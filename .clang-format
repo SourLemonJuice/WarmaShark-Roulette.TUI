@@ -1,0 +1,18 @@
+---
+BasedOnStyle: Microsoft
+IndentWidth: 4
+UseTab: Never
+MaxEmptyLinesToKeep: 2 # for me, 2 empty lines were so common.
+BreakBeforeBraces: Linux # it's my first guide of style, so I'll keep it.
+AllowShortIfStatementsOnASingleLine: Never
+IndentCaseLabels: false
+IncludeBlocks: Preserve # because google c++ guide specifies the order of #include blocks.
+SortIncludes: CaseInsensitive
+ColumnLimit: 120 # same as Microsoft, don't ask me, I just think it's great.
+BinPackParameters: true # MS also seted this, but I saw this config.
+AlignAfterOpenBracket: Align # TBD, now same as Microsoft.
+AlignTrailingComments: # TBD, so don't change my code now.
+    Kind: Leave
+    OverEmptyLines: 0
+...
+
