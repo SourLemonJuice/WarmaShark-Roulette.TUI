@@ -33,8 +33,10 @@ int main(void)
             continue;
         }
         // use 'q' can force EXIT
-        if (ch == 'q')
+        if (ch == 'q') {
+            printw("Note: Develop terminal Exited due to User. Enter any key to exit.");
             break;
+        }
     }
     // suspend program
     getch();
