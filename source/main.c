@@ -6,13 +6,14 @@
 
 int main(void)
 {
-    char *dialogue_lib1[] = {
-        "hello.",
-        "Who are you?",
-        "I'm littleShark, maybe sounds weird, but this is my name!",
-        "Here is the last line, can you see me? 233",
+    char *dialogue_tree1[] = {
+        "Hello",
+        "This is a Develop Terminal or just a dialogue tree for text output test.",
+        "The protagonist of this program(or videogame), it's a shark. But live in another universe.",
+        "Maybe his name is littleShark, sounds weird? But it is.",
+        "Here is the last line(string pointer), be careful of this pointer index...",
     };
-    int dialogue_lib1_entries_num = sizeof(dialogue_lib1) / sizeof(char*);
+    int dialogue_tree1_entries_num = sizeof(dialogue_tree1) / sizeof(char*);
 
     initscr();
     cbreak();
@@ -24,10 +25,10 @@ int main(void)
 
     char ch;
     int dialogue_index = 0;
-    while (dialogue_index + 1 <= dialogue_lib1_entries_num) {
+    while (dialogue_index + 1 <= dialogue_tree1_entries_num) {
         ch = getch();
         if (ch == ' ' or ch == '\n') {
-            printw("%s\n", dialogue_lib1[dialogue_index]);
+            printw("%s\n", dialogue_tree1[dialogue_index]);
             refresh();
             dialogue_index++;
             continue;
