@@ -13,33 +13,17 @@ int main(void)
     cbreak();
     noecho();
 
-    printw("WarmaShark Develop Terminal\n");
-    printw("This is dialogue lib1(tech test library):\n");
-    refresh();
-
-    struct scene_runtime runtime;
-    sceneInit(&runtime);
-    int dialogue_index = 0;
-    char ch;
-    while (dialogue_index + 1 <= runtime.dialogue1_size) {
-        ch = getch();
-        if (ch == ' ' or ch == '\n') {
-            printw("%s\n", getCurrentEventText(dialogue_index));
-            refresh();
-            dialogue_index++;
-            continue;
-        }
-        // use 'q' can force EXIT
-        if (ch == 'q') {
-            printw("Note: Develop terminal Exited due to User. Enter any key to exit.");
-            break;
-        }
-    }
-    // suspend program
+    // start test scene
+    sceneStart_DevelopTerminal(stdscr);
+    // show end info(full screen)
+    werase(stdscr);
+    wprintw(stdscr, "It's the last suspend of the program, just for debug now.\n");
+    wprintw(stdscr, "For debug guy, remember program may exit immediately after the last printw()\n");
+    wrefresh(stdscr);
+    // wait a key
     getch();
 
     endwin();
-    printf("[For debug guy]: Remember, program may exit immediately after the last printw()\n");
 
     return 0;
 }

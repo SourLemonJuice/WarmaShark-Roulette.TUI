@@ -1,3 +1,8 @@
+#ifndef WARM_SCENE_DEVELOP_TERMINAL_H_
+#define WARM_SCENE_DEVELOP_TERMINAL_H_
+
+#include <ncurses.h>
+
 struct dialogue_event
 {
     char *text;
@@ -8,5 +13,6 @@ struct scene_runtime
     int dialogue1_size;
 };
 
-int sceneInit(struct scene_runtime *runtime);
-char *getCurrentEventText(int index);
+int sceneStart_DevelopTerminal(WINDOW *win_handle);
+
+#endif

@@ -1,4 +1,4 @@
-# WarmaShark Text-based Game.TUI
+# WarmaShark Text-base Game.TUI
 
 ## Todo list
 
