@@ -4,17 +4,11 @@
 
 #include <ncurses.h>
 
+#include "scene/develop_terminal.h"
+
 int main(void)
 {
-    char *dialogue_tree1[] = {
-        "Hello",
-        "This is a Develop Terminal or just a dialogue tree for text output test.",
-        "The protagonist of this program(or videogame), it's a shark. But live in another universe.",
-        "Maybe his name is littleShark, sounds weird? But it is.",
-        "Here is the last line(string pointer), be careful of this pointer index...",
-    };
-    int dialogue_tree1_entries_num = sizeof(dialogue_tree1) / sizeof(char*);
-
+    /* init ncurse std screen */
     initscr();
     cbreak();
     noecho();
@@ -23,12 +17,14 @@ int main(void)
     printw("This is dialogue lib1(tech test library):\n");
     refresh();
 
-    char ch;
+    struct scene_runtime runtime;
+    sceneInit(&runtime);
     int dialogue_index = 0;
-    while (dialogue_index + 1 <= dialogue_tree1_entries_num) {
+    char ch;
+    while (dialogue_index + 1 <= runtime.dialogue1_size) {
         ch = getch();
         if (ch == ' ' or ch == '\n') {
-            printw("%s\n", dialogue_tree1[dialogue_index]);
+            printw("%s\n", getCurrentEventText(dialogue_index));
             refresh();
             dialogue_index++;
             continue;
