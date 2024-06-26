@@ -1,14 +1,14 @@
 SHELL := /usr/bin/bash
 
-source_codes := main.c scene/develop_terminal.c log/logger.c
-executable_base_name := warmaShark_Roulette
+source_codes := main.c scene/develop_terminal.c log/logger.c engine/engine_config.c
+executable_base_name := warmaShark
 
 clang_flag += -I./
 clang_flag += -lncurses
 
-default: warmaShark_Roulette.out
+default: warmaShark.out
 
-warmaShark_Roulette.out: $(source_codes)
+warmaShark.out: $(source_codes)
 	/usr/bin/clang $(source_codes) \
 		--output $(executable_base_name).out \
 		$(clang_flag)

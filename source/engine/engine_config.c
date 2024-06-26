@@ -1,0 +1,24 @@
+#include "engine/engine_config.h"
+
+#include <locale.h>
+#include <stdio.h>
+
+int EngineRuntimeInit(struct WarmRuntimeConfig *config)
+{
+    // set all default config
+    config->log_path = "./Engine.log";
+    config->log_handle = fopen(config->log_path, "w");
+    config->locale_string = "en_US.UTF-8";
+
+    // when everyone all be setted, apply those config
+    setlocale(LC_ALL, config->locale_string); // program locale
+    fprintf(config->log_handle, "Engine runtime has been inited\n");
+    fflush(config->log_handle);
+    return 0;
+}
+
+int EngineRuntimeFreeup(struct WarmRuntimeConfig *config)
+{
+    fclose(config->log_handle);
+    return 0;
+}

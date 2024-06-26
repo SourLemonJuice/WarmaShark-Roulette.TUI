@@ -11,13 +11,16 @@
 
 int main(void)
 {
-    // TODO emm make it use program config, but we don't have config...
-    setlocale(LC_ALL, "en_US.UTF-8");
+    struct WarmRuntimeConfig runtime_config;
+    EngineRuntimeInit(&runtime_config);
 
     /* init ncurse std screen */
     initscr();
     cbreak();
     noecho();
+
+    // logging
+    WarmLoggerMain(&runtime_config, "main", kLogLevel_General, "ncurses has inited, starting Developer Terminal scene\n");
 
     // start test scene
     sceneStart_DevelopTerminal(stdscr);
@@ -29,6 +32,8 @@ int main(void)
     // wait a key
     getch();
 
+    // freeup everything
+    EngineRuntimeFreeup(&runtime_config);
     endwin();
 
     return 0;
