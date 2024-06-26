@@ -1,0 +1,27 @@
+name: Build CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ./source/
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: make
+      run: make
+    - name: Upload executable file
+      uses: actions/upload-artifact@v4
+      with:
+        name: WarmaShark-Linux
+        path: source/warmaShark.out
+        retention-days: 7
