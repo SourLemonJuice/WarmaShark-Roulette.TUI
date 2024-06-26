@@ -11,8 +11,10 @@
 
 int main(void)
 {
+    // TODO emm make it use program config, but we don't have config...
+    setlocale(LC_ALL, "en_US.UTF-8");
+
     /* init ncurse std screen */
-    setlocale(LC_ALL, "");
     initscr();
     cbreak();
     noecho();
