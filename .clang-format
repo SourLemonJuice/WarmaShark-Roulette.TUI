@@ -8,7 +8,7 @@ AllowShortIfStatementsOnASingleLine: Never
 IndentCaseLabels: false
 IncludeBlocks: Preserve # because google c++ guide specifies the order of #include blocks.
 SortIncludes: CaseInsensitive
-ColumnLimit: 120 # same as Microsoft, don't ask me, I just think it's great.
+ColumnLimit: 0 # disabled now
 BinPackParameters: true # MS also seted this, but I saw this config.
 AlignAfterOpenBracket: Align # TBD, now same as Microsoft.
 AlignTrailingComments: # TBD, so don't change my code now.

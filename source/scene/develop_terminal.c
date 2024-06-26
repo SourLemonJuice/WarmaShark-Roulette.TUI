@@ -9,10 +9,12 @@ char *getCurrentEventText(int index);
 
 struct dialogue_event dialogue1[] = {
     {.text = "Hello"},
-    {.text = "This is a Develop Terminal or just a dialogue tree for text output test."},
-    {.text = "The protagonist of this program(or videogame), it's a shark. But live in another universe."},
-    {.text = "Maybe his name is littleShark, sounds weird? But it is."},
-    {.text = "Here is the last line(string pointer), be careful of this pointer index..."},
+    {.text = "This is a Develop Terminal or just a test for a normal example dialogue tree."},
+    {.text = "But what's the difference, dialogue trees are just some data structure... We are all normal."},
+    {.text = "The protagonist of this program(or videogame), is a shark. But live in another universe."},
+    {.text = "沃玛/Warma created him. Maybe his name is littleShark?"},
+    {.text = "Cute, Evil, Complex, or have another Hidden Story?"},
+    {.text = "Here is the last line/event/string-pointer, be careful of this pointer index..."},
 };
 
 int sceneInit(struct scene_runtime *runtime)
@@ -28,20 +30,27 @@ char *getCurrentEventText(int index)
 
 int sceneStart_DevelopTerminal(WINDOW *win_handle)
 {
-    wprintw(win_handle, "WarmaShark Develop Terminal\n");
-    wprintw(win_handle, "This is dialogue lib1(tech test library):\n");
+    wprintw(win_handle, "Yeah, WarmaShark Develop Terminal\n");
+    wprintw(win_handle, "Here is the dialogue tree 1(just for tech test):\n");
     wrefresh(win_handle);
 
     struct scene_runtime runtime;
     sceneInit(&runtime);
+    // temp var for loop
     int dialogue_index = 0;
     char getch_temp;
+    int cursorX;
+    int cursorY;
+    getyx(win_handle, cursorY, cursorX);
 
     while (dialogue_index + 1 <= runtime.dialogue1_size) {
         getch_temp = getch();
         if (getch_temp == ' ' or getch_temp == '\n') {
-            printw("%s\n", getCurrentEventText(dialogue_index));
+            wmove(win_handle, cursorY, cursorX);
+            wclrtoeol(win_handle);
+            wprintw(win_handle, "%s", getCurrentEventText(dialogue_index));
             wrefresh(win_handle);
+
             dialogue_index++;
             continue;
         }

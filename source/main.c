@@ -1,14 +1,18 @@
-#include <stdio.h>
 #include <iso646.h>
+#include <locale.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include <ncurses.h>
 
+#include "engine/engine_config.h"
+#include "log/logger.h"
 #include "scene/develop_terminal.h"
 
 int main(void)
 {
     /* init ncurse std screen */
+    setlocale(LC_ALL, "");
     initscr();
     cbreak();
     noecho();
