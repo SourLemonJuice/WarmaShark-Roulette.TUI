@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 
-// TODO
 struct WarmRuntimeConfig {
     char *log_path;
     FILE *log_handle;

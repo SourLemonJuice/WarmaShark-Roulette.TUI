@@ -20,14 +20,15 @@ int main(void)
     noecho();
 
     // logging
-    WarmLoggerMain(&runtime_config, "main", kLogLevel_General, "ncurses has inited, starting Developer Terminal scene\n");
+    WarmLog_General(&runtime_config, "main", "ncurses has inited, starting Developer Terminal scene\n");
 
     // start test scene
     sceneStart_DevelopTerminal(stdscr);
+
     // show end info(full screen)
     werase(stdscr);
-    wprintw(stdscr, "It's the last suspend of the program, just for debug now.\n");
-    wprintw(stdscr, "For debug guy, remember program may exit immediately after the last printw()\n");
+    wprintw(stdscr, "==== WarmaShark[Under Development] ====\n");
+    wprintw(stdscr, "Made With Open Source Softwares\n");
     wrefresh(stdscr);
     // wait a key
     getch();

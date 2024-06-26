@@ -32,3 +32,13 @@
   - 最严重的错误，程序在逻辑与代码层面均不符合设想。\
     或许它可以被称为转储
   - 需要提交包含更多错误信息的结构体，而非一行 printf() 的参数
+
+## 最终实现
+
+我也不知道这些宏有多稳定，但现在改起来也不费劲就是了
+
+```c
+WarmLog_General(&runtime_config, "module_tag", "format %d\n", 128);
+WarmLog_Warning(&runtime_config, "module_tag", "format %d\n", 128);
+WarmLog_UserWarning(&runtime_config, "module_tag", "format %d\n", 128);
+```
