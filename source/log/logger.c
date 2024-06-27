@@ -27,7 +27,7 @@ int WarmLoggerMain(struct WarmRuntimeConfig *config, enum WarmLogLevel level, ch
 /*
     TODO They are all TBD.
  */
-int WarmMeltdownedUniverse(struct WarmRuntimeConfig *config, struct WarmMeltdownDumpData *dump_data)
+int WarmthMeltdownUniverse(struct WarmRuntimeConfig *config, struct WarmMeltdownDumpData *dump_data)
 {
     fprintf(config->log_handle, "[Universe Meltdown]: ");
     fprintf(config->log_handle, "%s\n", dump_data->message);

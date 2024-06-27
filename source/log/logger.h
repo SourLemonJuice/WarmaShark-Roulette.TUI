@@ -18,7 +18,7 @@ struct WarmMeltdownDumpData {
 };
 
 int WarmLoggerMain(struct WarmRuntimeConfig *config, enum WarmLogLevel level, char *module_tag, char *format, ...);
-int WarmMeltdownedUniverse(struct WarmRuntimeConfig *config, struct WarmMeltdownDumpData *dump_data);
+int WarmthMeltdownUniverse(struct WarmRuntimeConfig *config, struct WarmMeltdownDumpData *dump_data);
 
 // here is the final macro definition
 #define WarmLog_General(runtime_config, module_tag, format, ...) WarmLoggerMain(runtime_config, kWarmLogLevel_General, module_tag, format, ##__VA_ARGS__)

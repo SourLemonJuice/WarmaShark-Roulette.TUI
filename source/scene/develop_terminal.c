@@ -8,7 +8,7 @@
 #include "log/logger.h"
 
 struct DialogueEvent dialogue1[] = {
-    {.text = "Hello"},
+    {.text = "Hello/你好"},
     {.text = "This is a Develop Terminal or just a test for a normal example dialogue tree."},
     {.text = "But what's the difference, dialogue trees are just some data structure... We are all normal."},
     {.text = "The protagonist of this program(or videogame), is a shark. But live in another universe."},
@@ -35,7 +35,7 @@ int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW 
 
     wprintw(win_handle, "Yeah, WarmaShark Develop Terminal\n");
     wprintw(win_handle, "Here is the dialogue tree 1(just for tech test)\n");
-    wprintw(win_handle, "==== ==== ====\n");
+    wprintw(win_handle, "====|====|====\n");
     wrefresh(win_handle);
 
     struct SceneCache_DevelopTerminal cache;
@@ -47,27 +47,24 @@ int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW 
     int cursorY;
     getyx(win_handle, cursorY, cursorX);
 
-    while (dialogue_index + 1 <= cache.dialogue1_size) {
-        getch_temp = getch();
-        if (getch_temp == ' ' or getch_temp == '\n') {
-            wmove(win_handle, cursorY, cursorX);
-            wclrtoeol(win_handle);
-            wprintw(win_handle, "%s", dialogue1[dialogue_index].text);
-            wrefresh(win_handle);
+    do {
+        wmove(win_handle, cursorY, cursorX);
+        wclrtoeol(win_handle);
+        wprintw(win_handle, "%s", dialogue1[dialogue_index].text);
+        wrefresh(win_handle);
+        dialogue_index++;
 
-            dialogue_index++;
+        getch_temp = getch();
+        // space key or enter ker to continue
+        if (getch_temp == ' ' or getch_temp == '\n') {
             continue;
         }
         // use 'q' can force EXIT
         if (getch_temp == 'q') {
-            printw("Note: Develop terminal Exited due to User. Enter any key to exit.");
-            wrefresh(win_handle);
             WarmLog_General(engine_runtime, module_tag_, "Dialogue breaked due to user input\n");
             break;
         }
-    }
-    // suspend program after last dialogue
-    getch();
+    } while (dialogue_index + 1 <= cache.dialogue1_size);
 
     WarmLog_General(engine_runtime, module_tag_, "Exit the scene\n");
     return 0;

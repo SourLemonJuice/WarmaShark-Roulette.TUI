@@ -30,7 +30,7 @@ int main(void)
     wprintw(stdscr, "==== WarmaShark[Under Development] ====\n");
     wprintw(stdscr, "Made With Open Source Softwares\n");
     wrefresh(stdscr);
-    // wait a key
+    // suspend program
     getch();
 
     // freeup everything
