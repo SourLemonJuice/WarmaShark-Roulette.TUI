@@ -11,7 +11,6 @@ defaults:
     shell: bash
     working-directory: ./source/
 
-
 jobs:
   build:
     runs-on: ubuntu-latest

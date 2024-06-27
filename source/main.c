@@ -23,7 +23,7 @@ int main(void)
     WarmLog_General(&runtime_config, "main", "ncurses has inited, starting Developer Terminal scene\n");
 
     // start test scene
-    sceneStart_DevelopTerminal(stdscr);
+    SceneStart_DevelopTerminal(&runtime_config, stdscr);
 
     // show end info(full screen)
     werase(stdscr);

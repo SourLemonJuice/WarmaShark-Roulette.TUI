@@ -3,16 +3,17 @@
 
 #include <ncurses.h>
 
-struct dialogue_event
-{
+#include "engine/engine_config.h"
+
+// TODO dialogue event shouldn't be implemented by scene self
+struct DialogueEvent {
     char *text;
 };
 
-struct scene_runtime
-{
+struct SceneCache_DevelopTerminal {
     int dialogue1_size;
 };
 
-int sceneStart_DevelopTerminal(WINDOW *win_handle);
+int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW *win_handle);
 
 #endif
