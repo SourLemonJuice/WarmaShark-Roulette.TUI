@@ -14,6 +14,6 @@ struct SceneCache_DevelopTerminal {
     int dialogue1_size;
 };
 
-int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW *win_handle);
+int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW *win_handle, int start_y, int start_x);
 
 #endif

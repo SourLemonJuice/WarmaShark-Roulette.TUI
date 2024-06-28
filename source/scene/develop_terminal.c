@@ -7,8 +7,10 @@
 #include "engine/engine_config.h"
 #include "log/logger.h"
 
+static char module_tag_[] = "scene - Develop Terminal";
+
 struct DialogueEvent dialogue1[] = {
-    {.text = "Hello/你好"},
+    {.text = "Hello/你好，你可以按 q 键退出，Enter 或 Space 跳转到下一个对话。"},
     {.text = "This is a Develop Terminal or just a test for a normal example dialogue tree."},
     {.text = "But what's the difference, dialogue trees are just some data structure... We are all normal."},
     {.text = "The protagonist of this program(or videogame), is a shark. But live in another universe."},
@@ -23,48 +25,46 @@ int SceneInit_DevelopTerminal(struct SceneCache_DevelopTerminal *cache)
     return 0;
 }
 
-int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW *win_handle)
+int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW *win_handle, int border_y, int border_x)
 {
-    char module_tag_[] = "scene - Develop Terminal";
-
     WarmLog_General(engine_runtime, module_tag_, "Entered the scene\n");
-    int max_y_;
-    int max_x_;
-    getmaxyx(stdscr, max_y_, max_x_);
-    WarmLog_General(engine_runtime, module_tag_, "MAX screen X: %d, Y: %d\n", max_x_, max_y_);
-
-    wprintw(win_handle, "Yeah, WarmaShark Develop Terminal\n");
-    wprintw(win_handle, "Here is the dialogue tree 1(just for tech test)\n");
-    wprintw(win_handle, "====|====|====\n");
-    wrefresh(win_handle);
 
     struct SceneCache_DevelopTerminal cache;
     SceneInit_DevelopTerminal(&cache);
     // temp var for loop
-    int dialogue_index = 0;
-    char getch_temp;
-    int cursorX;
-    int cursorY;
-    getyx(win_handle, cursorY, cursorX);
+    int dialogue_index_ = 0;
+    char getch_temp_;
+    int win_max_y_;
+    int win_max_x_;
+    getmaxyx(win_handle, win_max_y_, win_max_x_);
 
     do {
-        wmove(win_handle, cursorY, cursorX);
-        wclrtoeol(win_handle);
-        wprintw(win_handle, "%s", dialogue1[dialogue_index].text);
-        wrefresh(win_handle);
-        dialogue_index++;
+        // clear the window
+        for (int y = 0 + border_y; y <= win_max_y_ - border_y * 2; y++) {
+            for (int x = 0 + border_x; x <= win_max_x_ - border_x * 2; x++) {
+                // don't use delch(), it's not working like you want, check the docs
+                // mvwdelch(win_handle, y, x);
+                mvwaddch(win_handle, y, x, ' ');
+            }
+        }
+        // reset to first line
+        wmove(win_handle, 0 + border_y, 0 + border_x);
 
-        getch_temp = getch();
+        wprintw(win_handle, "%s", dialogue1[dialogue_index_].text);
+        wrefresh(win_handle);
+        dialogue_index_++;
+
+        getch_temp_ = getch();
         // space key or enter ker to continue
-        if (getch_temp == ' ' or getch_temp == '\n') {
+        if (getch_temp_ == ' ' or getch_temp_ == '\n') {
             continue;
         }
         // use 'q' can force EXIT
-        if (getch_temp == 'q') {
+        if (getch_temp_ == 'q') {
             WarmLog_General(engine_runtime, module_tag_, "Dialogue breaked due to user input\n");
             break;
         }
-    } while (dialogue_index + 1 <= cache.dialogue1_size);
+    } while (dialogue_index_ + 1 <= cache.dialogue1_size);
 
     WarmLog_General(engine_runtime, module_tag_, "Exit the scene\n");
     return 0;
