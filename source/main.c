@@ -9,6 +9,7 @@
 #include "log/logger.h"
 #include "runtime.h"
 #include "scene/develop_terminal.h"
+#include "scene/program_info.h"
 
 int main(int argc, char *argv[])
 {
@@ -45,7 +46,7 @@ int main(int argc, char *argv[])
     WarmLog_General(&runtime_config, "main", "ncurses has inited, starting Developer Terminal scene\n");
 
     attron(COLOR_PAIR(1));
-    wprintw(stdscr, "Yeah, Welcome to WarmaShark Develop Terminal\n");
+    wprintw(stdscr, "Yeah, Welcome to WarmaShark, below is the develop terminal.\n");
     attroff(COLOR_PAIR(1));
     wprintw(stdscr, "========:========:========\n");
     wrefresh(stdscr);
@@ -60,15 +61,7 @@ int main(int argc, char *argv[])
     SceneStart_DevelopTerminal(&runtime_config, window);
 
     // show end info(full screen)
-    werase(stdscr);
-    attron(COLOR_PAIR(2));
-    wprintw(stdscr, "--> WarmaShark[Under Development]\n");
-    attroff(COLOR_PAIR(2));
-    wprintw(stdscr, "Made With Open Source Softwares\n");
-    wprintw(stdscr, "> Press any key to EXIT <\n");
-    wrefresh(stdscr);
-    // suspend program
-    wgetch(stdscr);
+    SceneStart_ProgramInfo(&runtime_config, stdscr);
 
     // freeup everything
     EngineRuntimeFreeup(&runtime_config);

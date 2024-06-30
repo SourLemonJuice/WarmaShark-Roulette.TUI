@@ -1,4 +1,4 @@
-#include "scene/develop_terminal.h"
+#include "develop_terminal.h"
 
 #include <iso646.h>
 #include <stdbool.h>
