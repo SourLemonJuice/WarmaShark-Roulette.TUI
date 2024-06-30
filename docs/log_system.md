@@ -38,5 +38,5 @@ WarmLog_General(&runtime_config, "module_tag", "format %d\n", 128);
 WarmLog_Warning(&runtime_config, "module_tag", "format %d\n", 128);
 WarmLog_UserWarning(&runtime_config, "module_tag", "format %d\n", 128);
 // function
-int WarmthMeltdownUniverse(const struct WarmRuntimeConfig *config, const struct WarmMeltdownDumpData *dump_data);
+int WarmthMeltdownUniverse(struct WarmRuntimeConfig *config, const char *format, ...);
 ```

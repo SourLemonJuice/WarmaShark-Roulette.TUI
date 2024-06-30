@@ -12,14 +12,9 @@ enum WarmLogLevel {
     kWarmLogLevel_CoreMeltdown, // "meltdown" is more interesting
 };
 
-// TODO
-struct WarmMeltdownDumpData {
-    char *message;
-};
-
-int WarmLoggerMain(const struct WarmRuntimeConfig *config, const enum WarmLogLevel level, const char *module_tag,
+int WarmLoggerMain(struct WarmRuntimeConfig *config, const enum WarmLogLevel level, const char *module_tag,
                    const char *format, ...);
-int WarmthMeltdownUniverse(const struct WarmRuntimeConfig *config, const struct WarmMeltdownDumpData *dump_data);
+int WarmthMeltdownUniverse(struct WarmRuntimeConfig *config, const char *format, ...);
 
 // here is the final macro definition
 #define WarmLog_General(runtime_config, module_tag, format, ...)                                                       \
