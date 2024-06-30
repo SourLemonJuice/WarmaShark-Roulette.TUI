@@ -8,7 +8,8 @@
 /*
     This function is mainly used by macro but not users directly. TBD
  */
-int WarmLoggerMain(struct WarmRuntimeConfig *config, enum WarmLogLevel level, char *module_tag, char *format, ...)
+int WarmLoggerMain(const struct WarmRuntimeConfig *config, const enum WarmLogLevel level, const char *module_tag,
+                   const char *format, ...)
 {
     time_t now_time_;
     time(&now_time_);
@@ -27,7 +28,7 @@ int WarmLoggerMain(struct WarmRuntimeConfig *config, enum WarmLogLevel level, ch
 /*
     TODO They are all TBD.
  */
-int WarmthMeltdownUniverse(struct WarmRuntimeConfig *config, struct WarmMeltdownDumpData *dump_data)
+int WarmthMeltdownUniverse(const struct WarmRuntimeConfig *config, const struct WarmMeltdownDumpData *dump_data)
 {
     fprintf(config->log_handle, "[Universe Meltdown]: ");
     fprintf(config->log_handle, "%s\n", dump_data->message);

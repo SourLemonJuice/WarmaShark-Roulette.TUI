@@ -1,4 +1,4 @@
-#include "engine/engine_config.h"
+#include "runtime.h"
 
 #include <locale.h>
 #include <stdio.h>

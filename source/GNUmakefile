@@ -1,7 +1,7 @@
 SHELL := /usr/bin/bash
 
 source_codes += main.c scene/develop_terminal.c
-source_codes += log/logger.c engine/engine_config.c engine/animator.c
+source_codes += log/logger.c runtime.c
 executable_base_name := warmaShark
 
 clang_flag += -I./

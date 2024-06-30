@@ -2,11 +2,12 @@
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <ncurses.h>
 
-#include "engine/engine_config.h"
 #include "log/logger.h"
+#include "runtime.h"
 #include "scene/develop_terminal.h"
 
 int main(int argc, char *argv[])
@@ -27,6 +28,7 @@ int main(int argc, char *argv[])
     // init clolor
     start_color();
     init_pair(1, COLOR_YELLOW, COLOR_BLUE);
+    init_pair(2, COLOR_RED, COLOR_BLACK);
 
     // get maximum screen size
     int max_y_;
@@ -37,7 +39,6 @@ int main(int argc, char *argv[])
     // logging
     WarmLog_General(&runtime_config_, "main", "ncurses has inited, starting Developer Terminal scene\n");
 
-    waddch(stdscr, 't' | COLOR_PAIR(1));
     attron(COLOR_PAIR(1));
     wprintw(stdscr, "Yeah, Welcome to WarmaShark Develop Terminal\n");
     attroff(COLOR_PAIR(1));
@@ -52,8 +53,11 @@ int main(int argc, char *argv[])
 
     // show end info(full screen)
     werase(stdscr);
-    wprintw(stdscr, "==== WarmaShark[Under Development] ====\n");
+    attron(COLOR_PAIR(2));
+    wprintw(stdscr, "--> WarmaShark[Under Development]\n");
+    attroff(COLOR_PAIR(2));
     wprintw(stdscr, "Made With Open Source Softwares\n");
+    wprintw(stdscr, "> Press any key to EXIT <\n");
     wrefresh(stdscr);
     // suspend program
     getch();

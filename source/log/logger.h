@@ -3,7 +3,7 @@
 
 #include <stdarg.h>
 
-#include "engine/engine_config.h"
+#include "runtime.h"
 
 enum WarmLogLevel {
     kWarmLogLevel_General,
@@ -17,12 +17,16 @@ struct WarmMeltdownDumpData {
     char *message;
 };
 
-int WarmLoggerMain(struct WarmRuntimeConfig *config, enum WarmLogLevel level, char *module_tag, char *format, ...);
-int WarmthMeltdownUniverse(struct WarmRuntimeConfig *config, struct WarmMeltdownDumpData *dump_data);
+int WarmLoggerMain(const struct WarmRuntimeConfig *config, const enum WarmLogLevel level, const char *module_tag,
+                   const char *format, ...);
+int WarmthMeltdownUniverse(const struct WarmRuntimeConfig *config, const struct WarmMeltdownDumpData *dump_data);
 
 // here is the final macro definition
-#define WarmLog_General(runtime_config, module_tag, format, ...) WarmLoggerMain(runtime_config, kWarmLogLevel_General, module_tag, format, ##__VA_ARGS__)
-#define WarmLog_Warning(runtime_config, module_tag, format, ...) WarmLoggerMain(runtime_config, kWarmLogLevel_Warning, module_tag, format, ##__VA_ARGS__)
-#define WarmLog_UserWarning(runtime_config, module_tag, format, ...) WarmLoggerMain(runtime_config, kWarmLogLevel_UserWarning, module_tag, format, ##__VA_ARGS__)
+#define WarmLog_General(runtime_config, module_tag, format, ...)                                                       \
+    WarmLoggerMain(runtime_config, kWarmLogLevel_General, module_tag, format, ##__VA_ARGS__)
+#define WarmLog_Warning(runtime_config, module_tag, format, ...)                                                       \
+    WarmLoggerMain(runtime_config, kWarmLogLevel_Warning, module_tag, format, ##__VA_ARGS__)
+#define WarmLog_UserWarning(runtime_config, module_tag, format, ...)                                                   \
+    WarmLoggerMain(runtime_config, kWarmLogLevel_UserWarning, module_tag, format, ##__VA_ARGS__)
 
 #endif

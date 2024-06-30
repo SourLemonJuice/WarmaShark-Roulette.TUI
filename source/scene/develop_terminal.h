@@ -3,21 +3,20 @@
 
 #include <ncurses.h>
 
-#include "engine/engine_config.h"
+#include "runtime.h"
 
 // TODO dialogue event shouldn't be implemented by scene self
 struct DialogueEvent {
-    bool await;
+    // what message will be printw()
     char *text;
-    int keep_ms;
-    int delay;
+    // is this sentence finished? if `flase` will not wait a key and clear the window
+    bool finished;
+    // the ncurses color paird id
     int color_id;
+    // TODO speak rate
 };
 
-struct SceneCache_DevelopTerminal {
-    int dialogue1_size;
-};
-
-int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW *win_handle, int start_y, int start_x);
+int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW *win_handle, int border_y,
+                               int border_x);
 
 #endif
