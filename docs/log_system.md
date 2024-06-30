@@ -4,21 +4,15 @@
 
 ## 定义方式
 
-这又不是给微控制器开发固件，没必要用 `#define` 写宏的吧。\
-虽说这样能减小体积，但我不喜欢宏，加上在软件配置里调整等级还是有可能会被实现的
+日志的标头(`source/log/logger.h`)定义了一个枚举器，其中枚举了日志等级，比如: `kWarmLogLevel_General`\
+同时也定义了 `int WarmLoggerMain(...)` 函数，这些组合起来就变成了项目的日志系统。
 
-但另一方面，用函数就需要日志等级，需要输入等级就大概率需要枚举，需要枚举就意味着这东西和全局变量几乎一样...\
-枚举这东西怎么是这个样子的阿喂。\
-用宏定义吧还是
-
-不，还是摆烂吧，怎么这么多东西要做啊啊。等把整个引擎的配置设定好再说
+不过它们不是直接交给其他组件的，标头定义了一系列宏来简化这长的要命的日志等级。这些定义在下文中写到了。
 
 ## 输出方式
 
-按照不同等级的模式选择就好了，但像输出到文件里的这中功能是需要定义更多信息的呀。\
-如果让函数只输入等级是不可能做到这些的，但要是输入结构体整个 logger 的原型就会变得很难填写不是吗。
-
-算了，把那些高端东西叫做**转储**吧
+这些定义与 fprintf() 类似，但唯一的不同是会在每一行的前面加上一个 `module_tag` 作为标识。\
+需要被写入文件在 runtime 中定义和初始化
 
 ## 按等级分类
 
@@ -28,17 +22,21 @@
   - 轻度/中度 程序警告
 - UserWarning
   - 用户交互错误，这一部分可能需要显示在 ncurses 上
-- CoreMeltdown
+- CoreMeltdown - (unstable)
   - 最严重的错误，程序在逻辑与代码层面均不符合设想。\
     或许它可以被称为转储
-  - 需要提交包含更多错误信息的结构体，而非一行 printf() 的参数
+  - 需要提交包含更多错误信息的结构体，而非一行 printf() 的参数。\
+    虽说在调用 meltdown 时很可能是内存出错，但也不是不行吧，大概吧...
 
 ## 最终实现
 
 我也不知道这些宏有多稳定，但现在改起来也不费劲就是了
 
 ```c
+// macro
 WarmLog_General(&runtime_config, "module_tag", "format %d\n", 128);
 WarmLog_Warning(&runtime_config, "module_tag", "format %d\n", 128);
 WarmLog_UserWarning(&runtime_config, "module_tag", "format %d\n", 128);
+// function
+int WarmthMeltdownUniverse(const struct WarmRuntimeConfig *config, const struct WarmMeltdownDumpData *dump_data);
 ```

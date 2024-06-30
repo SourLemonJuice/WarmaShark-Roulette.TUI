@@ -26,11 +26,16 @@ int main(int argc, char *argv[])
     cbreak();
     noecho();
     // init clolor
+    if (has_colors() == false) {
+        wprintw(stdscr, "ERROR: The terminal don't support color output.");
+        wgetch(stdscr); // suspend
+        exit(1);
+    }
     start_color();
     init_pair(1, COLOR_YELLOW, COLOR_BLUE);
     init_pair(2, COLOR_RED, COLOR_BLACK);
 
-    // get maximum screen size
+    // get maximum screen size, used to calcuate the size of scene window
     int max_y_;
     int max_x_;
     getmaxyx(stdscr, max_y_, max_x_);
@@ -42,13 +47,14 @@ int main(int argc, char *argv[])
     attron(COLOR_PAIR(1));
     wprintw(stdscr, "Yeah, Welcome to WarmaShark Develop Terminal\n");
     attroff(COLOR_PAIR(1));
-    wprintw(stdscr, "======== ======== ========\n");
+    wprintw(stdscr, "========:========:========\n");
     wrefresh(stdscr);
     // create a window for develop terminal scene
     WINDOW *window_ = newwin((max_y_ - 2) * 0.4, max_x_ * 0.7, 2, 0);
     box(window_, 0, 0);
     wrefresh(window_);
     delwin(window_);
+    // new windows without border
     window_ = newwin(((max_y_ - 2) * 0.4) - 2, (max_x_ * 0.7) - 2, 3, 1);
     // start test scene
     SceneStart_DevelopTerminal(&runtime_config_, window_);
@@ -62,7 +68,7 @@ int main(int argc, char *argv[])
     wprintw(stdscr, "> Press any key to EXIT <\n");
     wrefresh(stdscr);
     // suspend program
-    getch();
+    wgetch(stdscr);
 
     // freeup everything
     EngineRuntimeFreeup(&runtime_config_);
