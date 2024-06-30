@@ -7,7 +7,11 @@
 
 // TODO dialogue event shouldn't be implemented by scene self
 struct DialogueEvent {
+    bool await;
     char *text;
+    int keep_ms;
+    int delay;
+    int color_id;
 };
 
 struct SceneCache_DevelopTerminal {

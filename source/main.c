@@ -24,6 +24,9 @@ int main(int argc, char *argv[])
     initscr();
     cbreak();
     noecho();
+    // init clolor
+    start_color();
+    init_pair(1, COLOR_YELLOW, COLOR_BLUE);
 
     // get maximum screen size
     int max_y_;
@@ -34,7 +37,10 @@ int main(int argc, char *argv[])
     // logging
     WarmLog_General(&runtime_config_, "main", "ncurses has inited, starting Developer Terminal scene\n");
 
+    waddch(stdscr, 't' | COLOR_PAIR(1));
+    attron(COLOR_PAIR(1));
     wprintw(stdscr, "Yeah, Welcome to WarmaShark Develop Terminal\n");
+    attroff(COLOR_PAIR(1));
     wprintw(stdscr, "======== ======== ========\n");
     wrefresh(stdscr);
     // create a window for develop terminal scene

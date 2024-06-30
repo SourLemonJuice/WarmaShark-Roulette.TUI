@@ -2,7 +2,10 @@
 
 ## Documents
 
-Some incomplete documents here: [docs/](docs/)
+The README don't have any useful information, so...
+
+Some incomplete documents here: [docs/](docs/)\
+But it's also just for myself...
 
 ## Build system
 
