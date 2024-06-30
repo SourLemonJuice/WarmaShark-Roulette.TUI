@@ -31,7 +31,7 @@ static const struct DialogueEvent dialogue1[] = {
      .text = "Here is the last line/event/string-pointer, be careful of this pointer index..."},
 };
 
-int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW *win_handle, int border_y, int border_x)
+int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW *win_handle)
 {
     WarmLog_General(engine_runtime, module_tag_, "Entered the scene\n");
 
@@ -45,7 +45,7 @@ int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW 
     getmaxyx(win_handle, win_max_y_, win_max_x_);
 
     // reset to first line
-    wmove(win_handle, 0 + border_y, 0 + border_x);
+    wmove(win_handle, 0, 0);
 
     do {
         // a log for debug
@@ -64,16 +64,10 @@ int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW 
             continue;
         }
 
-        // clear the window without border
-        for (int y = 0 + border_y; y <= win_max_y_ - border_y * 2; y++) {
-            for (int x = 0 + border_x; x <= win_max_x_ - border_x * 2; x++) {
-                // don't use delch(), it's not working like you want, check the docs
-                // mvwdelch(win_handle, y, x);
-                mvwaddch(win_handle, y, x, ' ');
-            }
-        }
+        // clear the window
+        werase(win_handle);
         // reset to first line
-        wmove(win_handle, 0 + border_y, 0 + border_x);
+        wmove(win_handle, 0, 0);
 
         getch_temp_ = getch();
         // space key or enter ker to continue

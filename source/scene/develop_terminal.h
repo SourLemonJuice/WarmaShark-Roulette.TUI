@@ -16,7 +16,6 @@ struct DialogueEvent {
     // TODO speak rate
 };
 
-int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW *win_handle, int border_y,
-                               int border_x);
+int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW *win_handle);
 
 #endif

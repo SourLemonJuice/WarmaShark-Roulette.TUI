@@ -45,11 +45,13 @@ int main(int argc, char *argv[])
     wprintw(stdscr, "======== ======== ========\n");
     wrefresh(stdscr);
     // create a window for develop terminal scene
-    WINDOW *window_ = newwin((max_y_ - 2) * 0.6, max_x_ * 0.7, 2, 0);
+    WINDOW *window_ = newwin((max_y_ - 2) * 0.4, max_x_ * 0.7, 2, 0);
     box(window_, 0, 0);
     wrefresh(window_);
+    delwin(window_);
+    window_ = newwin(((max_y_ - 2) * 0.4) - 2, (max_x_ * 0.7) - 2, 3, 1);
     // start test scene
-    SceneStart_DevelopTerminal(&runtime_config_, window_, 1, 1);
+    SceneStart_DevelopTerminal(&runtime_config_, window_);
 
     // show end info(full screen)
     werase(stdscr);
