@@ -14,16 +14,16 @@
 int WarmLoggerMain(struct WarmRuntimeConfig *config, const enum WarmLogLevel level, const char *module_tag,
                    const char *format, ...)
 {
-    time_t now_time_;
-    time(&now_time_);
+    time_t now_time;
+    time(&now_time);
 
-    va_list va_;
-    va_start(va_, format);
-    fprintf(config->log_handle, "[%ld] ", now_time_); // TODO This time format is so bad
+    va_list va;
+    va_start(va, format);
+    fprintf(config->log_handle, "[%ld] ", now_time); // TODO This time format is so bad
     fprintf(config->log_handle, "[%s]: ", module_tag);
-    vfprintf(config->log_handle, format, va_);
+    vfprintf(config->log_handle, format, va);
     fflush(config->log_handle);
-    va_end(va_);
+    va_end(va);
 
     return 0;
 }

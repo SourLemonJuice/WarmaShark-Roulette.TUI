@@ -13,12 +13,12 @@
 int main(int argc, char *argv[])
 {
     // init engine
-    struct WarmRuntimeConfig runtime_config_;
-    EngineRuntimeInit(&runtime_config_);
+    struct WarmRuntimeConfig runtime_config;
+    EngineRuntimeInit(&runtime_config);
 
     // if have any arguments, then break program
     if (argc >= 2) {
-        WarmLog_Warning(&runtime_config_, "main", "there is a CLI argument input here, we don't use it\n");
+        WarmLog_Warning(&runtime_config, "main", "there is a CLI argument input here, we don't use it\n");
     }
 
     /* init ncurse std screen */
@@ -36,13 +36,13 @@ int main(int argc, char *argv[])
     init_pair(2, COLOR_RED, COLOR_BLACK);
 
     // get maximum screen size, used to calcuate the size of scene window
-    int max_y_;
-    int max_x_;
-    getmaxyx(stdscr, max_y_, max_x_);
-    WarmLog_General(&runtime_config_, "main", "MAX screen X: %d, Y: %d\n", max_x_, max_y_);
+    int max_y;
+    int max_x;
+    getmaxyx(stdscr, max_y, max_x);
+    WarmLog_General(&runtime_config, "main", "MAX screen X: %d, Y: %d\n", max_x, max_y);
 
     // logging
-    WarmLog_General(&runtime_config_, "main", "ncurses has inited, starting Developer Terminal scene\n");
+    WarmLog_General(&runtime_config, "main", "ncurses has inited, starting Developer Terminal scene\n");
 
     attron(COLOR_PAIR(1));
     wprintw(stdscr, "Yeah, Welcome to WarmaShark Develop Terminal\n");
@@ -50,14 +50,14 @@ int main(int argc, char *argv[])
     wprintw(stdscr, "========:========:========\n");
     wrefresh(stdscr);
     // create a window for develop terminal scene
-    WINDOW *window_ = newwin((max_y_ - 2) * 0.4, max_x_ * 0.7, 2, 0);
-    box(window_, 0, 0);
-    wrefresh(window_);
-    delwin(window_);
+    WINDOW *window = newwin((max_y - 2) * 0.4, max_x * 0.7, 2, 0);
+    box(window, 0, 0);
+    wrefresh(window);
+    delwin(window);
     // new windows without border
-    window_ = newwin(((max_y_ - 2) * 0.4) - 2, (max_x_ * 0.7) - 2, 3, 1);
+    window = newwin(((max_y - 2) * 0.4) - 2, (max_x * 0.7) - 2, 3, 1);
     // start test scene
-    SceneStart_DevelopTerminal(&runtime_config_, window_);
+    SceneStart_DevelopTerminal(&runtime_config, window);
 
     // show end info(full screen)
     werase(stdscr);
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
     wgetch(stdscr);
 
     // freeup everything
-    EngineRuntimeFreeup(&runtime_config_);
+    EngineRuntimeFreeup(&runtime_config);
     endwin();
 
     return 0;

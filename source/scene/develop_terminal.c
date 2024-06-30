@@ -11,7 +11,7 @@
 #include "log/logger.h"
 #include "runtime.h"
 
-static const char module_tag_[] = "scene - Develop Terminal";
+static const char module_tag[] = "scene - Develop Terminal";
 
 static const struct WarmDialogueEvent dialogue[] = {
     {.finished = false, .attribute = COLOR_PAIR(1), .text = "Hello/你好"},
@@ -36,37 +36,37 @@ static const struct WarmDialogueEvent dialogue[] = {
 
 int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *runtime, WINDOW *win_handle)
 {
-    WarmLog_General(runtime, module_tag_, "Entered the scene\n");
+    WarmLog_General(runtime, module_tag, "Entered the scene\n");
 
     // temp var for loop
-    int dialogue_length_ = sizeof(dialogue) / sizeof(struct WarmDialogueEvent);
-    int dialogue_index_ = 0;
-    char getch_temp_;
+    int dialogue_length = sizeof(dialogue) / sizeof(struct WarmDialogueEvent);
+    int dialogue_index = 0;
+    char getch_temp;
 
     do {
-        int result_ = DialogueExecuteEvent(runtime, win_handle, &dialogue[dialogue_index_]);
-        if (result_ == 0) {
-            getch_temp_ = getch();
+        int event_result = DialogueExecuteEvent(runtime, win_handle, &dialogue[dialogue_index]);
+        if (event_result == 0) {
+            getch_temp = getch();
             // space key or enter ker to continue
-            if (getch_temp_ == ' ' or getch_temp_ == '\n') {
-                dialogue_index_++;
+            if (getch_temp == ' ' or getch_temp == '\n') {
+                dialogue_index++;
                 continue;
             }
             // use 'q' can force EXIT
-            if (getch_temp_ == 'q') {
-                WarmLog_General(runtime, module_tag_, "Dialogue breaked due to user input\n");
+            if (getch_temp == 'q') {
+                WarmLog_General(runtime, module_tag, "Dialogue breaked due to user input\n");
                 break;
             }
-        } else if (result_ == 1) {
-            dialogue_index_++;
+        } else if (event_result == 1) {
+            dialogue_index++;
             continue;
         }
 
         // TODO if exec to here, it's a serious warning...
-        WarmLog_Warning(runtime, module_tag_, "scene loop has a unknow issue");
-        dialogue_index_++;
-    } while (dialogue_index_ + 1 <= dialogue_length_);
+        WarmLog_Warning(runtime, module_tag, "scene loop has a unknow issue");
+        dialogue_index++;
+    } while (dialogue_index + 1 <= dialogue_length);
 
-    WarmLog_General(runtime, module_tag_, "Exit the scene\n");
+    WarmLog_General(runtime, module_tag, "Exit the scene\n");
     return 0;
 }
