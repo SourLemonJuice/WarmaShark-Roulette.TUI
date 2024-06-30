@@ -8,6 +8,7 @@ executable_base_name := warmaShark
 clang_flag += -I./
 clang_flag += -lncurses
 clang_flag += -O3
+clang_flag += -rdynamic
 
 default: warmaShark.out
 

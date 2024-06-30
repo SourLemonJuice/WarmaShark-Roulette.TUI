@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     // if have any arguments, then break program
     if (argc >= 2) {
-        WarmLog_Warning(&runtime_config_, "main", "there is a CLI argument input here, we don't use it");
+        WarmLog_Warning(&runtime_config_, "main", "there is a CLI argument input here, we don't use it\n");
     }
 
     /* init ncurse std screen */
