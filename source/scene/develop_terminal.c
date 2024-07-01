@@ -34,6 +34,9 @@ static const struct WarmDialogueEvent dialogue[] = {
      .text = "Here is the last line/event/string-pointer, be careful of this pointer index..."},
 };
 
+/*
+    If result is non zero, means have some problem.
+ */
 int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *runtime, WINDOW *win_handle)
 {
     WarmLog_General(runtime, module_tag, "Entered the scene\n");
@@ -45,9 +48,21 @@ int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *runtime, WINDOW *win_ha
 
     // just for test
     struct WarmSelectorActionEvent selector_event[4] = {
-        {.string = "test1(exit)", .attribute = A_NORMAL, .attribute_highlight = A_STANDOUT, .position_y = 0, .position_x = 0},
-        {.string = "test2(exit)", .attribute = A_DIM, .attribute_highlight = A_STANDOUT, .position_y = 1, .position_x = 0},
-        {.string = "Hello World 3(exit)", .attribute = A_DIM, .attribute_highlight = A_STANDOUT, .position_y = 2, .position_x = 0},
+        {.string = "test1(exit)",
+         .attribute = A_NORMAL,
+         .attribute_highlight = A_STANDOUT,
+         .position_y = 0,
+         .position_x = 0},
+        {.string = "test2(exit)",
+         .attribute = A_DIM,
+         .attribute_highlight = A_STANDOUT,
+         .position_y = 1,
+         .position_x = 0},
+        {.string = "Hello World 3(exit)",
+         .attribute = A_DIM,
+         .attribute_highlight = A_STANDOUT,
+         .position_y = 2,
+         .position_x = 0},
         {.string = "Main Dialogue",
          .attribute = A_BOLD,
          .attribute_highlight = A_STANDOUT,
@@ -64,27 +79,29 @@ int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *runtime, WINDOW *win_ha
     do {
         int event_result = DialogueExecuteEvent(runtime, win_handle, &dialogue[dialogue_index]);
         if (event_result == 0) {
-            getch_temp = getch();
-            // space key or enter ker to continue
-            if (getch_temp == ' ' or getch_temp == '\n') {
-                dialogue_index++;
-                continue;
-            }
-            // use 'q' can force EXIT
-            if (getch_temp == 'q') {
-                WarmLog_General(runtime, module_tag, "Dialogue break due to user input\n");
-                break;
+            // loop for get key
+            while (true) {
+                getch_temp = getch();
+                // space key or enter ker to continue
+                if (getch_temp == ' ' or getch_temp == '\n') { // space key or enter key to continue the dialogue
+                    dialogue_index++;
+                    break;
+                } else if (getch_temp == 'q') { // use 'q' can force EXIT
+                    WarmLog_General(runtime, module_tag, "Dialogue break due to user input\n");
+                    return 0;
+                } else {
+                    continue;
+                }
             }
         } else if (event_result == 1) {
             dialogue_index++;
             continue;
+        } else {
+            WarmLog_Warning(runtime, module_tag, "unknow result of DialogueExecuteEvent()");
+            return 1;
         }
-
-        // TODO if exec to here, it's a serious warning...
-        WarmLog_Warning(runtime, module_tag, "scene loop has a unknow issue");
-        dialogue_index++;
     } while (dialogue_index + 1 <= dialogue_length);
 
-    WarmLog_General(runtime, module_tag, "Exit the scene\n");
+    WarmLog_General(runtime, module_tag, "Exit the scene normally\n");
     return 0;
 }
