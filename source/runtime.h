@@ -10,6 +10,6 @@ struct WarmRuntimeConfig {
 };
 
 int EngineRuntimeInit(struct WarmRuntimeConfig *config);
-int EngineRuntimeFreeup(struct WarmRuntimeConfig *config);
+int EngineRuntimeFreeUp(struct WarmRuntimeConfig *config);
 
 #endif

@@ -24,7 +24,7 @@ int EngineRuntimeInit(struct WarmRuntimeConfig *config)
     return 0;
 }
 
-int EngineRuntimeFreeup(struct WarmRuntimeConfig *config)
+int EngineRuntimeFreeUp(struct WarmRuntimeConfig *config)
 {
     fclose(config->log_handle);
     return 0;

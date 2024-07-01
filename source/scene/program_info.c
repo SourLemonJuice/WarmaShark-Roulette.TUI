@@ -9,7 +9,7 @@ static const char module_tag[] = "scene - Program Info";
 
 int SceneStart_ProgramInfo(struct WarmRuntimeConfig *runtime, WINDOW *win)
 {
-    WarmLog_General(runtime, module_tag, "Enter the scene");
+    WarmLog_General(runtime, module_tag, "Enter the scene\n");
 
     // show program info
     werase(win);
@@ -23,7 +23,7 @@ int SceneStart_ProgramInfo(struct WarmRuntimeConfig *runtime, WINDOW *win)
     // suspend program
     wgetch(win);
 
-    WarmLog_General(runtime, module_tag, "Exit the scene");
+    WarmLog_General(runtime, module_tag, "Exit the scene\n");
 
     return 0;
 }
