@@ -9,6 +9,7 @@ struct WarmRuntimeConfig {
     char *locale_string;
 };
 
+int EngineReloadLocale(const struct WarmRuntimeConfig *config);
 int EngineRuntimeInit(struct WarmRuntimeConfig *config);
 int EngineRuntimeFreeUp(struct WarmRuntimeConfig *config);
 

@@ -19,7 +19,7 @@ int EngineRuntimeInit(struct WarmRuntimeConfig *config)
 
     // when everyone all be setted, apply those config
     EngineReloadLocale(config); // setup program locale
-    fprintf(config->log_handle, "==== Engine runtime has been inited ====\n");
+    fprintf(config->log_handle, "==== Engine runtime has been initd ====\n");
     fflush(config->log_handle);
     return 0;
 }

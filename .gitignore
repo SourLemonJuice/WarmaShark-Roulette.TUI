@@ -1,5 +1,7 @@
 # no python thanks
 *.py
+# for example "engine.log"
+*.log
 
 # END of lemon
 

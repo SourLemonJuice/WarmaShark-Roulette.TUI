@@ -1,6 +1,6 @@
 # WarmaShark Text-based Game.TUI
 
-## Documents
+## Documentations
 
 The README don't have any useful information, so...
 
