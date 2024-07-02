@@ -8,6 +8,8 @@
 #include "log/logger.h"
 #include "runtime.h"
 
+static const char module_tag[] = "dialog selector";
+
 /*
     Results:
     - 0: A full sentence is finished. And the window has already been erased.
@@ -42,7 +44,7 @@ int DialogueExecuteEvent(struct WarmRuntimeConfig *runtime, WINDOW *win, const s
 static int DialogueSelectorUpdateStatus_(struct WarmRuntimeConfig *runtime, WINDOW *win,
                                          const struct WarmSelectorActionEvent *event, int old, int new)
 {
-    WarmLog_General(runtime, "dialog selector update", "update func, old->new: %d->%d\n", old, new);
+    WarmLog_General(runtime, module_tag, "update view(old->new): %d->%d\n", old, new);
 
     // set old enter to normal attr
     if (old >= 0) {
@@ -68,6 +70,8 @@ static int DialogueSelectorUpdateStatus_(struct WarmRuntimeConfig *runtime, WIND
 static int DialogueSelectorClearOptionsOnScreen_(struct WarmRuntimeConfig *runtime, WINDOW *win,
                                                  const struct WarmSelectorActionEvent *event, int event_size)
 {
+    WarmLog_General(runtime, module_tag, "Clearing options on screen\n");
+
     wattrset(win, A_NORMAL);
     for (int i = 0; i < event_size; i++) {
         wmove(win, event[i].position_y, event[i].position_x);
@@ -81,13 +85,17 @@ static int DialogueSelectorClearOptionsOnScreen_(struct WarmRuntimeConfig *runti
 int DialogueSelector(struct WarmRuntimeConfig *runtime, WINDOW *win, const struct WarmSelectorActionEvent *event,
                      int event_size)
 {
+    // this func need get arrow key... so force enable keypad()
+    keypad(win, true);
+
+    // get source position, for later recovery
     int source_y;
     int source_x;
     getyx(win, source_y, source_x);
 
     int selecting = 0;
     int pre_selecting = 0;
-    char key;
+    int key;
 
     for (int i = 0; i < event_size; i++) {
         wattron(win, event[i].attribute);
@@ -102,14 +110,14 @@ int DialogueSelector(struct WarmRuntimeConfig *runtime, WINDOW *win, const struc
 
     while (true) {
         key = wgetch(win);
-        if (key == ']') {
+        if (key == KEY_DOWN or key == KEY_RIGHT) {
             pre_selecting = selecting + 1;
             if (pre_selecting < event_size and pre_selecting >= 0) {
                 DialogueSelectorUpdateStatus_(runtime, win, event, selecting, pre_selecting);
                 selecting = pre_selecting;
             }
         }
-        if (key == '[') {
+        if (key == KEY_UP or key == KEY_LEFT) {
             pre_selecting = selecting - 1;
             if (pre_selecting < event_size and pre_selecting >= 0) {
                 DialogueSelectorUpdateStatus_(runtime, win, event, selecting, pre_selecting);
