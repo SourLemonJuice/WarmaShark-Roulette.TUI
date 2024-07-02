@@ -11,6 +11,12 @@ clang_flag += -lncurses
 clang_flag += -O3
 clang_flag += -rdynamic
 
+# for preprocessor
+git_repo_info := $(shell git describe --abbrev=40 --dirty --tags --always --long)
+clang_flag += -DBUILD_GIT_REPO_INFO_STRING="\"${git_repo_info}\""
+build_date:= $(shell LANG=en_US.UTF-8 date --utc +%c)
+clang_flag += -DBUILD_DATE_STRING="\"${build_date}\""
+
 default: warmaShark.out
 
 warmaShark.out: $(source_codes)
