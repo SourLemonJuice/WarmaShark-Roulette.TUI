@@ -6,6 +6,7 @@
 
 #include <ncurses.h>
 
+#include "dialogue.h"
 #include "log/logger.h"
 #include "runtime.h"
 #include "scene/develop_terminal.h"
@@ -43,25 +44,46 @@ int main(int argc, char *argv[])
     WarmLog_General(&runtime_config, "main", "MAX screen X: %d, Y: %d\n", max_x, max_y);
 
     // logging
-    WarmLog_General(&runtime_config, "main", "ncurses has been initd, starting Developer Terminal scene\n");
+    WarmLog_General(&runtime_config, "main", "ncurses has been inited, starting Developer Terminal scene\n");
 
-    attron(COLOR_PAIR(1));
-    wprintw(stdscr, "Yeah, Welcome to WarmaShark, below is the develop terminal.\n");
-    attroff(COLOR_PAIR(1));
-    wprintw(stdscr, "======== ======== ========\n");
-    wrefresh(stdscr);
-    // create a window for develop terminal scene
-    WINDOW *window = newwin((max_y - 2) * 0.4, max_x * 0.7, 2, 0);
-    box(window, 0, 0);
-    wrefresh(window);
-    delwin(window);
-    // new windows without border
-    window = newwin(((max_y - 2) * 0.4) - 2, (max_x * 0.7) - 2, 3, 1);
-    // start test scene
-    SceneStart_DevelopTerminal(&runtime_config, window);
+    // select the scene
+    wprintw(stdscr, "Choose the scene(For Develop)");
+    struct WarmSelectorActionEvent scene_selector_event[2] = {
+        {.string = "Develop Terminal",
+         .attribute = A_BOLD,
+         .attribute_highlight = A_STANDOUT,
+         .position_y = 1,
+         .position_x = 0},
+        {.string = "Program info",
+         .attribute = A_BOLD,
+         .attribute_highlight = A_STANDOUT,
+         .position_y = 2,
+         .position_x = 0},
+    };
+    int selected_scene = DialogueSelector(&runtime_config, stdscr, scene_selector_event, 2);
+    werase(stdscr);
 
-    // show end info(full screen)
-    SceneStart_ProgramInfo(&runtime_config, stdscr);
+    if (selected_scene == 0) { // scene - develop terminal
+        attron(COLOR_PAIR(1));
+        wprintw(stdscr, "Yeah,");
+        attroff(COLOR_PAIR(1));
+        wprintw(stdscr, " Welcome to WarmaShark, below is the develop terminal.\n");
+        wprintw(stdscr, "======== ======== ======== ======== ========\n");
+        wrefresh(stdscr);
+        // create a window for develop terminal scene
+        WINDOW *window = newwin((max_y - 2) * 0.4, max_x * 0.7, 2, 0);
+        box(window, 0, 0);
+        wrefresh(window);
+
+        // creat a new windows without border
+        delwin(window);
+        window = newwin(((max_y - 2) * 0.4) - 2, (max_x * 0.7) - 2, 3, 1);
+        // start test scene
+        SceneStart_DevelopTerminal(&runtime_config, window);
+    } else if (selected_scene == 1) { // scene - program info
+        // show end info(full screen)
+        SceneStart_ProgramInfo(&runtime_config, stdscr);
+    }
 
     // free up everything
     EngineRuntimeFreeUp(&runtime_config);
