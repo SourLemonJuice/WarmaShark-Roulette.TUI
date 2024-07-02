@@ -7,6 +7,8 @@ struct WarmRuntimeConfig {
     char *log_path;
     FILE *log_handle;
     char *locale_string;
+    int terminal_y; // terminal maximum y
+    int terminal_x; // terminal maximum x
 };
 
 int EngineReloadLocale(const struct WarmRuntimeConfig *config);

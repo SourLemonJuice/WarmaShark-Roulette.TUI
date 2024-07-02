@@ -12,28 +12,36 @@ static const char module_tag[] = "dialog selector";
 
 /*
     Results:
+    - negative int: Unknown error
     - 0: A full sentence is finished. And the window has already been erased.
     - 1: Need to continue parsing the next event.
  */
 int DialogueExecuteEvent(struct WarmRuntimeConfig *runtime, WINDOW *win, const struct WarmDialogueEvent *event)
 {
-    // main print
-    wattron(win, event->attribute);
-    wprintw(win, "%s", event->text);
-    wattroff(win, event->attribute);
-    wrefresh(win);
-
-    // if the sentence is not finished
-    if (event->finished == false) {
+    switch (event->type) {
+    case kWarmDialogueType_SentencePart:
+        // print with attr
+        wattron(win, event->attribute);
+        wprintw(win, "%s", event->text);
+        wattroff(win, event->attribute);
+        wrefresh(win);
         return 1;
+        break;
+    case kWarmDialogueType_SentenceEnd:
+        // print with attr
+        wattron(win, event->attribute);
+        wprintw(win, "%s", event->text);
+        wattroff(win, event->attribute);
+        wrefresh(win);
+        return 0;
+        break;
+    case kWarmDialogueType_Delay:
+        return 1;
+        break;
     }
 
-    // clear the window
-    werase(win);
-    // reset to first line
-    wmove(win, 0, 0);
-
-    return 0;
+    // unknown issue
+    return -1;
 }
 
 /*

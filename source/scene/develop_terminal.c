@@ -1,4 +1,4 @@
-#include "develop_terminal.h"
+#include "scene/develop_terminal.h"
 
 #include <iso646.h>
 #include <stdbool.h>
@@ -14,25 +14,44 @@
 static const char module_tag[] = "scene - Develop Terminal";
 
 static const struct WarmDialogueEvent dialogue[] = {
-    {.finished = false, .attribute = COLOR_PAIR(1), .text = "Hello/你好"},
-    {.finished = true,
+    {.type = kWarmDialogueType_SentencePart, .attribute = COLOR_PAIR(1), .text = "Hello/你好"},
+    {.type = kWarmDialogueType_SentenceEnd,
      .attribute = COLOR_PAIR(0),
      .text = "，在这里可以按 q 键退出，Enter 或 Space 跳转到下一个对话。"},
-    {.finished = true,
+    {.type = kWarmDialogueType_SentenceEnd,
      .attribute = COLOR_PAIR(0),
      .text = "This is a Develop Terminal or just a test for a normal example dialogue tree."},
-    {.finished = true,
+    {.type = kWarmDialogueType_SentenceEnd,
      .attribute = COLOR_PAIR(0),
      .text = "But what's the difference, dialogue trees are just some data structure... We are all normal."},
-    {.finished = true,
+    {.type = kWarmDialogueType_SentenceEnd,
      .attribute = COLOR_PAIR(0),
      .text = "The protagonist of this program(or videogame), is a shark. But live in another universe."},
-    {.finished = true, .attribute = COLOR_PAIR(0), .text = "沃玛/Warma created him. Maybe his name is littleShark?"},
-    {.finished = true, .attribute = COLOR_PAIR(0), .text = "Cute, Evil, Complex, or have another Hidden Story?"},
-    {.finished = true,
+    {.type = kWarmDialogueType_SentenceEnd,
+     .attribute = COLOR_PAIR(0),
+     .text = "沃玛/Warma created him. Maybe his name is littleShark?"},
+    {.type = kWarmDialogueType_SentenceEnd,
+     .attribute = COLOR_PAIR(0),
+     .text = "Cute, Evil, Complex, or have another Hidden Story?"},
+    {.type = kWarmDialogueType_SentenceEnd,
      .attribute = COLOR_PAIR(0),
      .text = "Here is the last line/event/string-pointer, be careful of this pointer index..."},
 };
+
+/*
+    Clear the full screen...
+    TODO TBD with dialogue.c
+ */
+static int ResetScreen_(WINDOW *win)
+{
+    // clear the window
+    werase(win);
+    // reset to first line
+    wmove(win, 0, 0);
+    wrefresh(win);
+
+    return 0;
+}
 
 /*
     If result is non zero, means have some problem.
@@ -47,7 +66,7 @@ int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *runtime, WINDOW *win_ha
     char getch_temp;
 
     // just for test
-    struct WarmSelectorActionEvent selector_event[4] = {
+    struct WarmSelectorActionEvent selector_event[] = {
         {.string = "test1(exit)",
          .attribute = A_NORMAL,
          .attribute_highlight = A_STANDOUT,
@@ -84,9 +103,11 @@ int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *runtime, WINDOW *win_ha
                 getch_temp = getch();
                 // space key or enter ker to continue
                 if (getch_temp == ' ' or getch_temp == '\n') { // space key or enter key to continue the dialogue
+                    ResetScreen_(win_handle);
                     dialogue_index++;
                     break;
                 } else if (getch_temp == 'q') { // use 'q' can force EXIT
+                    ResetScreen_(win_handle);
                     WarmLog_General(runtime, module_tag, "Dialogue break due to user input\n");
                     return 0;
                 } else {

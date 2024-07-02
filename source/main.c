@@ -14,39 +14,21 @@
 
 int main(int argc, char *argv[])
 {
-    // init engine
-    struct WarmRuntimeConfig runtime_config;
-    EngineRuntimeInit(&runtime_config);
+    // init program
+    struct WarmRuntimeConfig runtime;
+    EngineRuntimeInit(&runtime);
+
+    init_pair(1, COLOR_YELLOW, COLOR_BLUE);
+    init_pair(2, COLOR_RED, COLOR_BLACK);
 
     // if have any arguments, then break program
     if (argc >= 2) {
-        WarmLog_Warning(&runtime_config, "main", "there is a CLI argument input here, we don't use it\n");
+        WarmLog_Warning(&runtime, "main", "there is a CLI argument input here, we don't use it\n");
     }
-
-    /* init ncurses std screen */
-    initscr();
-    cbreak();
-    noecho();
-    // init color
-    if (has_colors() == false) {
-        wprintw(stdscr, "ERROR: The terminal don't support color output.");
-        wrefresh(stdscr);
-        wgetch(stdscr); // suspend
-        werase(stdscr);
-    } else {
-        start_color();
-        init_pair(1, COLOR_YELLOW, COLOR_BLUE);
-        init_pair(2, COLOR_RED, COLOR_BLACK);
-    }
-
-    // get maximum screen size, used to calculate the size of scene window
-    int max_y;
-    int max_x;
-    getmaxyx(stdscr, max_y, max_x);
-    WarmLog_General(&runtime_config, "main", "MAX screen X: %d, Y: %d\n", max_x, max_y);
-
-    // logging
-    WarmLog_General(&runtime_config, "main", "ncurses has been init, starting Developer Terminal scene\n");
+    // record some information for tracking
+    WarmLog_General(&runtime, "main", "Program locale should have been set to %s\n", runtime.locale_string);
+    WarmLog_General(&runtime, "main", "MAX screen X: %d, Y: %d\n", runtime.terminal_x, runtime.terminal_y);
+    WarmLog_General(&runtime, "main", "program runtime has been init, starting scene selector\n");
 
     // select the scene
     wprintw(stdscr, "Choose the scene(For Develop):");
@@ -67,7 +49,7 @@ int main(int argc, char *argv[])
          .position_y = 3,
          .position_x = 2},
     };
-    int selected_scene = DialogueSelector(&runtime_config, stdscr, scene_selector_event, 3);
+    int selected_scene = DialogueSelector(&runtime, stdscr, scene_selector_event, 3);
     werase(stdscr);
 
     if (selected_scene == 0) { // scene - develop terminal
@@ -77,27 +59,28 @@ int main(int argc, char *argv[])
         wprintw(stdscr, " Welcome to WarmaShark, below is the develop terminal.\n");
         wprintw(stdscr, "======== ======== ======== ======== ========\n");
         wrefresh(stdscr);
-        // create a window for develop terminal scene
-        WINDOW *window = newwin((max_y - 2) * 0.4, max_x * 0.7, 2, 0);
+
+        // create a window for the border of develop terminal scene
+        WINDOW *window = newwin((runtime.terminal_y - 2) * 0.4, runtime.terminal_x * 0.7, 2, 0);
         box(window, 0, 0);
         wrefresh(window);
 
         // creat a new windows without border
         delwin(window);
-        window = newwin(((max_y - 2) * 0.4) - 2, (max_x * 0.7) - 2, 3, 1);
+        window = newwin(((runtime.terminal_y - 2) * 0.4) - 2, (runtime.terminal_x * 0.7) - 2, 3, 1);
         // start test scene
-        SceneStart_DevelopTerminal(&runtime_config, window);
+        SceneStart_DevelopTerminal(&runtime, window);
     } else if (selected_scene == 1) { // scene - program info
         // show end info(full screen)
-        SceneStart_ProgramInfo(&runtime_config, stdscr);
+        SceneStart_ProgramInfo(&runtime, stdscr);
     } else if (selected_scene == 2) { // quit program
-        EngineRuntimeFreeUp(&runtime_config);
+        EngineRuntimeFreeUp(&runtime);
         endwin();
         exit(0);
     }
 
     // free up everything
-    EngineRuntimeFreeUp(&runtime_config);
+    EngineRuntimeFreeUp(&runtime);
     endwin();
 
     return 0;

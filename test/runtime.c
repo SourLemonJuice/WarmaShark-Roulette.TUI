@@ -1,9 +1,9 @@
 #include <locale.h>
 #include <string.h>
 
-#include "unity/src/unity.h"
+#include "test/unity/src/unity.h"
 
-#include "runtime.h"
+#include "source/runtime.h"
 
 void setUp(void)
 {

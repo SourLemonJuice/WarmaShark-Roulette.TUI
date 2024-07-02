@@ -4,7 +4,7 @@ test_path := ./
 source_path := ../source/
 
 unity_source += ./unity/src/unity.c
-include_flag += -I../source/
+include_flag += -I../
 
 default: build
 

@@ -1,7 +1,8 @@
-#include "program_info.h"
+#include "scene/program_info.h"
 
 #include <ncurses.h>
 
+#include "dialogue.h"
 #include "log/logger.h"
 #include "predefine.h"
 #include "runtime.h"
@@ -26,6 +27,8 @@ int SceneStart_ProgramInfo(struct WarmRuntimeConfig *runtime, WINDOW *win)
     // suspend program
     wgetch(win);
 
+    werase(win);
+    wrefresh(win);
     WarmLog_General(runtime, module_tag, "Exit the scene\n");
 
     return 0;
