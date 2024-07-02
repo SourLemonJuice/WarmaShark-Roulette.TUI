@@ -30,12 +30,14 @@ int main(int argc, char *argv[])
     // init color
     if (has_colors() == false) {
         wprintw(stdscr, "ERROR: The terminal don't support color output.");
+        wrefresh(stdscr);
         wgetch(stdscr); // suspend
-        exit(1);
+        werase(stdscr);
+    } else {
+        start_color();
+        init_pair(1, COLOR_YELLOW, COLOR_BLUE);
+        init_pair(2, COLOR_RED, COLOR_BLACK);
     }
-    start_color();
-    init_pair(1, COLOR_YELLOW, COLOR_BLUE);
-    init_pair(2, COLOR_RED, COLOR_BLACK);
 
     // get maximum screen size, used to calculate the size of scene window
     int max_y;
