@@ -47,20 +47,25 @@ int main(int argc, char *argv[])
     WarmLog_General(&runtime_config, "main", "ncurses has been inited, starting Developer Terminal scene\n");
 
     // select the scene
-    wprintw(stdscr, "Choose the scene(For Develop)");
-    struct WarmSelectorActionEvent scene_selector_event[2] = {
+    wprintw(stdscr, "Choose the scene(For Develop):");
+    struct WarmSelectorActionEvent scene_selector_event[3] = {
         {.string = "Develop Terminal",
-         .attribute = A_BOLD,
+         .attribute = A_NORMAL,
          .attribute_highlight = A_STANDOUT,
          .position_y = 1,
-         .position_x = 0},
+         .position_x = 2},
         {.string = "Program info",
-         .attribute = A_BOLD,
+         .attribute = A_NORMAL,
          .attribute_highlight = A_STANDOUT,
          .position_y = 2,
-         .position_x = 0},
+         .position_x = 2},
+        {.string = "Quit Program",
+         .attribute = A_DIM,
+         .attribute_highlight = A_STANDOUT,
+         .position_y = 3,
+         .position_x = 2},
     };
-    int selected_scene = DialogueSelector(&runtime_config, stdscr, scene_selector_event, 2);
+    int selected_scene = DialogueSelector(&runtime_config, stdscr, scene_selector_event, 3);
     werase(stdscr);
 
     if (selected_scene == 0) { // scene - develop terminal
@@ -83,6 +88,10 @@ int main(int argc, char *argv[])
     } else if (selected_scene == 1) { // scene - program info
         // show end info(full screen)
         SceneStart_ProgramInfo(&runtime_config, stdscr);
+    } else if (selected_scene == 3) { // quit program
+        EngineRuntimeFreeUp(&runtime_config);
+        endwin();
+        exit(0);
     }
 
     // free up everything
