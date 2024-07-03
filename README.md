@@ -18,6 +18,12 @@ Executable file named `warmaShark.out`
 
 ## License
 
-Apache License Version 2.0(Apache-2.0)
-
 If those code can help you, I will also be happy.
+
+The main framework(repo://): Apache License Version 2.0(LICENSE.txt)\
+Copyright 2024 酸柠檬猹/SourLemonJuice
+
+Some dialogue scene idea(repo://source/scene/shark_roulette.*): 木兰宽松许可证，第2版(license/MulanPSL2.txt)\
+<https://gitee.com/mr-scorpion/shark_roulette>
+
+Full licensing information in [LICENSE.txt](LICENSE.txt), [NOTICE.txt](NOTICE.txt)

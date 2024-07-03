@@ -2,11 +2,7 @@
 
 ## 原始项目
 
-整个项目的灵感起源于 [BV1eH4y1E7v2](https://www.bilibili.com/video/BV1eH4y1E7v2) by [天蝎座羊蝎子](https://space.bilibili.com/431949982)\
-我本身是个沃玛的粉丝，也一直记着她给予我的帮助与温暖。所以有这样现成的灵感为什么不拿来实践呢，对吧（轻声）
-
-不过其实吧 呃 有个问题 就 是 えっと 原作者没写版权信息...\
-不过也不是什么大事，先把框架弄出来再说。
+已被分离到了 [./original_project.md](docs/original_project.md)
 
 ## 长话短说
 

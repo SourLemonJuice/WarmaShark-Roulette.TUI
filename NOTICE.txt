@@ -1,0 +1,2 @@
+项目灵感与部分场景的对话树来源于 天蝎座羊蝎子/mr-scorpion 的项目 shark_roulette(https://gitee.com/mr-scorpion/shark_roulette)
+本项目在原项目中的 木兰宽松许可证，第2版 的许可下再发布其中的部分代码
