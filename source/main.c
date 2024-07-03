@@ -11,6 +11,7 @@
 #include "runtime.h"
 #include "scene/develop_terminal.h"
 #include "scene/program_info.h"
+#include "scene/shark_roulette.h"
 
 int main(int argc, char *argv[])
 {
@@ -32,27 +33,40 @@ int main(int argc, char *argv[])
 
     // select the scene
     wprintw(stdscr, "Choose the scene(For Develop):");
-    struct WarmSelectorActionEvent scene_selector_event[3] = {
-        {.string = "Develop Terminal",
-         .attribute = A_NORMAL,
+    struct WarmSelectorActionEvent scene_selector_event[] = {
+        {.string = "Quit Program",
+         .attribute = A_DIM,
          .attribute_highlight = A_STANDOUT,
          .position_y = 1,
          .position_x = 2},
-        {.string = "Program info",
+        {.string = "Develop Terminal",
          .attribute = A_NORMAL,
          .attribute_highlight = A_STANDOUT,
          .position_y = 2,
          .position_x = 2},
-        {.string = "Quit Program",
-         .attribute = A_DIM,
+        {.string = "Program info",
+         .attribute = A_NORMAL,
          .attribute_highlight = A_STANDOUT,
          .position_y = 3,
          .position_x = 2},
+        {.string = "Shark Roulette",
+         .attribute = A_NORMAL,
+         .attribute_highlight = A_STANDOUT,
+         .position_y = 4,
+         .position_x = 2},
     };
-    int selected_scene = DialogueSelector(&runtime, stdscr, scene_selector_event, 3);
+    int selected_scene = DialogueSelector(&runtime, stdscr, scene_selector_event, 4);
     werase(stdscr);
 
-    if (selected_scene == 0) { // scene - develop terminal
+    switch (selected_scene) {
+    case 0:
+        // quit program
+        EngineRuntimeFreeUp(&runtime);
+        endwin();
+        exit(0);
+        break;
+    case 1:
+        // scene - develop terminal
         attron(COLOR_PAIR(1));
         wprintw(stdscr, "Yeah,");
         attroff(COLOR_PAIR(1));
@@ -70,13 +84,15 @@ int main(int argc, char *argv[])
         window = newwin(((runtime.terminal_y - 2) * 0.4) - 2, (runtime.terminal_x * 0.7) - 2, 3, 1);
         // start test scene
         SceneStart_DevelopTerminal(&runtime, window);
-    } else if (selected_scene == 1) { // scene - program info
-        // show end info(full screen)
+        break;
+    case 2:
+        // scene - program info
         SceneStart_ProgramInfo(&runtime, stdscr);
-    } else if (selected_scene == 2) { // quit program
-        EngineRuntimeFreeUp(&runtime);
-        endwin();
-        exit(0);
+        break;
+    case 3:
+        // Shark Roulette
+        StartScene_SharkRoulette(&runtime, stdscr);
+        break;
     }
 
     // free up everything

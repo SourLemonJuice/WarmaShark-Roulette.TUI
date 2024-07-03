@@ -2,7 +2,7 @@ SHELL := /usr/bin/bash
 
 source_codes += main.c
 source_codes += log/logger.c runtime.c dialogue.c
-source_codes += scene/develop_terminal.c scene/program_info.c
+source_codes += scene/develop_terminal.c scene/program_info.c scene/shark_roulette.c
 
 executable_base_name := warmaShark
 
