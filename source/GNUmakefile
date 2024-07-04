@@ -1,4 +1,8 @@
+# I HATE MAKEFILE!!!
+
 SHELL := /usr/bin/bash
+
+build_type := debug
 
 source_codes += main.c
 source_codes += log/logger.c runtime.c dialogue.c
@@ -10,6 +14,10 @@ clang_flag += -I./
 clang_flag += -lncurses
 clang_flag += -O3
 clang_flag += -rdynamic
+
+ifeq (${build_type}, debug)
+clang_flag += -g
+endif
 
 # for preprocessor
 git_repo_info := $(shell git describe --abbrev=40 --dirty --tags --always --long)
@@ -32,4 +40,4 @@ warmaShark.exe: $(source_codes)
 		$(clang_flag)
 
 clear:
-	rm -i $(executable_base_name).*
+	rm -i $(executable_base_name).* *.o

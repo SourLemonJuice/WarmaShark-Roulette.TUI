@@ -2,7 +2,7 @@
 
 ## 原始项目
 
-已被分离到了 [./original_project.md](docs/original_project.md)
+已被分离到了 [./original_project.md](./original_project.md)
 
 ## 长话短说
 

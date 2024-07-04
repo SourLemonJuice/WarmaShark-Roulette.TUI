@@ -8,7 +8,7 @@
 #include "log/logger.h"
 #include "runtime.h"
 
-static const char module_tag[] = "dialog selector";
+static const char module_tag[] = "dialog component";
 
 /*
     Results:
@@ -52,7 +52,7 @@ int DialogueExecuteEvent(struct WarmRuntimeConfig *runtime, WINDOW *win, const s
 static int DialogueSelectorUpdateStatus_(struct WarmRuntimeConfig *runtime, WINDOW *win,
                                          const struct WarmSelectorActionEvent *event, int old, int new)
 {
-    WarmLog_General(runtime, module_tag, "update view(old->new): %d->%d\n", old, new);
+    WarmLog_General(runtime, module_tag, "update selector view(old->new): %d->%d\n", old, new);
 
     // set old enter to normal attr
     if (old >= 0) {
@@ -78,7 +78,7 @@ static int DialogueSelectorUpdateStatus_(struct WarmRuntimeConfig *runtime, WIND
 static int DialogueSelectorClearOptionsOnScreen_(struct WarmRuntimeConfig *runtime, WINDOW *win,
                                                  const struct WarmSelectorActionEvent *event, int event_size)
 {
-    WarmLog_General(runtime, module_tag, "Clearing options on screen\n");
+    WarmLog_General(runtime, module_tag, "Clearing selector options on screen\n");
 
     wattrset(win, A_NORMAL);
     for (int i = 0; i < event_size; i++) {
