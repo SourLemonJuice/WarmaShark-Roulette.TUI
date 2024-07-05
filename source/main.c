@@ -11,6 +11,7 @@
 #include "runtime.h"
 #include "scene/develop_terminal.h"
 #include "scene/program_info.h"
+#include "scene/selector_show.h"
 #include "scene/shark_roulette.h"
 
 int main(int argc, char *argv[])
@@ -54,15 +55,19 @@ int main(int argc, char *argv[])
          .attribute_highlight = A_STANDOUT,
          .position_y = 4,
          .position_x = 2},
+        {.string = "Selector Show/Test",
+         .attribute = A_NORMAL,
+         .attribute_highlight = A_STANDOUT,
+         .position_y = 5,
+         .position_x = 2},
     };
-    int selected_scene = DialogueSelector(&runtime, stdscr, scene_selector_event, 4);
+    int selected_scene = DialogueSelector(&runtime, stdscr, scene_selector_event, 5);
     werase(stdscr);
 
     switch (selected_scene) {
     case 0:
         // quit program
-        EngineRuntimeFreeUp(&runtime);
-        endwin();
+        EngineRuntimeUnload(&runtime);
         exit(0);
         break;
     case 1:
@@ -93,10 +98,14 @@ int main(int argc, char *argv[])
         // Shark Roulette
         StartScene_SharkRoulette(&runtime, stdscr);
         break;
+    case 4:
+        // Selector Show/Test
+        SceneStart_SelectorShow(&runtime, stdscr);
+        break;
     }
 
     // free up everything
-    EngineRuntimeFreeUp(&runtime);
+    EngineRuntimeUnload(&runtime);
     endwin();
 
     return 0;

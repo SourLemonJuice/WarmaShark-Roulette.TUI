@@ -65,36 +65,6 @@ int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *runtime, WINDOW *win_ha
     int dialogue_index = 0;
     char getch_temp;
 
-    // just for test
-    struct WarmSelectorActionEvent selector_event[] = {
-        {.string = "test1(exit)",
-         .attribute = A_NORMAL,
-         .attribute_highlight = A_STANDOUT,
-         .position_y = 0,
-         .position_x = 1},
-        {.string = "test2(exit)",
-         .attribute = A_DIM,
-         .attribute_highlight = A_STANDOUT,
-         .position_y = 1,
-         .position_x = 2},
-        {.string = "Hello World 3(exit)",
-         .attribute = A_DIM,
-         .attribute_highlight = A_STANDOUT,
-         .position_y = 1,
-         .position_x = 16},
-        {.string = "Main Dialogue",
-         .attribute = A_BOLD,
-         .attribute_highlight = A_STANDOUT,
-         .position_y = 2,
-         .position_x = 0},
-    };
-    int ret = DialogueSelector(runtime, win_handle, selector_event, 4);
-    WarmLog_General(runtime, module_tag, "selector result %d\n", ret);
-    // if not chose the "main dialogue" then exit this scene
-    if (ret != 3) {
-        return 0;
-    }
-
     do {
         int event_result = DialogueExecuteEvent(runtime, win_handle, &dialogue[dialogue_index]);
         if (event_result == 0) {

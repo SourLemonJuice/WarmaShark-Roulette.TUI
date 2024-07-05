@@ -5,12 +5,6 @@
 
 #include <ncurses.h>
 
-int EngineReloadLocale(const struct WarmRuntimeConfig *config)
-{
-    setlocale(LC_ALL, config->locale_string);
-    return 0;
-}
-
 /*
     Here needs to become the first function in the program. Don't forget this.
 
@@ -23,7 +17,7 @@ int EngineRuntimeInit(struct WarmRuntimeConfig *config)
     // set locale
     // NOTE: this step need before any IO operation, include the ncurses init!!!
     config->locale_string = "en_US.UTF-8";
-    EngineReloadLocale(config); // setup program locale
+    setlocale(LC_ALL, config->locale_string); // setup program locale
 
     // init ncurses std screen
     initscr();
@@ -56,8 +50,10 @@ int EngineRuntimeInit(struct WarmRuntimeConfig *config)
     return 0;
 }
 
-int EngineRuntimeFreeUp(struct WarmRuntimeConfig *config)
+int EngineRuntimeUnload(struct WarmRuntimeConfig *config)
 {
     fclose(config->log_handle);
+    endwin();
+
     return 0;
 }

@@ -11,8 +11,7 @@ struct WarmRuntimeConfig {
     int terminal_x; // terminal maximum x
 };
 
-int EngineReloadLocale(const struct WarmRuntimeConfig *config);
 int EngineRuntimeInit(struct WarmRuntimeConfig *config);
-int EngineRuntimeFreeUp(struct WarmRuntimeConfig *config);
+int EngineRuntimeUnload(struct WarmRuntimeConfig *config);
 
 #endif

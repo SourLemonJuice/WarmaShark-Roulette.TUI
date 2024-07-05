@@ -57,7 +57,7 @@ int WarmthMeltdownUniverse(struct WarmRuntimeConfig *runtime, const char *format
     fflush(runtime->log_handle);
 
     // free up
-    EngineRuntimeFreeUp(runtime);
+    EngineRuntimeUnload(runtime);
     endwin();
 
     exit(1);
