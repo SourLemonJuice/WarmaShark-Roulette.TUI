@@ -14,7 +14,7 @@ Executable file named `warmaShark.out`
 
 ## Todo list
 
-- Not in readme, sorry. I didn't write them anywhere.
+- Dialogue component 2
 
 ## License
 
