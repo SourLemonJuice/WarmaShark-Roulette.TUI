@@ -5,6 +5,6 @@
 
 #include "runtime.h"
 
-int SceneStart_ProgramInfo(struct WarmRuntimeConfig *runtime, WINDOW *win);
+int SceneStart_ProgramInfo(struct WarmRuntime *runtime, WINDOW *win);
 
 #endif

@@ -12,7 +12,7 @@
         0: no error
         non-zero: anyway, it just have error
  */
-int EngineRuntimeInit(struct WarmRuntimeConfig *config)
+int EngineRuntimeInit(struct WarmRuntime *config)
 {
     // set locale
     // NOTE: this step need before any IO operation, include the ncurses init!!!
@@ -50,7 +50,7 @@ int EngineRuntimeInit(struct WarmRuntimeConfig *config)
     return 0;
 }
 
-int EngineRuntimeUnload(struct WarmRuntimeConfig *config)
+int EngineRuntimeUnload(struct WarmRuntime *config)
 {
     fclose(config->log_handle);
     endwin();

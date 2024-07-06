@@ -5,6 +5,6 @@
 
 #include "runtime.h"
 
-int SceneStart_SelectorShow(struct WarmRuntimeConfig *runtime, WINDOW *win);
+int SceneStart_SelectorShow(struct WarmRuntime *runtime, WINDOW *win);
 
 #endif

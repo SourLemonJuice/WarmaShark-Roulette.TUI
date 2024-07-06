@@ -9,7 +9,7 @@
 
 static const char module_tag[] = "scene - Program Info";
 
-int SceneStart_ProgramInfo(struct WarmRuntimeConfig *runtime, WINDOW *win)
+int SceneStart_ProgramInfo(struct WarmRuntime *runtime, WINDOW *win)
 {
     WarmLog_General(runtime, module_tag, "Enter the scene\n");
 

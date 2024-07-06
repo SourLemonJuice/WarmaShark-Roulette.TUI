@@ -5,6 +5,6 @@
 
 #include "runtime.h"
 
-int SceneStart_DevelopTerminal(struct WarmRuntimeConfig *engine_runtime, WINDOW *win_handle);
+int SceneStart_DevelopTerminal(struct WarmRuntime *engine_runtime, WINDOW *win_handle);
 
 #endif

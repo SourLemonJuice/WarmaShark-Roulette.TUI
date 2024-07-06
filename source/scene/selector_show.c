@@ -8,7 +8,7 @@
 
 static const char module_tag[] = "scene - selector show";
 
-int SceneStart_SelectorShow(struct WarmRuntimeConfig *runtime, WINDOW *win)
+int SceneStart_SelectorShow(struct WarmRuntime *runtime, WINDOW *win)
 {
     wprintw(win, "Here is a selector test\n");
     struct WarmSelectorActionEvent selector_event[] = {

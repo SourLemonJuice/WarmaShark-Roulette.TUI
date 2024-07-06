@@ -4,7 +4,7 @@
 
 #include "log/logger.h"
 
-struct EngineAnimatorEventSet *EngineAnimatorEventSetInit(struct WarmRuntimeConfig *runtime_config)
+struct EngineAnimatorEventSet *EngineAnimatorEventSetInit(struct WarmRuntime *runtime_config)
 {
     struct EngineAnimatorEventSet *result_ = malloc(sizeof(struct EngineAnimatorEventSet));
     if (result_ == NULL) {
@@ -15,7 +15,7 @@ struct EngineAnimatorEventSet *EngineAnimatorEventSetInit(struct WarmRuntimeConf
     return result_;
 }
 
-int EngineAnimatorEventSetAppend(struct WarmRuntimeConfig *runtime_config, struct EngineAnimatorEventSet *event_set)
+int EngineAnimatorEventSetAppend(struct WarmRuntime *runtime_config, struct EngineAnimatorEventSet *event_set)
 {
     event_set->next = malloc(sizeof(struct EngineAnimatorEventSet));
     if (event_set->next == NULL) {

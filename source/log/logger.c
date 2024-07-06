@@ -11,7 +11,7 @@
 /*
     This function is mainly used by macro but not users directly. TBD
  */
-int WarmLoggerMain(struct WarmRuntimeConfig *config, const enum WarmLogLevel level, const char *module_tag,
+int WarmLoggerMain(struct WarmRuntime *config, const enum WarmLogLevel level, const char *module_tag,
                    const char *format, ...)
 {
     time_t now_time;
@@ -31,7 +31,7 @@ int WarmLoggerMain(struct WarmRuntimeConfig *config, const enum WarmLogLevel lev
 /*
     In addition to fprintf(), it can dump stack backtrace info.
  */
-int WarmthMeltdownUniverse(struct WarmRuntimeConfig *runtime, const char *format, ...)
+int WarmthMeltdownUniverse(struct WarmRuntime *runtime, const char *format, ...)
 {
     time_t now_time;
     time(&now_time);

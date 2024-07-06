@@ -19,9 +19,9 @@ struct WarmDialogue2Description {
     // TODO speak rate
 };
 
-int Dialogue2PrintText(struct WarmRuntimeConfig *runtime, WINDOW *win, struct WarmDialogue2Description *event);
-int Dialogue2Delay(struct WarmRuntimeConfig *runtime, WINDOW *win, int length_ms);
-int Dialogue2EventClear(struct WarmRuntimeConfig *runtime, WINDOW *win, struct WarmDialogue2Description *event);
+int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
+int Dialogue2Delay(struct WarmRuntime *runtime, WINDOW *win, int length_ms);
+int Dialogue2EventClear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
 int Dialogue2EventSetDefaultPrintText(struct WarmDialogue2Description *event);
 
 #endif

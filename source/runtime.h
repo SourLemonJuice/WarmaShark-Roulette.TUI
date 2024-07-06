@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-struct WarmRuntimeConfig {
+struct WarmRuntime {
     char *log_path;
     FILE *log_handle;
     char *locale_string;
@@ -11,7 +11,7 @@ struct WarmRuntimeConfig {
     int terminal_x; // terminal maximum x
 };
 
-int EngineRuntimeInit(struct WarmRuntimeConfig *config);
-int EngineRuntimeUnload(struct WarmRuntimeConfig *config);
+int EngineRuntimeInit(struct WarmRuntime *config);
+int EngineRuntimeUnload(struct WarmRuntime *config);
 
 #endif

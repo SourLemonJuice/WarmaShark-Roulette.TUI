@@ -17,7 +17,7 @@
 int main(int argc, char *argv[])
 {
     // init program
-    struct WarmRuntimeConfig runtime;
+    struct WarmRuntime runtime;
     EngineRuntimeInit(&runtime);
 
     init_pair(1, COLOR_YELLOW, COLOR_BLUE);

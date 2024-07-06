@@ -33,6 +33,6 @@ struct WarmDialogueEvent {
     // TODO speak rate
 };
 
-int DialogueExecuteEvent(struct WarmRuntimeConfig *runtime, WINDOW *win, const struct WarmDialogueEvent *event);
+int DialogueExecuteEvent(struct WarmRuntime *runtime, WINDOW *win, const struct WarmDialogueEvent *event);
 
 #endif

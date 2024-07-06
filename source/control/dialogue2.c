@@ -14,7 +14,7 @@
 
 #include "runtime.h"
 
-int Dialogue2PrintText(struct WarmRuntimeConfig *runtime, WINDOW *win, struct WarmDialogue2Description *event)
+int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event)
 {
     // print with attr
     wattron(win, event->attribute);
@@ -25,13 +25,13 @@ int Dialogue2PrintText(struct WarmRuntimeConfig *runtime, WINDOW *win, struct Wa
     return 0;
 }
 
-int Dialogue2Delay(struct WarmRuntimeConfig *runtime, WINDOW *win, int length_ms)
+int Dialogue2Delay(struct WarmRuntime *runtime, WINDOW *win, int length_ms)
 {
     // TODO
     return 0;
 }
 
-int Dialogue2EventClear(struct WarmRuntimeConfig *runtime, WINDOW *win, struct WarmDialogue2Description *event)
+int Dialogue2EventClear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event)
 {
     // move to original position
     wmove(win, event->position_y, event->position_x);

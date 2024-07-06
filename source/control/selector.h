@@ -15,7 +15,7 @@ struct WarmSelectorActionEvent {
     int position_x;
 };
 
-int DialogueSelector(struct WarmRuntimeConfig *runtime, WINDOW *win, const struct WarmSelectorActionEvent *event,
+int DialogueSelector(struct WarmRuntime *runtime, WINDOW *win, const struct WarmSelectorActionEvent *event,
                      int event_size);
 
 #endif

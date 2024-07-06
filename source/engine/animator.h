@@ -9,7 +9,7 @@ struct EngineAnimatorEventSet {
     struct EngineAnimatorEventSet *next;
 };
 
-struct EngineAnimatorEventSet *EngineAnimatorEventSetInit(struct WarmRuntimeConfig *runtime_config);
-int EngineAnimatorEventSetAppend(struct WarmRuntimeConfig *runtime_config, struct EngineAnimatorEventSet *event_set);
+struct EngineAnimatorEventSet *EngineAnimatorEventSetInit(struct WarmRuntime *runtime_config);
+int EngineAnimatorEventSetAppend(struct WarmRuntime *runtime_config, struct EngineAnimatorEventSet *event_set);
 
 #endif

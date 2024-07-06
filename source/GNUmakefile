@@ -5,14 +5,14 @@ SHELL := /usr/bin/bash
 build_type := debug
 
 source_codes += main.c
-source_codes += log/logger.c runtime.c dialogue.c control/dialogue2.c control/selector.c
+source_codes += log/logger.c runtime.c dialogue.c control/dialogue2.c control/selector.c control/trigger.c
 source_codes += scene/develop_terminal.c scene/program_info.c scene/shark_roulette.c scene/selector_show.c
 
 executable_base_name := warmaShark
 
 clang_flag += -I./
 clang_flag += -lncurses
-clang_flag += -O3
+clang_flag += -O0
 clang_flag += -rdynamic
 
 ifeq (${build_type}, debug)

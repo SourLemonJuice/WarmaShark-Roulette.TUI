@@ -15,7 +15,7 @@ static const char module_tag[] = "selector";
     The old one will be set to normal attr, the new one will be set to highlight attr.
     If the old one is a negative, then skip its update.
  */
-static int DialogueSelectorUpdateStatus_(struct WarmRuntimeConfig *runtime, WINDOW *win,
+static int DialogueSelectorUpdateStatus_(struct WarmRuntime *runtime, WINDOW *win,
                                          const struct WarmSelectorActionEvent *event, int old, int new)
 {
     WarmLog_General(runtime, module_tag, "update selector view(old->new): %d->%d\n", old, new);
@@ -41,7 +41,7 @@ static int DialogueSelectorUpdateStatus_(struct WarmRuntimeConfig *runtime, WIND
 /*
     Clear all objects on the screen
  */
-static int DialogueSelectorClearOptionsOnScreen_(struct WarmRuntimeConfig *runtime, WINDOW *win,
+static int DialogueSelectorClearOptionsOnScreen_(struct WarmRuntime *runtime, WINDOW *win,
                                                  const struct WarmSelectorActionEvent *event, int event_size)
 {
     WarmLog_General(runtime, module_tag, "Clearing selector options on screen\n");
@@ -56,7 +56,7 @@ static int DialogueSelectorClearOptionsOnScreen_(struct WarmRuntimeConfig *runti
     return 0;
 }
 
-int DialogueSelector(struct WarmRuntimeConfig *runtime, WINDOW *win, const struct WarmSelectorActionEvent *event,
+int DialogueSelector(struct WarmRuntime *runtime, WINDOW *win, const struct WarmSelectorActionEvent *event,
                      int event_size)
 {
     // this func need get arrow key... so force enable keypad()

@@ -54,7 +54,7 @@ static struct WarmDialogueEvent dialogue1[] = {
 
 static const struct WarmDialogueEvent dialogue2[] = {{}};
 
-int StartScene_SharkRoulette(struct WarmRuntimeConfig *runtime, WINDOW *win)
+int StartScene_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
 {
     WarmLog_General(runtime, module_tag, "Entered the scene\n");
 

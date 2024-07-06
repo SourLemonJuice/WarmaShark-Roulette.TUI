@@ -16,7 +16,7 @@ static const char module_tag[] = "dialog1 component";
     - 0: A full sentence is finished. And the window has already been erased.
     - 1: Need to continue parsing the next event.
  */
-int DialogueExecuteEvent(struct WarmRuntimeConfig *runtime, WINDOW *win, const struct WarmDialogueEvent *event)
+int DialogueExecuteEvent(struct WarmRuntime *runtime, WINDOW *win, const struct WarmDialogueEvent *event)
 {
     switch (event->type) {
     case kWarmDialogueType_SentencePart:
