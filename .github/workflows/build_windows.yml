@@ -1,0 +1,25 @@
+name: Build for Windows
+
+on: workflow_dispatch
+
+defaults:
+  run:
+    shell: msys2 {0}
+    working-directory: ./source/
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: msys2/setup-msys2@v2
+      with:
+        install: git make clang ncurses-devel
+    - name: make
+      run: make warmaShark.exe build_type=notDebug
+    - name: Upload executable file
+      uses: actions/upload-artifact@v4
+      with:
+        name: WarmaShark-Windows
+        path: source/warmaShark.exe
+        retention-days: 7
