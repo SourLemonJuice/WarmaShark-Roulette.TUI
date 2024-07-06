@@ -69,8 +69,7 @@ int main(int argc, char *argv[])
     switch (selected_scene) {
     case 0:
         // quit program
-        EngineRuntimeUnload(&runtime);
-        exit(0);
+        EngineRuntimeUnload(&runtime, 0);
         break;
     case 1:
         // scene - develop terminal
@@ -107,8 +106,7 @@ int main(int argc, char *argv[])
     }
 
     // free up everything
-    EngineRuntimeUnload(&runtime);
-    endwin();
+    EngineRuntimeUnload(&runtime, 0);
 
     return 0;
 }

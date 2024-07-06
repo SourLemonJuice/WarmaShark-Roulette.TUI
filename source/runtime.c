@@ -2,6 +2,7 @@
 
 #include <locale.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include <ncurses.h>
 
@@ -50,10 +51,9 @@ int EngineRuntimeInit(struct WarmRuntime *config)
     return 0;
 }
 
-int EngineRuntimeUnload(struct WarmRuntime *config)
+void EngineRuntimeUnload(struct WarmRuntime *config, int return_code)
 {
     fclose(config->log_handle);
     endwin();
-
-    return 0;
+    exit(return_code);
 }

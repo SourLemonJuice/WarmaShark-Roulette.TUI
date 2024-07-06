@@ -12,6 +12,6 @@ struct WarmRuntime {
 };
 
 int EngineRuntimeInit(struct WarmRuntime *config);
-int EngineRuntimeUnload(struct WarmRuntime *config);
+void EngineRuntimeUnload(struct WarmRuntime *config, int return_code);
 
 #endif

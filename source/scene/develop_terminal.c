@@ -28,8 +28,7 @@ static int GetKeyToContinue_(struct WarmRuntime *runtime, WINDOW *win)
         if (input == ' ' or input == '\n') {
             return 0;
         } else if (input == 'q') {
-            EngineRuntimeUnload(runtime);
-            exit(0);
+            EngineRuntimeUnload(runtime, 0);
         }
     }
 

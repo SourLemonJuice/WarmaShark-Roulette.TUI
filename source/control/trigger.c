@@ -17,7 +17,6 @@ static const char module_tag[] = "Control.Trigger";
  */
 static int MatchTheKeys_(int input, int target[], int size)
 {
-    // TODO not work
     for (int i = 0; i < size; i++) {
         if (input == target[i]) {
             return 0;
