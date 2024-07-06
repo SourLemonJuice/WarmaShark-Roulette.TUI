@@ -6,7 +6,7 @@
     In short, adjust the event in real time instead of predefined it.
  */
 
-#include "dialogue2.h"
+#include "control/dialogue2.h"
 
 #include <string.h>
 

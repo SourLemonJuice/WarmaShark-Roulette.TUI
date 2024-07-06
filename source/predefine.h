@@ -1,6 +1,10 @@
 #ifndef WARM_PREDEFINE_H_
 #define WARM_PREDEFINE_H_
 
+/*
+    Those macro should defined by compiler
+ */
+
 #ifndef BUILD_GIT_REPO_INFO_STRING
 #define BUILD_GIT_REPO_INFO_STRING "Unknown, the preprocessor maybe errored"
 #endif

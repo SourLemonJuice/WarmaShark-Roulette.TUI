@@ -6,7 +6,7 @@
 
 #include <ncurses.h>
 
-#include "dialogue.h"
+#include "control/selector.h"
 #include "log/logger.h"
 #include "runtime.h"
 #include "scene/develop_terminal.h"

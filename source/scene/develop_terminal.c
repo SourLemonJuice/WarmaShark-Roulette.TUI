@@ -8,7 +8,7 @@
 
 #include <ncurses.h>
 
-#include "dialogue2.h"
+#include "control/dialogue2.h"
 #include "log/logger.h"
 #include "runtime.h"
 

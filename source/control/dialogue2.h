@@ -1,5 +1,5 @@
-#ifndef WARM_DIALOGUE2_H_
-#define WARM_DIALOGUE2_H_
+#ifndef WARM_CONTROL_DIALOGUE2_H_
+#define WARM_CONTROL_DIALOGUE2_H_
 
 #include <ncurses.h>
 
