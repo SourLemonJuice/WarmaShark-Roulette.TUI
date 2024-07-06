@@ -37,14 +37,18 @@ int TriggerKeyboardCheck(struct WarmRuntime *runtime, WINDOW *win, struct WarmTr
     struct WarmTriggerKeyboardCheckEvent *current_event = event;
     while (true) {
         input = wgetch(win);
-        while (current_event->next != NULL) {
+        while (true) {
             if (MatchTheKeys_(input, current_event->keys, current_event->keys_size) == 0) {
                 return current_event->index;
+            }
+            // move to next linked list
+            // and... the last structure's 'next' is null
+            if (current_event->next != NULL) {
+                current_event = current_event->next;
+                continue;
             } else {
                 break;
             }
-            // move to next linked list
-            current_event = current_event->next;
         }
     }
 

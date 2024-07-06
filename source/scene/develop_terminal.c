@@ -13,7 +13,7 @@
 #include "log/logger.h"
 #include "runtime.h"
 
-static const char module_tag[] = "scene - Develop Terminal";
+static const char module_tag[] = "Scene.Develop-Terminal";
 
 /*
     Result:
@@ -59,7 +59,7 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     Dialogue2PrintText(runtime, win, &event);
 
     Dialogue2EventSetDefaultPrintText(&event);
-    event.text = "，在这里可以按 q 键退出，Enter 或 Space 跳转到下一个对话。";
+    event.text = "，在这里可以按 q 键退出（真的？），Enter 或 Space 跳转到下一个对话。";
     Dialogue2PrintText(runtime, win, &event);
     TriggerKeyboardCheck(runtime, win, &key_event);
     Dialogue2EventClear(runtime, win, &event);

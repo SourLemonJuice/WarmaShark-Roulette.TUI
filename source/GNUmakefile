@@ -12,7 +12,7 @@ executable_base_name := warmaShark
 
 clang_flag += -I./
 clang_flag += -lncurses
-clang_flag += -O0
+clang_flag += -Os
 clang_flag += -rdynamic
 
 ifeq (${build_type}, debug)

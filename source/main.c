@@ -14,6 +14,8 @@
 #include "scene/selector_show.h"
 #include "scene/shark_roulette.h"
 
+static const char module_tag[] = "Main";
+
 int main(int argc, char *argv[])
 {
     // init program
@@ -25,12 +27,12 @@ int main(int argc, char *argv[])
 
     // if have any arguments, then break program
     if (argc >= 2) {
-        WarmLog_Warning(&runtime, "main", "there is a CLI argument input here, we don't use it\n");
+        WarmLog_Warning(&runtime, module_tag, "there is a CLI argument input here, we don't use it\n");
     }
     // record some information for tracking
-    WarmLog_General(&runtime, "main", "Program locale should have been set to %s\n", runtime.locale_string);
-    WarmLog_General(&runtime, "main", "MAX screen X: %d, Y: %d\n", runtime.terminal_x, runtime.terminal_y);
-    WarmLog_General(&runtime, "main", "program runtime has been init, starting scene selector\n");
+    WarmLog_General(&runtime, module_tag, "Program locale should have been set to %s\n", runtime.locale_string);
+    WarmLog_General(&runtime, module_tag, "MAX screen X: %d, Y: %d\n", runtime.terminal_x, runtime.terminal_y);
+    WarmLog_General(&runtime, module_tag, "program runtime has been init, starting scene selector\n");
 
     // select the scene
     wprintw(stdscr, "Choose the scene(For Develop):");
