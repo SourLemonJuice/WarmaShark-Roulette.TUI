@@ -12,11 +12,13 @@ executable_base_name := warmaShark
 
 clang_flag += -I./
 clang_flag += -lncurses
-clang_flag += -Os
-clang_flag += -rdynamic
 
 ifeq (${build_type}, debug)
+clang_flag += -O0
 clang_flag += -g
+clang_flag += -rdynamic
+else
+clang_flag += -Os
 endif
 
 # for preprocessor
@@ -40,4 +42,4 @@ warmaShark.exe: $(source_codes)
 		$(clang_flag)
 
 clear:
-	rm -i $(executable_base_name).* *.o
+	rm -i $(executable_base_name).*
