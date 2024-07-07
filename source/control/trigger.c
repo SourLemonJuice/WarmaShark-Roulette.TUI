@@ -36,6 +36,8 @@ int TriggerKeyboardCheck(struct WarmRuntime *runtime, WINDOW *win, struct WarmTr
     struct WarmTriggerKeyboardCheckEvent *current_event = event;
     while (true) {
         input = wgetch(win);
+        // reset to first structure
+        current_event = event;
         while (true) {
             if (MatchTheKeys_(input, current_event->keys, current_event->keys_size) == 0) {
                 return current_event->index;
@@ -46,6 +48,7 @@ int TriggerKeyboardCheck(struct WarmRuntime *runtime, WINDOW *win, struct WarmTr
                 current_event = current_event->next;
                 continue;
             } else {
+                // if has traversed all structure
                 break;
             }
         }

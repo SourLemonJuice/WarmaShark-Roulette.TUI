@@ -12,6 +12,9 @@ But it's also just for myself...
 Goto `source/` folder and run `make` or `make default` or `make warmaShark.out`\
 Executable file named `warmaShark.out`
 
+For Windows Build:\
+Emm... There is a `#include <execinfo.h>` in log system. So MSYS2 can't build it, I'm also don't want to change it. TBD
+
 ## Todo list
 
 - Dialogue component 2
