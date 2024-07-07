@@ -9,6 +9,7 @@
 #include <ncurses.h>
 
 #include "control/dialogue2.h"
+#include "control/selector.h"
 #include "control/trigger.h"
 #include "log/logger.h"
 #include "runtime.h"
@@ -94,10 +95,17 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     Dialogue2EventClear(runtime, win, &event);
 
     Dialogue2EventSetDefaultPrintText(&event);
-    event.text = "Here is the last line/event/string-pointer, be careful of this pointer index...";
+    event.text = "Sorry... But... Can you wait while I continue developing? I need some light ahead of me... also need "
+                 "to make with myself.";
     Dialogue2PrintText(runtime, win, &event);
     TriggerKeyboardCheck(runtime, win, &key_event);
     Dialogue2EventClear(runtime, win, &event);
+
+    struct WarmSelectorActionEvent selector_event[] = {
+        {.position_y = 0, .position_x = 2, .attribute = A_NORMAL, .attribute_highlight = A_STANDOUT, .string = "Yes"},
+        {.position_y = 0, .position_x = 10, .attribute = A_NORMAL, .attribute_highlight = A_STANDOUT, .string = "No"},
+    };
+    DialogueSelector(runtime, win, selector_event, (sizeof(selector_event) / sizeof(struct WarmSelectorActionEvent)));
 
     WarmLog_General(runtime, module_tag, "Exit the scene normally\n");
     return 0;
