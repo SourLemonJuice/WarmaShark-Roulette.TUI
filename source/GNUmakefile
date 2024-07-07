@@ -10,6 +10,14 @@ source_codes += scene/develop_terminal.c scene/program_info.c scene/shark_roulet
 
 executable_base_name := warmaShark
 
+clang_flag += -std=c99
+clang_flag += -Wall -Wextra -Werror
+# and disable some stuff ( ´･･)ﾉ(._.`)
+clang_flag += -Wno-unused-parameter
+clang_flag += -Wno-unused-const-variable
+clang_flag += -Wno-unused-function
+clang_flag += -Wno-sign-compare
+
 clang_flag += -I./
 clang_flag += -lncurses
 
