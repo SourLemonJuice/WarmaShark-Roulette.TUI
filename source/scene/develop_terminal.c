@@ -107,6 +107,7 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     };
     DialogueSelector(runtime, win, selector_event, (sizeof(selector_event) / sizeof(struct WarmSelectorActionEvent)));
 
+    TriggerKeyboardCheckEventFreeUp(runtime, &key_event);
     WarmLog_General(runtime, module_tag, "Exit the scene normally\n");
     return 0;
 }

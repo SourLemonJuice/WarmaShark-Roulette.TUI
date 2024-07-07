@@ -20,5 +20,6 @@ int TriggerKeyboardCheckEventInit(struct WarmRuntime *runtime, struct WarmTrigge
                                   int keys_size, int index);
 int TriggerKeyboardCheckEventAppend(struct WarmRuntime *runtime, struct WarmTriggerKeyboardCheckEvent *event,
                                     int keys[], int keys_size, int index);
+int TriggerKeyboardCheckEventFreeUp(struct WarmRuntime *runtime, struct WarmTriggerKeyboardCheckEvent *event);
 
 #endif

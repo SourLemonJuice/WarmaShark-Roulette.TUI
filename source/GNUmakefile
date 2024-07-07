@@ -5,7 +5,8 @@ SHELL := /usr/bin/bash
 build_type := debug
 
 source_codes += main.c
-source_codes += log/logger.c runtime.c dialogue.c control/dialogue2.c control/selector.c control/trigger.c
+source_codes += log/logger.c runtime.c
+source_codes += dialogue.c control/dialogue2.c control/selector.c control/trigger.c
 source_codes += scene/develop_terminal.c scene/program_info.c scene/shark_roulette.c scene/selector_show.c
 
 executable_base_name := warmaShark
@@ -37,7 +38,7 @@ clang_flag += -DBUILD_DATE_STRING="\"${build_date}\""
 
 default: warmaShark.out
 
-warmaShark.out: $(source_codes)
+warmaShark.out: $(source_codes) GNUmakefile
 	/usr/bin/clang $(source_codes) \
 		--output $(executable_base_name).out \
 		$(clang_flag)

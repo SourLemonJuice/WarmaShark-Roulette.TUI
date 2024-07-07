@@ -64,23 +64,33 @@ int TriggerKeyboardCheckEventInit(struct WarmRuntime *runtime, struct WarmTrigge
     event->keys = keys;
     event->keys_size = keys_size;
     event->next = NULL;
+
+    WarmLog_General(runtime, module_tag, "keyboard event structure has been init\n");
     return 0;
 }
 
+/*
+    Result:
+        0: success
+        self exit: there's memory error, so it have right to unload the runtime
+ */
 int TriggerKeyboardCheckEventAppend(struct WarmRuntime *runtime, struct WarmTriggerKeyboardCheckEvent *event,
                                     int keys[], int keys_size, int index)
 {
     struct WarmTriggerKeyboardCheckEvent *last_event = event;
     while (true) {
+        // if already have a event have the same index, return a error
+        if (last_event->index == index) {
+            WarmthMeltdownUniverse(runtime, "try to append a existing keyboard event index\n");
+        }
         if (last_event->next != NULL) {
             last_event = last_event->next;
         } else {
             break;
         }
     }
-    // last_event has been init
+    // last_event has been found
 
-    WarmLog_General(runtime, module_tag, "last_event->next is: %p, index: %d\n", last_event->next, last_event->index);
     last_event->next = malloc(sizeof(struct WarmTriggerKeyboardCheckEvent));
     if (last_event->next == NULL) {
         return 1;
@@ -90,6 +100,25 @@ int TriggerKeyboardCheckEventAppend(struct WarmRuntime *runtime, struct WarmTrig
     last_event->next->index = index;
     last_event->next->next = NULL;
 
-    WarmLog_General(runtime, module_tag, "event linked list has been append\n");
+    WarmLog_General(runtime, module_tag, "keyboard event linked list has been append\n");
+    return 0;
+}
+
+int TriggerKeyboardCheckEventFreeUp(struct WarmRuntime *runtime, struct WarmTriggerKeyboardCheckEvent *event)
+{
+    // the input is a auto storage period, don't free it
+    struct WarmTriggerKeyboardCheckEvent *now_ptr = event->next;
+    struct WarmTriggerKeyboardCheckEvent *next_ptr;
+    while (true) {
+        next_ptr = now_ptr->next; // record next struct, even though it is NULL
+        free(now_ptr);
+        // if we don't have next struct, the work is over
+        if (next_ptr == NULL) {
+            break;
+        } else {
+            now_ptr = next_ptr;
+        }
+    }
+
     return 0;
 }
