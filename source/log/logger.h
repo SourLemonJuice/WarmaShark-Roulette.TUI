@@ -23,4 +23,9 @@ int WarmthMeltdownUniverse(struct WarmRuntime *config, const char *format, ...);
 #define WarmLog_UserWarning(runtime_config, module_tag, format, ...)                                                   \
     WarmLoggerMain(runtime_config, kWarmLogLevel_UserWarning, module_tag, format, ##__VA_ARGS__)
 
+#define WarmLog_GeneralLn(runtime_config, module_tag, format, ...)                                                       \
+    WarmLog_General(runtime_config, module_tag, format"\n", ##__VA_ARGS__)
+#define WarmLog_WarningLn(runtime_config, module_tag, format, ...)                                                       \
+    WarmLog_Warning(runtime_config, module_tag, format"\n", ##__VA_ARGS__)
+
 #endif

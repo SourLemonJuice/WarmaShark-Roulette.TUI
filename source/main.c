@@ -30,9 +30,9 @@ int main(int argc, char *argv[])
         WarmLog_Warning(&runtime, module_tag, "there is a CLI argument input here, we don't use it\n");
     }
     // record some information for tracking
-    WarmLog_General(&runtime, module_tag, "Program locale should have been set to %s\n", runtime.locale_string);
-    WarmLog_General(&runtime, module_tag, "MAX screen X: %d, Y: %d\n", runtime.terminal_x, runtime.terminal_y);
-    WarmLog_General(&runtime, module_tag, "program runtime has been init, starting scene selector\n");
+    WarmLog_GeneralLn(&runtime, module_tag, "Program locale should have been set to %s", runtime.locale_string);
+    WarmLog_GeneralLn(&runtime, module_tag, "MAX screen X: %d, Y: %d", runtime.terminal_x, runtime.terminal_y);
+    WarmLog_GeneralLn(&runtime, module_tag, "program runtime has been init, starting scene selector");
 
     // select the scene
     wprintw(stdscr, "Choose the scene(For Develop):");

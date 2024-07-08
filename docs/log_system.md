@@ -21,13 +21,13 @@
 
 ## 按等级分类
 
-- General
+- General(宏)
   - 常规日志输出，但不包括想要给用户显示的内容
-- Warning
+- Warning(宏)
   - 轻度/中度 程序警告
-- UserWarning
+- UserWarning(宏) - (unstable)
   - 用户交互错误，这一部分可能需要显示在 ncurses 上
-- CoreMeltdown - (unstable)
+- CoreMeltdown(函数)
   - 最严重的错误，程序在逻辑与代码层面均不符合设想。或许它可以被称为转储
   - [已放弃] 需要提交包含更多错误信息的结构体，而非一行 printf() 的参数。\
     虽说在调用 meltdown 时很可能是内存出错，但也不是不行吧，大概吧...
@@ -35,7 +35,7 @@
 ### WarmthMeltdownUniverse()
 
 也就是 Warmth meltdown universe/温暖的融化（这个）宇宙\
-从 Warm 这个全局命名空间上意外想出来的，挺有趣不是么
+从 Warm 这个全局命名空间为基础意外想出来的，挺有趣不是么
 
 - 输入一个 printf 格式的参数作为崩溃简介
 - 转储当前的堆栈调用信息
@@ -46,10 +46,14 @@
 注：以头文件中的定义为准
 
 ```c
-// macro
+/* macros */
 WarmLog_General(&runtime_config, "module_tag", "format %d\n", 128);
-WarmLog_Warning(&runtime_config, "module_tag", "format %d\n", 128);
-WarmLog_UserWarning(&runtime_config, "module_tag", "format %d\n", 128);
-// function
+WarmLog_Warning(...);
+WarmLog_UserWarning(...);
+// ...Ln series don't need '\n'
+WarmLog_GeneralLn(&runtime, "module_tag", "format %d", 256);
+WarmLog_WarningLn(...);
+
+/* functions */
 int WarmthMeltdownUniverse(struct WarmRuntimeConfig *config, const char *format, ...);
 ```
