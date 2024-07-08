@@ -15,6 +15,7 @@ clang_flag += -std=c99
 clang_flag += -Wall -Wextra -Werror
 # and disable some stuff ( ´･･)ﾉ(._.`)
 clang_flag += -Wno-unused-parameter
+clang_flag += -Wno-unused-but-set-variable
 clang_flag += -Wno-unused-const-variable
 clang_flag += -Wno-unused-function
 clang_flag += -Wno-sign-compare

@@ -9,10 +9,7 @@
 #include "control/selector.h"
 #include "log/logger.h"
 #include "runtime.h"
-#include "scene/develop_terminal.h"
-#include "scene/program_info.h"
-#include "scene/selector_show.h"
-#include "scene/shark_roulette.h"
+#include "scene/scene_collection.h"
 
 static const char module_tag[] = "Main";
 

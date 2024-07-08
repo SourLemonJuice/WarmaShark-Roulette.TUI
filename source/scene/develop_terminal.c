@@ -43,6 +43,10 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
 {
     WarmLog_General(runtime, module_tag, "Entered the scene\n");
 
+    int win_y;
+    int win_x;
+    getmaxyx(win, win_y, win_x);
+
     struct WarmTriggerKeyboardCheckEvent key_event;
     TriggerKeyboardCheckEventInit(runtime, &key_event, (int[]){' ', '\n'}, 2, 0);
     TriggerKeyboardCheckEventAppend(runtime, &key_event, (int[]){'q'}, 1, 1);
@@ -100,10 +104,18 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     Dialogue2PrintText(runtime, win, &event);
 
     struct WarmSelectorActionEvent selector_event[] = {
-        {.position_y = 3, .position_x = 2, .attribute = A_NORMAL, .attribute_highlight = A_STANDOUT, .string = "You Idiot"},
-        {.position_y = 3, .position_x = 16, .attribute = A_NORMAL, .attribute_highlight = A_STANDOUT, .string = "Take it slow, it's fine"},
+        {.position_y = win_y * 0.6,
+         .position_x = win_x * 0.1,
+         .attribute = A_NORMAL,
+         .attribute_highlight = A_STANDOUT,
+         .string = "You Idiot"},
+        {.position_y = win_y * 0.6,
+         .position_x = win_x * 0.5,
+         .attribute = A_NORMAL,
+         .attribute_highlight = A_STANDOUT,
+         .string = "Take it slow, it's fine"},
     };
-    DialogueSelector(runtime, win, selector_event, (sizeof(selector_event) / sizeof(struct WarmSelectorActionEvent)));
+      DialogueSelector(runtime, win, selector_event, (sizeof(selector_event) / sizeof(struct WarmSelectorActionEvent)));
 
     TriggerKeyboardCheckEventFreeUp(runtime, &key_event);
     WarmLog_General(runtime, module_tag, "Exit the scene normally\n");
