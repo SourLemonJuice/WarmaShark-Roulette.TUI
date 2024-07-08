@@ -98,12 +98,10 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     event.text = "Sorry... But... Can you wait while I continue developing? I need some light ahead of me... also need "
                  "to make with myself.";
     Dialogue2PrintText(runtime, win, &event);
-    TriggerKeyboardCheck(runtime, win, &key_event);
-    Dialogue2EventClear(runtime, win, &event);
 
     struct WarmSelectorActionEvent selector_event[] = {
-        {.position_y = 0, .position_x = 2, .attribute = A_NORMAL, .attribute_highlight = A_STANDOUT, .string = "Yes"},
-        {.position_y = 0, .position_x = 10, .attribute = A_NORMAL, .attribute_highlight = A_STANDOUT, .string = "No"},
+        {.position_y = 3, .position_x = 2, .attribute = A_NORMAL, .attribute_highlight = A_STANDOUT, .string = "You Idiot"},
+        {.position_y = 3, .position_x = 16, .attribute = A_NORMAL, .attribute_highlight = A_STANDOUT, .string = "Take it slow, it's fine"},
     };
     DialogueSelector(runtime, win, selector_event, (sizeof(selector_event) / sizeof(struct WarmSelectorActionEvent)));
 
