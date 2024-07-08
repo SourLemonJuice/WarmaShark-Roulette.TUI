@@ -8,23 +8,44 @@
 #include <execinfo.h>
 #include <ncurses.h>
 
+char *LevelToString_(const enum WarmLogLevel level)
+{
+    switch (level) {
+    case kWarmLogLevel_General:
+        return "Info";
+        break;
+    case kWarmLogLevel_Warning:
+        return "Warning";
+        break;
+    case kWarmLogLevel_UserWarning:
+        return "UserWarning";
+        break;
+    }
+
+    // default return
+    return "Unknow";
+}
+
 /*
     This function is mainly used by macro but not users directly. TBD
  */
-int WarmLoggerMain(struct WarmRuntime *config, const enum WarmLogLevel level, const char *module_tag,
+int WarmLoggerMain(struct WarmRuntime *runtime, const enum WarmLogLevel level, const char *module_tag,
                    const char *format, ...)
 {
     time_t now_time;
     time(&now_time);
-
+    struct tm *tm = localtime(&now_time);
     va_list va;
+
+    fprintf(runtime->log_handle, "[%d.%d.%d-%d:%d:%d] ", tm->tm_year + 1900, tm->tm_mon, tm->tm_mday, tm->tm_hour, tm->tm_min,
+            tm->tm_sec);
+    fprintf(runtime->log_handle, "[%s] ", LevelToString_(level));
+    fprintf(runtime->log_handle, "[%s]: ", module_tag);
     va_start(va, format);
-    fprintf(config->log_handle, "[%ld] ", now_time); // TODO This time format is so bad
-    fprintf(config->log_handle, "[%s]: ", module_tag);
-    vfprintf(config->log_handle, format, va);
-    fflush(config->log_handle);
+    vfprintf(runtime->log_handle, format, va);
     va_end(va);
 
+    fflush(runtime->log_handle);
     return 0;
 }
 

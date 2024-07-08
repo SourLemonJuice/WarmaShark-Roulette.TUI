@@ -8,7 +8,7 @@
 #include "log/logger.h"
 #include "runtime.h"
 
-static const char module_tag[] = "selector";
+static const char module_tag[] = "Control.Selector";
 
 /*
     Refresh specified event object.
