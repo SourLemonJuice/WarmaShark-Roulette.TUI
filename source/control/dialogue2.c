@@ -36,16 +36,22 @@ int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDial
         TriggerKeyboardCheck(runtime, win, key_event);
     }
 
-    if (event->clear == true) {
+    switch (event->type) {
+    case kDialogueTypeSentenceEnd:
         Dialogue2Clear(runtime, win, event);
-    }
-
-    if (event->reset_position == true) {
         wmove(win, event->position_y, event->position_x);
+        break;
+    case kDialogueTypeSentenceEraseWindow:
+        werase(win);
+        wrefresh(win);
+        wmove(win, event->position_y, event->position_x);
+        break;
+    case kDialogueTypeStatic:
+        break;
     }
 
     if (event->reset_config == true) {
-        Dialogue2EventSetDefaultPrintText(event);
+        Dialogue2ResetPrintTextEvent(event);
     }
 
     return 0;
@@ -73,6 +79,9 @@ int Dialogue2Clear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue
 
 /*
     move and take a log
+
+    when using type:static, start position maybe will need to change.
+    if what do this, chang the position_* in structure and run this function.
  */
 int Dialogue2UpdatePosition(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event)
 {
@@ -84,15 +93,12 @@ int Dialogue2UpdatePosition(struct WarmRuntime *runtime, WINDOW *win, struct War
 }
 
 /*
-    reset anything except:
-      - text
-      - position_*
+    don't reset them: {position_*, text}
  */
-int Dialogue2EventSetDefaultPrintText(struct WarmDialogue2Description *event)
+int Dialogue2ResetPrintTextEvent(struct WarmDialogue2Description *event)
 {
+    event->type = kDialogueTypeSentenceEnd;
     event->attribute = A_NORMAL;
-    event->clear = true;
-    event->reset_position = true;
     event->reset_config = true;
 
     return 0;

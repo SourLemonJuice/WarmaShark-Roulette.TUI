@@ -47,7 +47,7 @@ void ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
         .position_y = 0,
         .position_x = 0,
     };
-    Dialogue2EventSetDefaultPrintText(&dialogue);
+    Dialogue2ResetPrintTextEvent(&dialogue);
 
     dialogue.text = "你好啊，Administrator";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
@@ -80,8 +80,7 @@ void ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     dialogue.text = "我来简单的介绍一下规则:\n";
-    dialogue.clear = false;
-    dialogue.reset_position = false;
+    dialogue.type = kDialogueTypeStatic;
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     getyx(win, dialogue.position_y, dialogue.position_x);
@@ -145,27 +144,29 @@ static void ChapterShooting_(struct WarmRuntime *runtime, WINDOW *win)
         .position_y = 0,
         .position_x = 0,
     };
-    Dialogue2EventSetDefaultPrintText(&dialogue);
+    Dialogue2ResetPrintTextEvent(&dialogue);
 
     dialogue.text = "> 所以... 游戏要开始咯";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     int live_ammunition = rand() % 6;
+    WarmLog_GeneralLn(runtime, module_tag, "live ammunition is in: %d", live_ammunition);
     for (int i = 0; i < 6; i++) {
         dialogue.text = "> 你会选谁呢:";
-        dialogue.clear = false;
+        dialogue.type = kDialogueTypeStatic;
         Dialogue2PrintText(runtime, win, &dialogue, NULL);
 
-        switch (DialogueSelector(runtime, win, shooting_targets, 2)) {
-        case 0:
-            werase(win);
+        int shooting_to = DialogueSelector(runtime, win, shooting_targets, 2);
 
+        werase(win);
+        switch (shooting_to) {
+        case 0:
             dialogue.text = "你对着自己扣动了扳机";
-            dialogue.clear = false;
-            dialogue.reset_position = false;
+            dialogue.type = kDialogueTypeStatic;
             Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
             dialogue.text = "，时间在这一刻仿佛静止了";
+            dialogue.type = kDialogueTypeSentenceEraseWindow;
             Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
             if (i == live_ammunition) {
@@ -201,8 +202,6 @@ static void ChapterShooting_(struct WarmRuntime *runtime, WINDOW *win)
             }
             break;
         case 1:
-                werase(win);
-
                 dialogue.text = "develop";
                 Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
             break;

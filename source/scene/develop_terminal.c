@@ -56,40 +56,36 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
         .position_y = 0,
         .position_x = 0,
     };
+    Dialogue2ResetPrintTextEvent(&event);
 
-    Dialogue2EventSetDefaultPrintText(&event);
     event.text = "你好/Hello";
     event.attribute = COLOR_PAIR(1);
+    event.type = kDialogueTypeStatic;
     Dialogue2PrintText(runtime, win, &event, NULL);
 
-    Dialogue2EventSetDefaultPrintText(&event);
     event.text = "，在这里可以按 q 键退出（真的？），Enter 或 Space 跳转到下一个对话。";
+    event.type = kDialogueTypeSentenceEraseWindow;
     Dialogue2PrintText(runtime, win, &event, &key_event);
 
-    Dialogue2EventSetDefaultPrintText(&event);
     event.text = "This is a Develop Terminal or just a test for a normal example dialogue tree.";
     Dialogue2PrintText(runtime, win, &event, &key_event);
 
-    Dialogue2EventSetDefaultPrintText(&event);
     event.text = "But what's the difference, dialogue trees are just some data structure... We are all normal.";
     Dialogue2PrintText(runtime, win, &event, &key_event);
 
-    Dialogue2EventSetDefaultPrintText(&event);
     event.text = "The protagonist of this program(or videogame), is a shark. But live in another universe.";
     Dialogue2PrintText(runtime, win, &event, &key_event);
 
-    Dialogue2EventSetDefaultPrintText(&event);
     event.text = "沃玛/Warma created him. Maybe his name is littleShark?";
     Dialogue2PrintText(runtime, win, &event, &key_event);
 
-    Dialogue2EventSetDefaultPrintText(&event);
     event.text = "Cute, Evil, Complex, or have another Hidden Story?";
     Dialogue2PrintText(runtime, win, &event, &key_event);
 
-    Dialogue2EventSetDefaultPrintText(&event);
     event.text = "Sorry... But... Can you wait while I continue developing? I need some light ahead of me... also need "
                  "to make with myself.";
-    Dialogue2PrintText(runtime, win, &event, &key_event);
+    event.type = kDialogueTypeStatic;
+    Dialogue2PrintText(runtime, win, &event, NULL);
 
     struct WarmSelectorActionEvent selector_event[] = {
         {.position_y = win_y * 0.6,
@@ -103,7 +99,10 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
          .attribute_highlight = A_STANDOUT,
          .string = "Take it slow, it's fine"},
     };
-      DialogueSelector(runtime, win, selector_event, (sizeof(selector_event) / sizeof(struct WarmSelectorActionEvent)));
+    DialogueSelector(runtime, win, selector_event, (sizeof(selector_event) / sizeof(struct WarmSelectorActionEvent)));
+
+    werase(win);
+    wrefresh(win);
 
     TriggerKeyboardCheckEventFreeUp(runtime, &key_event);
     WarmLog_General(runtime, module_tag, "Exit the scene normally\n");

@@ -8,11 +8,27 @@
 #include "control/trigger.h"
 #include "runtime.h"
 
+/*
+    note: the keyboard trigger is a parameter of Dialogue2PrintText(), not a print type
+ */
+enum WarmDialogue2EventType {
+    // clear the printed string(not erase window), and reset position.
+    kDialogueTypeSentenceEnd,
+    // same like ...SentenceEnd, but will erase the full window.
+    // can be used well with ...Static type.
+    kDialogueTypeSentenceEraseWindow,
+    // don't do anything after print.
+    // then no one known the full string length and position, so just erase the window...
+    // remember to werase(), even next dialogue may will overwrite the sentence.
+    kDialogueTypeStatic,
+};
+
 // TODO speak rate
 struct WarmDialogue2Description {
-    // reset some config to default after print
-    bool reset_config;
-    // cursor position at startup
+    // type
+    // default kDialogueTypeSentenceEnd
+    enum WarmDialogue2EventType type;
+    // cursor position at startup print
     int position_y;
     int position_x;
     // what message will be print
@@ -20,12 +36,8 @@ struct WarmDialogue2Description {
     // the ncurses print attr
     // default: A_NORMAL
     attr_t attribute;
-    // clear after printing
-    // default: true
-    bool clear;
-    // reset position after print
-    // default: true
-    bool reset_position;
+    // reset some config to default after print
+    bool reset_config;
 };
 
 int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event,
@@ -33,6 +45,6 @@ int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDial
 int Dialogue2Delay(struct WarmRuntime *runtime, WINDOW *win, int length_ms);
 int Dialogue2Clear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
 int Dialogue2UpdatePosition(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
-int Dialogue2EventSetDefaultPrintText(struct WarmDialogue2Description *event);
+int Dialogue2ResetPrintTextEvent(struct WarmDialogue2Description *event);
 
 #endif
