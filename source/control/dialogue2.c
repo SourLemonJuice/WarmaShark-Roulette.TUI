@@ -8,12 +8,16 @@
 
 #include "control/dialogue2.h"
 
+#include <stdbool.h>
 #include <string.h>
 
 #include <ncurses.h>
 
 #include "control/trigger.h"
+#include "log/logger.h"
 #include "runtime.h"
+
+static const char module_tag[] = "Control.Dialogue2";
 
 /*
     Note:
@@ -28,10 +32,21 @@ int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDial
     wattroff(win, event->attribute);
     wrefresh(win);
 
-    if (key_event == NULL) {
-        return 0;
+    if (key_event != NULL) {
+        TriggerKeyboardCheck(runtime, win, key_event);
     }
-    TriggerKeyboardCheck(runtime, win, key_event);
+
+    if (event->clear == true) {
+        Dialogue2Clear(runtime, win, event);
+    }
+
+    if (event->reset_position == true) {
+        wmove(win, event->position_y, event->position_x);
+    }
+
+    if (event->reset_config == true) {
+        Dialogue2EventSetDefaultPrintText(event);
+    }
 
     return 0;
 }
@@ -48,7 +63,7 @@ int Dialogue2Clear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue
     wmove(win, event->position_y, event->position_x);
     // clear the window
     for (int i = 1; i <= strlen(event->text); i++) {
-        wechochar(win, ' ');
+        wechochar(win, ' '); // echochar() don't need refresh
     }
     // reset position
     wmove(win, event->position_y, event->position_x);
@@ -56,10 +71,29 @@ int Dialogue2Clear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue
     return 0;
 }
 
-// TODO did we really need this? but for future...
+/*
+    move and take a log
+ */
+int Dialogue2UpdatePosition(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event)
+{
+    wmove(win, event->position_y, event->position_x);
+    WarmLog_GeneralLn(runtime, module_tag, "position has been updated to: y: %d, x: %d", event->position_y,
+                      event->position_x);
+
+    return 0;
+}
+
+/*
+    reset anything except:
+      - text
+      - position_*
+ */
 int Dialogue2EventSetDefaultPrintText(struct WarmDialogue2Description *event)
 {
     event->attribute = A_NORMAL;
+    event->clear = true;
+    event->reset_position = true;
+    event->reset_config = true;
 
     return 0;
 }

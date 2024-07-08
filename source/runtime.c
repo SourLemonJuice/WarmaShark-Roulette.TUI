@@ -3,6 +3,7 @@
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include <ncurses.h>
 
@@ -47,6 +48,9 @@ int EngineRuntimeInit(struct WarmRuntime *config)
 
     // maximum terminal size
     getmaxyx(stdscr, config->terminal_y, config->terminal_x);
+
+    // seeding for random number
+    srand(time(NULL));
 
     return 0;
 }

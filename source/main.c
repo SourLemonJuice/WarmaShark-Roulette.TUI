@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     init_pair(1, COLOR_YELLOW, COLOR_BLUE);
     init_pair(2, COLOR_RED, COLOR_BLACK);
 
-    // if have any arguments, then break program
+    // if have any arguments, then take an error
     if (argc >= 2) {
         WarmLog_Warning(&runtime, module_tag, "there is a CLI argument input here, we don't use it\n");
     }
