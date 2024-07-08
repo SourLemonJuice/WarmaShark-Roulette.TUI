@@ -3,6 +3,7 @@
 
 #include <ncurses.h>
 
+#include "control/trigger.h"
 #include "runtime.h"
 
 struct WarmDialogue2Description {
@@ -19,9 +20,10 @@ struct WarmDialogue2Description {
     // TODO speak rate
 };
 
-int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
+int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event,
+                       struct WarmTriggerKeyboardCheckEvent *key_event);
 int Dialogue2Delay(struct WarmRuntime *runtime, WINDOW *win, int length_ms);
-int Dialogue2EventClear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
+int Dialogue2Clear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
 int Dialogue2EventSetDefaultPrintText(struct WarmDialogue2Description *event);
 
 #endif

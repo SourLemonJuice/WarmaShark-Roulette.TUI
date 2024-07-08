@@ -12,15 +12,26 @@
 
 #include <ncurses.h>
 
+#include "control/trigger.h"
 #include "runtime.h"
 
-int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event)
+/*
+    Note:
+        - If key_event is NULL, then skip keyboard check trigger.
+ */
+int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event,
+                       struct WarmTriggerKeyboardCheckEvent *key_event)
 {
     // print with attr
     wattron(win, event->attribute);
     wprintw(win, "%s", event->text);
     wattroff(win, event->attribute);
     wrefresh(win);
+
+    if (key_event == NULL) {
+        return 0;
+    }
+    TriggerKeyboardCheck(runtime, win, key_event);
 
     return 0;
 }
@@ -31,7 +42,7 @@ int Dialogue2Delay(struct WarmRuntime *runtime, WINDOW *win, int length_ms)
     return 0;
 }
 
-int Dialogue2EventClear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event)
+int Dialogue2Clear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event)
 {
     // move to original position
     wmove(win, event->position_y, event->position_x);

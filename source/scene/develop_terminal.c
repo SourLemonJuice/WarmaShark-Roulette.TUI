@@ -60,48 +60,42 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     Dialogue2EventSetDefaultPrintText(&event);
     event.text = "你好/Hello";
     event.attribute = COLOR_PAIR(1);
-    Dialogue2PrintText(runtime, win, &event);
+    Dialogue2PrintText(runtime, win, &event, NULL);
 
     Dialogue2EventSetDefaultPrintText(&event);
     event.text = "，在这里可以按 q 键退出（真的？），Enter 或 Space 跳转到下一个对话。";
-    Dialogue2PrintText(runtime, win, &event);
-    TriggerKeyboardCheck(runtime, win, &key_event);
-    Dialogue2EventClear(runtime, win, &event);
+    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2Clear(runtime, win, &event);
 
     Dialogue2EventSetDefaultPrintText(&event);
     event.text = "This is a Develop Terminal or just a test for a normal example dialogue tree.";
-    Dialogue2PrintText(runtime, win, &event);
-    TriggerKeyboardCheck(runtime, win, &key_event);
-    Dialogue2EventClear(runtime, win, &event);
+    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2Clear(runtime, win, &event);
 
     Dialogue2EventSetDefaultPrintText(&event);
     event.text = "But what's the difference, dialogue trees are just some data structure... We are all normal.";
-    Dialogue2PrintText(runtime, win, &event);
-    TriggerKeyboardCheck(runtime, win, &key_event);
-    Dialogue2EventClear(runtime, win, &event);
+    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2Clear(runtime, win, &event);
 
     Dialogue2EventSetDefaultPrintText(&event);
     event.text = "The protagonist of this program(or videogame), is a shark. But live in another universe.";
-    Dialogue2PrintText(runtime, win, &event);
-    TriggerKeyboardCheck(runtime, win, &key_event);
-    Dialogue2EventClear(runtime, win, &event);
+    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2Clear(runtime, win, &event);
 
     Dialogue2EventSetDefaultPrintText(&event);
     event.text = "沃玛/Warma created him. Maybe his name is littleShark?";
-    Dialogue2PrintText(runtime, win, &event);
-    TriggerKeyboardCheck(runtime, win, &key_event);
-    Dialogue2EventClear(runtime, win, &event);
+    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2Clear(runtime, win, &event);
 
     Dialogue2EventSetDefaultPrintText(&event);
     event.text = "Cute, Evil, Complex, or have another Hidden Story?";
-    Dialogue2PrintText(runtime, win, &event);
-    TriggerKeyboardCheck(runtime, win, &key_event);
-    Dialogue2EventClear(runtime, win, &event);
+    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2Clear(runtime, win, &event);
 
     Dialogue2EventSetDefaultPrintText(&event);
     event.text = "Sorry... But... Can you wait while I continue developing? I need some light ahead of me... also need "
                  "to make with myself.";
-    Dialogue2PrintText(runtime, win, &event);
+    Dialogue2PrintText(runtime, win, &event, &key_event);
 
     struct WarmSelectorActionEvent selector_event[] = {
         {.position_y = win_y * 0.6,
