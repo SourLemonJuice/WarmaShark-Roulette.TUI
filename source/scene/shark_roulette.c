@@ -12,20 +12,36 @@
 #include "runtime.h"
 
 // static functions
-static void ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win);
-static void ChapterShooting_(struct WarmRuntime *runtime, WINDOW *win);
+static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win);
+static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win);
+static int ChapterShootingFromShark_(struct WarmRuntime *runtime, WINDOW *win);
 
 static const char module_tag[] = "Scene.Shark-Roulette";
+
+static struct WarmDialogue2Description dialogue = {
+    .position_y = 0,
+    .position_x = 0,
+};
+
+enum PlayerTurn_ {
+    kTurnPlayer_,
+    kTurnShark_,
+};
 
 static struct SceneCache_ {
     int win_y;
     int win_x;
     struct WarmTriggerKeyboardCheckEvent *key_event;
+    enum PlayerTurn_ turn;
+    int live_ammunition;
+    int current_cycle;
 } cache;
 
 int StartScene_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
 {
     WarmLog_GeneralLn(runtime, module_tag, "Entered the scene");
+
+    Dialogue2ResetPrintTextEvent(&dialogue);
 
     getmaxyx(win, cache.win_y, cache.win_x);
     WarmLog_GeneralLn(runtime, module_tag, "scene's window y: %d, x: %d", cache.win_y, cache.win_x);
@@ -34,20 +50,55 @@ int StartScene_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
     TriggerKeyboardCheckEventInit(runtime, &key_event, (int[]){' ', '\n'}, 2, 0);
     cache.key_event = &key_event;
 
-    ChapterIntroduction_(runtime, win);
+    // init finished
+
+    dialogue.text = "所以，你想跳过介绍吗？";
+    dialogue.type = kDialogueTypeStatic;
+    Dialogue2PrintText(runtime, win, &dialogue, NULL);
+
+    struct WarmSelectorActionEvent skip_introduction_event[] = {
+        {.position_y = cache.win_y * 0.2,
+         .position_x = cache.win_x * 0.1,
+         .attribute = A_NORMAL,
+         .attribute_highlight = A_STANDOUT,
+         .string = "不跳过"},
+        {.position_y = cache.win_y * 0.2,
+         .position_x = cache.win_x * 0.3,
+         .attribute = A_NORMAL,
+         .attribute_highlight = A_STANDOUT,
+         .string = "跳过"},
+    };
+    int skip_introduction = DialogueSelector(runtime, win, skip_introduction_event, 2);
+    werase(win);
+    wrefresh(win);
+    if ( skip_introduction == 0) {
+        ChapterIntroduction_(runtime, win);
+    }
+
+    cache.live_ammunition = rand() % 6;
+    cache.turn = kTurnPlayer_;
+    WarmLog_GeneralLn(runtime, module_tag, "live ammunition is in: %d", cache.live_ammunition);
+    for (cache.current_cycle = 0; cache.current_cycle < 6; cache.current_cycle++) {
+        if (cache.turn == kTurnPlayer_) {
+            if (ChapterShootingFromPlayer_(runtime, win) != 0) {
+                break;
+            }
+        } else if (cache.turn == kTurnShark_) {
+            if (ChapterShootingFromShark_(runtime, win) != 0) {
+                break;
+            }
+        }
+    }
+
+    dialogue.text = "> 都是些有趣的人类呐";
+    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     return 0;
 }
 
-void ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
+static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
 {
     WarmLog_GeneralLn(runtime, module_tag, "enter the chapter: Introduction");
-
-    struct WarmDialogue2Description dialogue = {
-        .position_y = 0,
-        .position_x = 0,
-    };
-    Dialogue2ResetPrintTextEvent(&dialogue);
 
     dialogue.text = "你好啊，Administrator";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
@@ -116,16 +167,15 @@ void ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
     dialogue.text = "想了想，算了，这个悬念留到游戏结束再揭晓吧";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-    ChapterShooting_(runtime, win);
-
-    werase(win);
-    dialogue.text = "> 有趣的生物们呐";
+    dialogue.text = "> 所以... 游戏要开始咯";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+    return 0;
 }
 
-static void ChapterShooting_(struct WarmRuntime *runtime, WINDOW *win)
+static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
 {
-    WarmLog_GeneralLn(runtime, module_tag, "enter the chapter: Shooting");
+    WarmLog_GeneralLn(runtime, module_tag, "enter the chapter: Shooting from player");
 
     struct WarmSelectorActionEvent shooting_targets[] = {
         {.position_y = cache.win_y * 0.2,
@@ -146,65 +196,154 @@ static void ChapterShooting_(struct WarmRuntime *runtime, WINDOW *win)
     };
     Dialogue2ResetPrintTextEvent(&dialogue);
 
-    dialogue.text = "> 所以... 游戏要开始咯";
+    dialogue.text = "> 你会选谁呢:";
+    dialogue.type = kDialogueTypeStatic;
+    Dialogue2PrintText(runtime, win, &dialogue, NULL);
+
+    int shooting_to = DialogueSelector(runtime, win, shooting_targets, 2);
+
+    werase(win);
+    switch (shooting_to) {
+    case 0:
+        dialogue.text = "你对着自己扣动了扳机";
+        dialogue.type = kDialogueTypeStatic;
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+        dialogue.text = "，时间在这一刻仿佛静止了";
+        dialogue.type = kDialogueTypeSentenceEraseWindow;
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+        if (cache.current_cycle == cache.live_ammunition) {
+            dialogue.text = "伴随着一声巨响，仿佛有人给你来了一记下勾拳";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            dialogue.text = "你倒在地上，一些黏腻的内容物从你头部刚打开的孔洞里流了出来";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            dialogue.text = "此刻，你的视线变得血红，意识开始逐渐模糊";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            dialogue.text = "你甚至产生了身后墙上溅出的一部分内容物仍然保有自己意识的错觉";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            dialogue.text =
+                "地上，墙上，还有保留在你身体里的一小部分，正在和这个空间融为一体，都让你清晰的感受到生命的流逝";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            dialogue.text = "你好！我想吃苹果！";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            dialogue.text = "这便是你的结局";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            dialogue.text = "结局-1:暴虐欢愉的收场";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            return 1;
+        } else {
+            dialogue.text = "你很幸运，此时枪里并没有子弹，而你因此获得了额外的回合";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            cache.turn = kTurnPlayer_;
+            return 0;
+        }
+        break;
+    case 1:
+        dialogue.text = "你对着小鲨鱼扣动了扳机";
+        dialogue.type = kDialogueTypeStatic;
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+        dialogue.text = "，这一行为甚至没有让你产生任何负罪感";
+        dialogue.type = kDialogueTypeSentenceEraseWindow;
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+        if (cache.current_cycle == cache.live_ammunition) {
+            dialogue.text = "噗";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            dialogue.text = "枪口伸出了一朵小黄花，花芯是须状的，这并不是你在外面发现的那朵花";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            dialogue.text = "小鲨鱼看着这朵花愣了愣神，随后开口道";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            dialogue.text = "啊！我知道这是什么花了";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            dialogue.text = "这是弟切草";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            dialogue.text = "你知道弟切草的花语吗？";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            dialogue.text = "结局-2:弟切草";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            return 1;
+        } else {
+            dialogue.text = "没有预想中的枪声，显然，这一枪没有击发那颗子弹，而下一回合，就轮到小鲨鱼了";
+            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+            cache.turn = kTurnShark_;
+            return 0;
+        }
+        break;
+    }
+
+    return -1;
+}
+
+static int ChapterShootingFromShark_(struct WarmRuntime *runtime, WINDOW *win)
+{
+    WarmLog_GeneralLn(runtime, module_tag, "enter the chapter: Shooting from player");
+
+    struct WarmDialogue2Description dialogue = {
+        .position_y = 0,
+        .position_x = 0,
+    };
+    Dialogue2ResetPrintTextEvent(&dialogue);
+
+    dialogue.text = "小鲨鱼努力的拿起枪，笨拙的做出了一个扣动扳机的动作";
+    dialogue.type = kDialogueTypeStatic;
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-    int live_ammunition = rand() % 6;
-    WarmLog_GeneralLn(runtime, module_tag, "live ammunition is in: %d", live_ammunition);
-    for (int i = 0; i < 6; i++) {
-        dialogue.text = "> 你会选谁呢:";
-        dialogue.type = kDialogueTypeStatic;
-        Dialogue2PrintText(runtime, win, &dialogue, NULL);
+    dialogue.text = "，你的心跳停止了";
+    dialogue.type = kDialogueTypeSentenceEraseWindow;
+    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-        int shooting_to = DialogueSelector(runtime, win, shooting_targets, 2);
+    if (cache.current_cycle == cache.live_ammunition) {
+        dialogue.text = "你俯下头看了看自己的胸口，你胸部的衣服被染成了暗红色";
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-        werase(win);
-        switch (shooting_to) {
-        case 0:
-            dialogue.text = "你对着自己扣动了扳机";
-            dialogue.type = kDialogueTypeStatic;
-            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+        dialogue.text = "也许是右心房，或者右心室（笑）";
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-            dialogue.text = "，时间在这一刻仿佛静止了";
-            dialogue.type = kDialogueTypeSentenceEraseWindow;
-            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+        dialogue.text = "可怜的小鲨鱼，由于高度原因，连给你一个干脆利落的结局都做不到";
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-            if (i == live_ammunition) {
-                dialogue.text = "伴随着一声巨响，仿佛有人给你来了一记下勾拳";
-                Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+        dialogue.text = "此时，你闻到了一股诡异的香甜，从小鲨鱼洞穿你身体的位置";
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-                dialogue.text = "你倒在地上，一些黏腻的内容物从你头部刚打开的孔洞里流了出来";
-                Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+        dialogue.text = "你以手指与指甲作为工具，从你的身体里探索那股香甜气味的来源";
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-                dialogue.text = "此刻，你的视线变得血红，意识开始逐渐模糊";
-                Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+        dialogue.text = "当你气若游丝之时，你找到了这颗气味的来源，用染成鲜红的双手捧起了它";
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-                dialogue.text = "你甚至产生了身后墙上溅出的一部分内容物仍然保有自己意识的错觉";
-                Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+        dialogue.text = "结局-3:原罪、诱惑、智慧的化身";
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-                dialogue.text =
-                    "地上，墙上，还有保留在你身体里的一小部分，正在和这个空间融为一体，都让你清晰的感受到生命的流逝";
-                Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+        return 1;
+    } else {
+        dialogue.text = "但过了不长时间又开始照常跳动，履行作为器官的职责，让你意识到你还活着";
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-                dialogue.text = "你好！我想吃苹果！";
-                Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+        dialogue.text = "接下来是你的回合";
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-                dialogue.text = "这便是你的结局";
-                Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
-
-                dialogue.text = "结局-1:暴虐欢愉的收场";
-                Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
-
-                return;
-            } else {
-                dialogue.text = "你很幸运，此时枪里并没有子弹，而你因此获得了额外的回合";
-                Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
-            }
-            break;
-        case 1:
-                dialogue.text = "develop";
-                Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
-            break;
-        }
+        cache.turn = kTurnPlayer_;
+        return 0;
     }
+
+    return -1;
 }

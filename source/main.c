@@ -94,7 +94,14 @@ int main(int argc, char *argv[])
         break;
     case 3:
         // Shark Roulette
-        StartScene_SharkRoulette(&runtime, stdscr);
+        wprintw(stdscr, "Little Shark Roulette\n");
+        wrefresh(stdscr);
+        WINDOW *win = newwin((runtime.terminal_y - 1) * 0.4, runtime.terminal_x * 0.7, 1, 0);
+        box(win, 0, 0);
+        wrefresh(win);
+        delwin(win);
+        win = newwin((runtime.terminal_y - 1) * 0.4 - 2, runtime.terminal_x * 0.7 - 2, 2, 1);
+        StartScene_SharkRoulette(&runtime, win);
         break;
     case 4:
         // Selector Show/Test
