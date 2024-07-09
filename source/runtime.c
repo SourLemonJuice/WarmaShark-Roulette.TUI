@@ -14,12 +14,12 @@
         0: no error
         non-zero: anyway, it just have error
  */
-int EngineRuntimeInit(struct WarmRuntime *config)
+int EngineRuntimeInit(struct WarmRuntime *runtime)
 {
     // set locale
     // NOTE: this step need before any IO operation, include the ncurses init!!!
-    config->locale_string = "en_US.UTF-8";
-    setlocale(LC_ALL, config->locale_string); // setup program locale
+    runtime->locale_string = "en_US.UTF-8";
+    setlocale(LC_ALL, runtime->locale_string); // setup program locale
 
     // init ncurses std screen
     initscr();
@@ -37,17 +37,17 @@ int EngineRuntimeInit(struct WarmRuntime *config)
     }
 
     // setting log file
-    config->log_path = "./Engine.log";
-    config->log_handle = fopen(config->log_path, "w"); // open log file, and save the handle
-    if (config->log_handle == NULL) {
+    runtime->log_path = "./Engine.log";
+    runtime->log_handle = fopen(runtime->log_path, "w"); // open log file, and save the handle
+    if (runtime->log_handle == NULL) {
         return 1;
     } else {
-        fprintf(config->log_handle, "==== Engine runtime has been init ====\n");
-        fflush(config->log_handle);
+        fprintf(runtime->log_handle, "==== Engine runtime has been init ====\n");
+        fflush(runtime->log_handle);
     }
 
     // maximum terminal size
-    getmaxyx(stdscr, config->terminal_y, config->terminal_x);
+    getmaxyx(stdscr, runtime->terminal_y, runtime->terminal_x);
 
     // seeding for random number
     srand(time(NULL));
@@ -55,9 +55,9 @@ int EngineRuntimeInit(struct WarmRuntime *config)
     return 0;
 }
 
-void EngineRuntimeUnload(struct WarmRuntime *config, int return_code)
+void EngineRuntimeUnload(struct WarmRuntime *runtime, int return_code)
 {
-    fclose(config->log_handle);
+    fclose(runtime->log_handle);
     endwin();
     exit(return_code);
 }

@@ -22,10 +22,25 @@ int main(int argc, char *argv[])
     init_pair(1, COLOR_YELLOW, COLOR_BLUE);
     init_pair(2, COLOR_RED, COLOR_BLACK);
 
-    // if have any arguments, then take an error
+    // handle command arguments
     if (argc >= 2) {
-        WarmLog_Warning(&runtime, module_tag, "there is a CLI argument input here, we don't use it\n");
+        for (int i = 1; i < argc; i++) {
+            if (strcmp(argv[i], "--help") == 0) {
+                endwin();
+                printf("Usage: executable [--help] [--version]\n");
+                printf("This is a game, build with ncurses.\n");
+                EngineRuntimeUnload(&runtime, 0);
+            } else if (strcmp(argv[i], "--version") == 0) {
+                SceneStart_ProgramInfo(&runtime, stdscr);
+                EngineRuntimeUnload(&runtime, 0);
+            } else {
+                endwin();
+                printf("ERROR: Invalid arguments '%s'\n", argv[i]);
+                EngineRuntimeUnload(&runtime, 1);
+            }
+        }
     }
+
     // record some information for tracking
     WarmLog_GeneralLn(&runtime, module_tag, "Program locale should have been set to %s", runtime.locale_string);
     WarmLog_GeneralLn(&runtime, module_tag, "MAX screen X: %d, Y: %d", runtime.terminal_x, runtime.terminal_y);
