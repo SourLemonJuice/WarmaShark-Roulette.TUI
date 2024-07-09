@@ -21,7 +21,7 @@ clang_flag += -Wno-unused-function
 clang_flag += -Wno-sign-compare
 
 clang_flag += -I./
-clang_flag += -lncurses
+clang_flag += -lncursesw
 
 ifeq (${build_type}, debug)
 clang_flag += -O0
