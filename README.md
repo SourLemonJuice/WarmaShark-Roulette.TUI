@@ -28,6 +28,12 @@ But it's also just for myself...
 Goto `source/` folder and run `make` or `make warmaShark.out`.\
 The executable file will be named `warmaShark.out`.
 
+The variable `build_type` of make can set some build macro and compiler's flags.
+
+- `...=debug` is default one, no optimization and have some debug flag: `-g`, `-rdynamic`.
+- `...=CI` use for GitHub Action.
+- `...=Anything`, yes, just anything, not a keyword, it means Release mode.
+
 My test OS is Archlinux(main) and Ubuntu(verification, GitHub CI).
 
 ### For Windows Build

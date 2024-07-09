@@ -6,7 +6,7 @@
 #include "log/logger.h"
 #include "runtime.h"
 
-static const char module_tag[] = "scene - selector show";
+static const char module_tag[] = "Scene.Selector-Show";
 
 int SceneStart_SelectorShow(struct WarmRuntime *runtime, WINDOW *win)
 {

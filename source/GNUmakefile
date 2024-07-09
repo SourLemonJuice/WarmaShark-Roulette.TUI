@@ -27,6 +27,9 @@ build_version := Develop Build
 clang_flag += -O0
 clang_flag += -g
 clang_flag += -rdynamic
+else ifeq (${build_type}, CI)
+build_version := CI Workflow
+clang_flag += -O0
 else
 build_version := Version 1.0, Build 1
 clang_flag += -Os

@@ -7,7 +7,7 @@
 #include "predefine.h"
 #include "runtime.h"
 
-static const char module_tag[] = "scene - Program Info";
+static const char module_tag[] = "Scene.Program-Info";
 
 int SceneStart_ProgramInfo(struct WarmRuntime *runtime, WINDOW *win)
 {
@@ -16,7 +16,7 @@ int SceneStart_ProgramInfo(struct WarmRuntime *runtime, WINDOW *win)
     // show program info
     werase(win);
     wattron(win, COLOR_PAIR(2));
-    wprintw(win, "WarmaShark[Under Development]\n");
+    wprintw(win, "WarmaShark-Roulette(?)\n");
     wattroff(win, COLOR_PAIR(2));
     wprintw(win, "Made With Open Source Softwares\n");
     wprintw(win, "Version:\t\t%s\n", BUILD_VERSION_STRING);
