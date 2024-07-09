@@ -3,13 +3,12 @@
 SHELL := /usr/bin/bash
 
 build_type := debug
+executable_base_name := warmaShark
 
 source_codes += main.c
 source_codes += log/logger.c runtime.c
 source_codes += dialogue.c control/dialogue2.c control/selector.c control/trigger.c
 source_codes += scene/develop_terminal.c scene/program_info.c scene/shark_roulette.c scene/selector_show.c
-
-executable_base_name := warmaShark
 
 clang_flag += -std=c99
 clang_flag += -Wall -Wextra -Werror
@@ -24,14 +23,17 @@ clang_flag += -I./
 clang_flag += -lncursesw
 
 ifeq (${build_type}, debug)
+build_version := Develop Build
 clang_flag += -O0
 clang_flag += -g
 clang_flag += -rdynamic
 else
+build_version := Version 1.0, Build 1
 clang_flag += -Os
 endif
 
 # for preprocessor
+clang_flag += -DBUILD_VERSION_STRING="\"${build_version}\""
 git_repo_info := $(shell git describe --abbrev=40 --dirty --tags --always --long)
 clang_flag += -DBUILD_GIT_REPO_INFO_STRING="\"${git_repo_info}\""
 build_date:= $(shell LANG=en_US.UTF-8 date --utc +%c)

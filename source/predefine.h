@@ -5,12 +5,18 @@
     Those macro should defined by compiler
  */
 
+#define BUILD_PREPROCESSOR_DEFINE_ERROR_STRING "Unknown, the preprocessor maybe errored"
+
+#ifndef BUILD_VERSION_STRING
+#define BUILD_VERSION_STRING BUILD_PREPROCESSOR_DEFINE_ERROR_STRING
+#endif
+
 #ifndef BUILD_GIT_REPO_INFO_STRING
-#define BUILD_GIT_REPO_INFO_STRING "Unknown, the preprocessor maybe errored"
+#define BUILD_GIT_REPO_INFO_STRING BUILD_PREPROCESSOR_DEFINE_ERROR_STRING
 #endif
 
 #ifndef BUILD_DATE_STRING
-#define BUILD_DATE_STRING "Unknown, the preprocessor maybe errored"
+#define BUILD_DATE_STRING BUILD_PREPROCESSOR_DEFINE_ERROR_STRING
 #endif
 
 #endif

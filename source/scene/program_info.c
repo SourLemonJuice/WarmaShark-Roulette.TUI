@@ -19,8 +19,9 @@ int SceneStart_ProgramInfo(struct WarmRuntime *runtime, WINDOW *win)
     wprintw(win, "WarmaShark[Under Development]\n");
     wattroff(win, COLOR_PAIR(2));
     wprintw(win, "Made With Open Source Softwares\n");
-    wprintw(win, "Git commit: %s\n", BUILD_GIT_REPO_INFO_STRING);
-    wprintw(win, "Build date/time: %s\n", BUILD_DATE_STRING);
+    wprintw(win, "Version:\t\t%s\n", BUILD_VERSION_STRING);
+    wprintw(win, "Git commit:\t\t%s\n", BUILD_GIT_REPO_INFO_STRING);
+    wprintw(win, "Build date/time:\t%s\n", BUILD_DATE_STRING);
     wprintw(win, "\n> Press any key to EXIT <\n");
     wrefresh(win);
 
