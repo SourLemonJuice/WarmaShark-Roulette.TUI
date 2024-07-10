@@ -37,7 +37,7 @@ int WarmLoggerMain(struct WarmRuntime *runtime, const enum WarmLogLevel level, c
     struct tm *tm = localtime(&now_time);
     va_list va;
 
-    fprintf(runtime->log_handle, "[%d-%d-%d %d:%d:%d] ", tm->tm_year + 1900, tm->tm_mon, tm->tm_mday, tm->tm_hour, tm->tm_min,
+    fprintf(runtime->log_handle, "[%d-%d-%d %d:%d:%d] ", tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday, tm->tm_hour, tm->tm_min,
             tm->tm_sec);
     fprintf(runtime->log_handle, "[%s] ", LevelToString_(level));
     fprintf(runtime->log_handle, "[%s]: ", module_tag);

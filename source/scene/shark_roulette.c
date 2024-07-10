@@ -2,6 +2,7 @@
 
 #include <iso646.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include <ncurses.h>
 
@@ -101,13 +102,15 @@ static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
 {
     WarmLog_GeneralLn(runtime, module_tag, "enter the chapter: Introduction");
 
-    dialogue.text = "你好啊，Administrator";
+    dialogue.text = "你好啊，";
+    dialogue.type = kDialogueTypeStatic;
+    Dialogue2PrintText(runtime, win, &dialogue, NULL);
+
+    dialogue.text = getlogin();
+    dialogue.type = kDialogueTypeSentenceEraseWindow;
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-    dialogue.text = "怎么又是Administrator？你们不能改一下用户名称吗？";
-    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
-
-    dialogue.text = "咳咳，抱歉，刚才发生了一些小插曲";
+    dialogue.text = "抱歉，刚才发生了一些小插曲";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     dialogue.text = "你好";
@@ -191,7 +194,7 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
          .string = "亦或是小鲨鱼"},
     };
 
-    dialogue.text = "> 你会选谁呢:";
+    dialogue.text = "> 你会射向谁呢:";
     dialogue.type = kDialogueTypeStatic;
     Dialogue2PrintText(runtime, win, &dialogue, NULL);
 
