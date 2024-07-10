@@ -5,8 +5,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <execinfo.h>
 #include <ncurses.h>
+
+#include "predefine.h"
+
+#ifdef __linux__
+#include <execinfo.h>
+#endif
 
 char *LevelToString_(const enum WarmLogLevel level)
 {
@@ -58,11 +63,17 @@ int WarmthMeltdownUniverse(struct WarmRuntime *runtime, const char *format, ...)
     time(&now_time);
     va_list va;
 
+    #ifdef __linux__
     // get backtrack info
     void *stack_pointers[32];
     char **stack_strings;
     int stack_size = backtrace(stack_pointers, 32);
     stack_strings = backtrace_symbols(stack_pointers, stack_size);
+    #else
+    void *stack_pointers[0];
+    char *stack_strings[] = {"Stack backtrack is disabled on Windows"};
+    int stack_size = 1;
+    #endif
 
     // tag
     fprintf(runtime->log_handle, "[%ld] [!!! Universe Meltdown !!!]\n", now_time);

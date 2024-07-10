@@ -15,6 +15,7 @@ clang_flag += -D_POSIX_C_SOURCE=200809L
 clang_flag += -Wall -Wextra -Werror
 # and disable some stuff ( ´･･)ﾉ(._.`)
 clang_flag += -Wno-unused-parameter
+clang_flag += -Wno-unused-variable
 clang_flag += -Wno-unused-but-set-variable
 clang_flag += -Wno-unused-const-variable
 clang_flag += -Wno-unused-function
