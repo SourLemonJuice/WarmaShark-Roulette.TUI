@@ -21,6 +21,7 @@ static const char module_tag[] = "Scene.Shark-Roulette";
 static struct WarmDialogue2Description dialogue = {
     .position_y = 0,
     .position_x = 0,
+    .interval_delay = 16,
 };
 
 enum PlayerTurn_ {
@@ -190,12 +191,6 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
          .string = "亦或是小鲨鱼"},
     };
 
-    struct WarmDialogue2Description dialogue = {
-        .position_y = 0,
-        .position_x = 0,
-    };
-    Dialogue2ResetPrintTextEvent(&dialogue);
-
     dialogue.text = "> 你会选谁呢:";
     dialogue.type = kDialogueTypeStatic;
     Dialogue2PrintText(runtime, win, &dialogue, NULL);
@@ -296,12 +291,6 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
 static int ChapterShootingFromShark_(struct WarmRuntime *runtime, WINDOW *win)
 {
     WarmLog_GeneralLn(runtime, module_tag, "enter the chapter: Shooting from player");
-
-    struct WarmDialogue2Description dialogue = {
-        .position_y = 0,
-        .position_x = 0,
-    };
-    Dialogue2ResetPrintTextEvent(&dialogue);
 
     dialogue.text = "小鲨鱼努力的拿起枪，笨拙的做出了一个扣动扳机的动作";
     dialogue.type = kDialogueTypeStatic;

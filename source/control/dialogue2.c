@@ -10,6 +10,8 @@
 
 #include <stdbool.h>
 #include <string.h>
+#include <time.h>
+#include <unistd.h>
 
 #include <ncurses.h>
 
@@ -26,11 +28,27 @@ static const char module_tag[] = "Control.Dialogue2";
 int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event,
                        struct WarmTriggerKeyboardCheckEvent *key_event)
 {
-    // print with attr
-    wattron(win, event->attribute);
-    wprintw(win, "%s", event->text);
-    wattroff(win, event->attribute);
-    wrefresh(win);
+    // print at first
+    if (event->interval_delay == 0) {
+        // print with attr
+        wattron(win, event->attribute);
+        wprintw(win, "%s", event->text);
+        wattroff(win, event->attribute);
+        wrefresh(win);
+    } else if (event->interval_delay > 0) {
+        wattron(win, event->attribute);
+        for (int i = 0; i < strlen(event->text); i++) {
+            wprintw(win, "%c", event->text[i]);
+            wrefresh(win);
+            Dialogue2Delay(runtime, event->interval_delay);
+            flushinp();
+        }
+        wattroff(win, event->attribute);
+    } else {
+        // TODO
+        EngineRuntimeUnload(runtime, 1);
+        return 0;
+    }
 
     if (key_event != NULL) {
         TriggerKeyboardCheck(runtime, win, key_event);
@@ -57,9 +75,14 @@ int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDial
     return 0;
 }
 
-int Dialogue2Delay(struct WarmRuntime *runtime, WINDOW *win, int length_ms)
+int Dialogue2Delay(struct WarmRuntime *runtime, int length_ms)
 {
-    // TODO
+    struct timespec timespec = {
+        .tv_sec = length_ms / 1000,
+        .tv_nsec = (length_ms % 1000) * 1000000
+    };
+    nanosleep(&timespec, NULL);
+
     return 0;
 }
 

@@ -11,6 +11,7 @@ source_codes += dialogue.c control/dialogue2.c control/selector.c control/trigge
 source_codes += scene/develop_terminal.c scene/program_info.c scene/shark_roulette.c scene/selector_show.c
 
 clang_flag += -std=c99
+clang_flag += -D_POSIX_C_SOURCE=200809L
 clang_flag += -Wall -Wextra -Werror
 # and disable some stuff ( ´･･)ﾉ(._.`)
 clang_flag += -Wno-unused-parameter

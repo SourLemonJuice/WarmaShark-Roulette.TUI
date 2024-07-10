@@ -55,6 +55,7 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
         .attribute = A_NORMAL,
         .position_y = 0,
         .position_x = 0,
+        .interval_delay = 16,
     };
     Dialogue2ResetPrintTextEvent(&event);
 

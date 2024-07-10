@@ -26,23 +26,29 @@ enum WarmDialogue2EventType {
 // TODO speak rate
 struct WarmDialogue2Description {
     // type
-    // default kDialogueTypeSentenceEnd
+    // default: kDialogueTypeSentenceEnd
     enum WarmDialogue2EventType type;
     // cursor position at startup print
+    // default: won't set
     int position_y;
     int position_x;
     // what message will be print
+    // default: won't set
     char *text;
     // the ncurses print attr
     // default: A_NORMAL
     attr_t attribute;
-    // reset some config to default after print
+    // speak rate(ms). 0 is disable.
+    // default: won't set
+    int interval_delay;
+    // reset some config in structure to default after print
+    // default: true
     bool reset_config;
 };
 
 int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event,
                        struct WarmTriggerKeyboardCheckEvent *key_event);
-int Dialogue2Delay(struct WarmRuntime *runtime, WINDOW *win, int length_ms);
+int Dialogue2Delay(struct WarmRuntime *runtime, int length_ms);
 int Dialogue2Clear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
 int Dialogue2UpdatePosition(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
 int Dialogue2ResetPrintTextEvent(struct WarmDialogue2Description *event);
