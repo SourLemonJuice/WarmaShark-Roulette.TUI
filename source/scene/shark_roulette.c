@@ -38,7 +38,7 @@ static struct SceneCache_ {
     int current_cycle;
 } cache;
 
-int StartScene_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
+int SceneStart_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
 {
     WarmLog_GeneralLn(runtime, module_tag, "Entered the scene");
 
@@ -133,7 +133,7 @@ static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
 
     dialogue.text = "我来简单的介绍一下规则:\n";
     dialogue.type = kDialogueTypeStatic;
-    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+    Dialogue2PrintText(runtime, win, &dialogue, NULL);
 
     getyx(win, dialogue.position_y, dialogue.position_x);
     dialogue.position_x += 4;

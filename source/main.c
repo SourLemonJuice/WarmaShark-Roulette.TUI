@@ -22,20 +22,21 @@ int main(int argc, char *argv[])
     init_pair(1, COLOR_YELLOW, COLOR_BLUE);
     init_pair(2, COLOR_RED, COLOR_BLACK);
 
+    WarmLog_GeneralLn(&runtime, module_tag, "Starting processing command flags");
     // handle command arguments
     if (argc >= 2) {
         for (int i = 1; i < argc; i++) {
             if (strcmp(argv[i], "--help") == 0) {
                 endwin();
                 printf("Usage: executable [--help] [--version]\n");
-                printf("This is a game, build with ncurses.\n");
+                printf("It's a TUI game, build with ncurses.\n");
                 EngineRuntimeUnload(&runtime, 0);
             } else if (strcmp(argv[i], "--version") == 0) {
                 SceneStart_ProgramInfo(&runtime, stdscr);
                 EngineRuntimeUnload(&runtime, 0);
             } else {
                 endwin();
-                printf("ERROR: Invalid arguments '%s'\n", argv[i]);
+                printf("Error: Invalid arguments '%s', use '--help' to see more info.\n", argv[i]);
                 EngineRuntimeUnload(&runtime, 1);
             }
         }
@@ -49,28 +50,28 @@ int main(int argc, char *argv[])
     // select the scene
     wprintw(stdscr, "Choose the scene(For Develop):");
     struct WarmSelectorActionEvent scene_selector_event[] = {
-        {.string = "Quit Program",
+        {.string = "Quit/Exit",
          .attribute = A_DIM,
          .attribute_highlight = A_STANDOUT,
          .position_y = 1,
          .position_x = 2},
-        {.string = "Develop Terminal",
+        {.string = "Develop Terminal\t[Little Demo]",
          .attribute = A_NORMAL,
          .attribute_highlight = A_STANDOUT,
          .position_y = 2,
          .position_x = 2},
-        {.string = "Program info",
+        {.string = "Program info\t\t[Build Version]",
          .attribute = A_NORMAL,
          .attribute_highlight = A_STANDOUT,
          .position_y = 3,
          .position_x = 2},
-        {.string = "Shark Roulette",
+        {.string = "Shark Roulette\t[Main Game]",
          .attribute = A_NORMAL,
          .attribute_highlight = A_STANDOUT,
          .position_y = 4,
          .position_x = 2},
-        {.string = "Selector Show/Test",
-         .attribute = A_NORMAL,
+        {.string = "Selector Show/Test\t[Just for Test]",
+         .attribute = A_DIM,
          .attribute_highlight = A_STANDOUT,
          .position_y = 5,
          .position_x = 2},
@@ -116,7 +117,7 @@ int main(int argc, char *argv[])
         wrefresh(win);
         delwin(win);
         win = newwin((runtime.terminal_y - 1) * 0.4 - 2, runtime.terminal_x * 0.7 - 2, 2, 1);
-        StartScene_SharkRoulette(&runtime, win);
+        SceneStart_SharkRoulette(&runtime, win);
         break;
     case 4:
         // Selector Show/Test

@@ -5,6 +5,6 @@
 
 #include "runtime.h"
 
-int StartScene_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win_handle);
+int SceneStart_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win_handle);
 
 #endif

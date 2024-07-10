@@ -32,6 +32,7 @@ else ifeq (${build_type}, CI)
 build_version := CI Workflow
 clang_flag += -O0
 else
+# release info
 build_version := Version 1.0, Build 1
 clang_flag += -Os
 endif

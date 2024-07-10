@@ -23,7 +23,6 @@ enum WarmDialogue2EventType {
     kDialogueTypeStatic,
 };
 
-// TODO speak rate
 struct WarmDialogue2Description {
     // type
     // default: kDialogueTypeSentenceEnd

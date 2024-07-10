@@ -45,8 +45,7 @@ int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDial
         }
         wattroff(win, event->attribute);
     } else {
-        // TODO
-        EngineRuntimeUnload(runtime, 1);
+        WarmthMeltdownUniverse(runtime, "Dialogue2 PrintText event have a invalid value of 'interval_delay'\n");
         return 0;
     }
 

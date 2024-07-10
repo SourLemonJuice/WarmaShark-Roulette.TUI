@@ -16,9 +16,9 @@ int SceneStart_ProgramInfo(struct WarmRuntime *runtime, WINDOW *win)
     // show program info
     werase(win);
     wattron(win, COLOR_PAIR(2));
-    wprintw(win, "WarmaShark-Roulette(?)\n");
+    wprintw(win, "WarmaShark-Roulette\n");
     wattroff(win, COLOR_PAIR(2));
-    wprintw(win, "Made With Open Source Softwares\n");
+    wprintw(win, "2024 酸柠檬猹/SourLemonJuice\n");
     wprintw(win, "Version:\t\t%s\n", BUILD_VERSION_STRING);
     wprintw(win, "Git commit:\t\t%s\n", BUILD_GIT_REPO_INFO_STRING);
     wprintw(win, "Build date/time:\t%s\n", BUILD_DATE_STRING);
