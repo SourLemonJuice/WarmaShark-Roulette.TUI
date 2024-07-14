@@ -1,6 +1,11 @@
 name: Build for Windows
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      build_type:
+        required: true
+        default: "build_type=CI"
 
 defaults:
   run:
@@ -16,7 +21,7 @@ jobs:
       with:
         install: git make clang ncurses-devel
     - name: make
-      run: make warmaShark.exe build_type=CI
+      run: make warmaShark.exe ${{ inputs.build_type }}
     - name: Upload executable file
       uses: actions/upload-artifact@v4
       with:

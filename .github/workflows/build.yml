@@ -5,6 +5,11 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      build_type:
+        required: true
+        default: "build_type=CI"
 
 defaults:
   run:
@@ -17,7 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: make
-      run: make warmaShark.out build_type=CI
+      run: make warmaShark.out ${{ inputs.build_type }}
     - name: Upload executable file
       uses: actions/upload-artifact@v4
       with:
