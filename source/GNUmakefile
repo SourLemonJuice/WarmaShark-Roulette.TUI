@@ -20,6 +20,8 @@ clang_flag += -Wno-unused-but-set-variable
 clang_flag += -Wno-unused-const-variable
 clang_flag += -Wno-unused-function
 clang_flag += -Wno-sign-compare
+# for old version clang
+clang_flag += -Wno-unknown-warning-option
 
 clang_flag += -I./
 clang_flag += -lncursesw

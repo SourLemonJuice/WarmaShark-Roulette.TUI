@@ -38,7 +38,16 @@ My test OS is Archlinux(main) and Ubuntu(verification, GitHub CI).
 
 ### For Windows Build
 
-Emm... There is a `#include <execinfo.h>` in log system. So MSYS2 can't build it, I'm also don't want to change it. TBD
+In theory, it can build.\
+BUT!!!!
+
+The clang compiler version of MSYS2 is 11.0.0\
+The control warning flags are slightly incompatible...
+
+AAAAAAAAAAAAAAAAAAA
+
+`-Wno-unknown-warning-option` can fix it, but...\
+I hate...
 
 ## Todo list
 
