@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     }
 
     // record some information for tracking
-    WarmLog_GeneralLn(&runtime, module_tag, "Program locale should have been set to %s", runtime.locale_string);
+    WarmLog_GeneralLn(&runtime, module_tag, "Program locale should have been set to '%s'", runtime.locale_string);
     WarmLog_GeneralLn(&runtime, module_tag, "MAX screen X: %d, Y: %d", runtime.terminal_x, runtime.terminal_y);
     WarmLog_GeneralLn(&runtime, module_tag, "program runtime has been init, starting scene selector");
 
@@ -55,8 +55,8 @@ int main(int argc, char *argv[])
          .attribute_highlight = A_STANDOUT,
          .position_y = 1,
          .position_x = 2},
-        {.string = "Develop Terminal\t[Little Demo]",
-         .attribute = A_NORMAL,
+        {.string = "Develop Terminal\t[Little Dialogue Demo]",
+         .attribute = A_DIM,
          .attribute_highlight = A_STANDOUT,
          .position_y = 2,
          .position_x = 2},
