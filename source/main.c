@@ -19,28 +19,27 @@ int main(int argc, char *argv[])
     struct WarmRuntime runtime;
     EngineRuntimeInit(&runtime);
 
-    init_pair(1, COLOR_YELLOW, COLOR_BLUE);
-    init_pair(2, COLOR_RED, COLOR_BLACK);
-
     WarmLog_GeneralLn(&runtime, module_tag, "Starting processing command flags");
     // handle command arguments
     if (argc >= 2) {
         for (int i = 1; i < argc; i++) {
             if (strcmp(argv[i], "--help") == 0) {
-                endwin();
                 printf("Usage: executable [--help] [--version]\n");
                 printf("It's a TUI game, build with ncurses.\n");
-                EngineRuntimeUnload(&runtime, 0);
+                EngineRuntimeUnload(&runtime);
+                exit(0);
             } else if (strcmp(argv[i], "--version") == 0) {
+                EngineNcursesInit(&runtime);
                 SceneStart_ProgramInfo(&runtime, stdscr);
-                EngineRuntimeUnload(&runtime, 0);
+                EngineRuntimeExit(&runtime, 0);
             } else {
-                endwin();
                 printf("Error: Invalid arguments '%s', use '--help' to see more info.\n", argv[i]);
-                EngineRuntimeUnload(&runtime, 1);
+                EngineRuntimeUnload(&runtime);
+                exit(1);
             }
         }
     }
+    EngineNcursesInit(&runtime);
 
     // record some information for tracking
     WarmLog_GeneralLn(&runtime, module_tag, "Program locale should have been set to '%s'", runtime.locale_string);
@@ -82,7 +81,7 @@ int main(int argc, char *argv[])
     switch (selected_scene) {
     case 0:
         // quit program
-        EngineRuntimeUnload(&runtime, 0);
+        EngineRuntimeExit(&runtime, 0);
         break;
     case 1:
         // scene - develop terminal
@@ -126,7 +125,7 @@ int main(int argc, char *argv[])
     }
 
     // free up everything
-    EngineRuntimeUnload(&runtime, 0);
+    EngineRuntimeExit(&runtime, 0);
 
     return 0;
 }

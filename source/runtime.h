@@ -11,7 +11,9 @@ struct WarmRuntime {
     int terminal_x; // terminal maximum x
 };
 
-int EngineRuntimeInit(struct WarmRuntime *config);
-void EngineRuntimeUnload(struct WarmRuntime *config, int return_code);
+int EngineRuntimeInit(struct WarmRuntime *runtime);
+int EngineNcursesInit(struct WarmRuntime *runtime);
+void EngineRuntimeUnload(struct WarmRuntime *runtime);
+void EngineRuntimeExit(struct WarmRuntime *runtime, int return_code);
 
 #endif

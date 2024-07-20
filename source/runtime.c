@@ -23,6 +23,24 @@ int EngineRuntimeInit(struct WarmRuntime *runtime)
         exit(1);
     setlocale(LC_ALL, runtime->locale_string); // setup program locale
 
+    // setting log file
+    runtime->log_path = "./Engine.log";
+    runtime->log_handle = fopen(runtime->log_path, "w"); // open log file, and save the handle
+    if (runtime->log_handle == NULL) {
+        exit(1);
+    } else {
+        fprintf(runtime->log_handle, "==== Engine runtime has been init ====\n");
+        fflush(runtime->log_handle);
+    }
+
+    // seeding for random number
+    srand(time(NULL));
+
+    return 0;
+}
+
+int EngineNcursesInit(struct WarmRuntime *runtime)
+{
     // init ncurses std screen
     initscr();
     cbreak();
@@ -36,30 +54,31 @@ int EngineRuntimeInit(struct WarmRuntime *runtime)
         werase(stdscr);
     } else {
         start_color();
-    }
-
-    // setting log file
-    runtime->log_path = "./Engine.log";
-    runtime->log_handle = fopen(runtime->log_path, "w"); // open log file, and save the handle
-    if (runtime->log_handle == NULL) {
-        exit(1);
-    } else {
-        fprintf(runtime->log_handle, "==== Engine runtime has been init ====\n");
-        fflush(runtime->log_handle);
+        init_pair(1, COLOR_YELLOW, COLOR_BLUE);
+        init_pair(2, COLOR_RED, COLOR_BLACK);
     }
 
     // maximum terminal size
     getmaxyx(stdscr, runtime->terminal_y, runtime->terminal_x);
 
-    // seeding for random number
-    srand(time(NULL));
-
     return 0;
 }
 
-void EngineRuntimeUnload(struct WarmRuntime *runtime, int return_code)
+/*
+    Just will free up runtime data.
+    Won't close ncurses lib, and also won't exit program.
+ */
+void EngineRuntimeUnload(struct WarmRuntime *runtime)
 {
     fclose(runtime->log_handle);
+}
+
+/*
+    Completely exit the program.
+ */
+void EngineRuntimeExit(struct WarmRuntime *runtime, int return_code)
+{
+    EngineRuntimeUnload(runtime);
     endwin();
     exit(return_code);
 }

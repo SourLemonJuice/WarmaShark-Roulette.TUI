@@ -60,6 +60,7 @@ I hate...
 ## Known bugs
 
 - Chinese characters may be garbled due to the ncurses/ncursesw dynamic link issue. It is just in some platforms like Ubuntu.
+- It may not even start in Windows.
 
 ## Todo list
 
