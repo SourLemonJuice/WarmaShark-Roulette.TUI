@@ -51,7 +51,7 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     TriggerKeyboardCheckEventInit(runtime, &key_event, (int[]){' ', '\n'}, 2, 0);
     TriggerKeyboardCheckEventAppend(runtime, &key_event, (int[]){'q'}, 1, 1);
 
-    struct WarmDialogue2Description event = {
+    struct DialogueDescription event = {
         .attribute = A_NORMAL,
         .position_y = 0,
         .position_x = 0,
@@ -62,7 +62,8 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     event.text = "你好/Hello";
     event.attribute = COLOR_PAIR(1);
     event.type = kDialogueTypeStatic;
-    Dialogue2PrintText(runtime, win, &event, NULL);
+    event.wait_key = false;
+    Dialogue2PrintText(runtime, win, &event, &key_event);
 
     event.text = "，在这里可以按 q 键退出（真的？），Enter 或 Space 跳转到下一个对话。";
     event.type = kDialogueTypeWindowReset;
@@ -89,7 +90,8 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     event.text = "Sorry... But... Can you wait while I continue developing? I need some light ahead of me... also need "
                  "to make with myself.";
     event.type = kDialogueTypeStatic;
-    Dialogue2PrintText(runtime, win, &event, NULL);
+    event.wait_key = false;
+    Dialogue2PrintText(runtime, win, &event, &key_event);
 
     struct WarmSelectorActionEvent selector_event[] = {
         {.position_y = win_y * 0.6,

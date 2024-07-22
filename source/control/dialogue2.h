@@ -24,7 +24,7 @@ enum WarmDialogue2EventType {
     kDialogueTypeWindowReset,
 };
 
-struct WarmDialogue2Description {
+struct DialogueDescription {
     // type
     // default: kDialogueTypeSentenceEnd
     enum WarmDialogue2EventType type;
@@ -38,21 +38,25 @@ struct WarmDialogue2Description {
     // the ncurses print attr
     // default: A_NORMAL
     attr_t attribute;
-    // speak rate(ms). 0 is disable.
+    // speak rate(ms). 0 is disable
     // default: won't set
     int interval_delay;
+    // fast mode status, if true ignore the speak rate(interval_delay)
+    bool fast_sentence;
+    // wait a key trigger event after print. it's not a print detection, that's controlled by skip_sentence
+    bool wait_key;
     // reset some config in structure to default after print
     // default: true
     bool reset_config;
 };
 
-int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event,
+int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event,
                        struct WarmTriggerKeyboardCheckEvent *key_event);
-int DialoguePrintCenter(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event,
+int DialoguePrintCenter(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event,
                         struct WarmTriggerKeyboardCheckEvent *key_event);
 int DialogueDelay(struct WarmRuntime *runtime, int length_ms);
-int DialogueClear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
+int DialogueClear(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event);
 // int Dialogue2UpdatePosition(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
-int Dialogue2ResetPrintTextEvent(struct WarmDialogue2Description *event);
+int Dialogue2ResetPrintTextEvent(struct DialogueDescription *event);
 
 #endif

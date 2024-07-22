@@ -1,5 +1,6 @@
 #include "control/trigger.h"
 
+#include <iso646.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -33,28 +34,39 @@ static int MatchTheKeys_(int input, int target[], int size)
 int TriggerKeyboardCheck(struct WarmRuntime *runtime, WINDOW *win, struct WarmTriggerKeyboardCheckEvent *event)
 {
     int input; // it is a char not num
-    struct WarmTriggerKeyboardCheckEvent *current_event = event;
+    int result;
     while (true) {
         input = wgetch(win);
-        // reset to first structure
-        current_event = event;
-        while (true) {
-            if (MatchTheKeys_(input, current_event->keys, current_event->keys_size) == 0) {
-                return current_event->index;
-            }
-            // move to next linked list
-            // and... the last structure's 'next' is null
-            if (current_event->next != NULL) {
-                current_event = current_event->next;
-                continue;
-            } else {
-                // if has traversed all structure
-                break;
-            }
+        result = TriggerKeyboardCheckExistingKey(runtime, win, event, input);
+        if (not (result < 0))
+            return result;
+    }
+
+    return -1;
+}
+
+/*
+    Match only one existing key.
+ */
+int TriggerKeyboardCheckExistingKey(struct WarmRuntime *runtime, WINDOW *win,
+                                    struct WarmTriggerKeyboardCheckEvent *event, int key)
+{
+    struct WarmTriggerKeyboardCheckEvent *current_event = event;
+    while (true) {
+        if (MatchTheKeys_(key, current_event->keys, current_event->keys_size) == 0)
+            return current_event->index;
+        // move to next linked list
+        // and... the last structure's 'next' is null
+        if (current_event->next != NULL) {
+            current_event = current_event->next;
+            continue;
+        } else {
+            // if has traversed all structure
+            break;
         }
     }
 
-    return 0;
+    return -1;
 }
 
 int TriggerKeyboardCheckEventInit(struct WarmRuntime *runtime, struct WarmTriggerKeyboardCheckEvent *event, int keys[],

@@ -19,7 +19,7 @@ static int ChapterShootingFromShark_(struct WarmRuntime *runtime, WINDOW *win);
 
 static const char module_tag[] = "Scene.Shark-Roulette";
 
-static struct WarmDialogue2Description dialogue = {
+static struct DialogueDescription dialogue = {
     .position_y = 0,
     .position_x = 0,
     .interval_delay = 16,
@@ -56,7 +56,8 @@ int SceneStart_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
 
     dialogue.type = kDialogueTypeStatic;
     dialogue.text = "所以，你想跳过介绍吗？";
-    Dialogue2PrintText(runtime, win, &dialogue, NULL);
+    dialogue.wait_key = false;
+    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     struct WarmSelectorActionEvent skip_introduction_select[] = {
         {.position_y = cache.win_y * 0.2,
@@ -74,7 +75,8 @@ int SceneStart_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
 
     dialogue.type = kDialogueTypeWindowReset;
     dialogue.text = NULL;
-    Dialogue2PrintText(runtime, win, &dialogue, NULL);
+    dialogue.wait_key = false;
+    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
     if ( skip_introduction == 0) {
         ChapterIntroduction_(runtime, win);
     }
@@ -106,7 +108,8 @@ static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
 
     dialogue.type = kDialogueTypeStatic;
     dialogue.text = "你好啊，";
-    Dialogue2PrintText(runtime, win, &dialogue, NULL);
+    dialogue.wait_key = false;
+    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     dialogue.type = kDialogueTypeWindowReset;
     dialogue.text = getlogin();
@@ -138,7 +141,8 @@ static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
 
     dialogue.type = kDialogueTypeStatic;
     dialogue.text = "我来简单的介绍一下规则:\n";
-    Dialogue2PrintText(runtime, win, &dialogue, NULL);
+    dialogue.wait_key = false;
+    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     getyx(win, dialogue.position_y, dialogue.position_x);
     dialogue.position_x += 4;
@@ -193,13 +197,15 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
 
     dialogue.text = "> 你会射向谁呢:";
     dialogue.type = kDialogueTypeStatic;
-    Dialogue2PrintText(runtime, win, &dialogue, NULL);
+    dialogue.wait_key = false;
+    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     int shooting_to = DialogueSelector(runtime, win, shooting_targets, 2);
 
     dialogue.type = kDialogueTypeWindowReset;
     dialogue.text = NULL;
-    Dialogue2PrintText(runtime, win, &dialogue, NULL);
+    dialogue.wait_key = false;
+    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     switch (shooting_to) {
     case 0:

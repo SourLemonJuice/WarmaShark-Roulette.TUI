@@ -16,6 +16,8 @@ struct WarmTriggerKeyboardCheckEvent {
 };
 
 int TriggerKeyboardCheck(struct WarmRuntime *runtime, WINDOW *win, struct WarmTriggerKeyboardCheckEvent *event);
+int TriggerKeyboardCheckExistingKey(struct WarmRuntime *runtime, WINDOW *win,
+                                    struct WarmTriggerKeyboardCheckEvent *event, int key);
 int TriggerKeyboardCheckEventInit(struct WarmRuntime *runtime, struct WarmTriggerKeyboardCheckEvent *event, int keys[],
                                   int keys_size, int index);
 int TriggerKeyboardCheckEventAppend(struct WarmRuntime *runtime, struct WarmTriggerKeyboardCheckEvent *event,
