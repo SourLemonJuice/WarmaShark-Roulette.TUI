@@ -98,7 +98,7 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
          .position_x = win_x * 0.1,
          .attribute = A_NORMAL,
          .attribute_highlight = A_STANDOUT,
-         .string = "You Idiot"},
+         .string = "You Idiot(just joke)"},
         {.position_y = win_y * 0.6,
          .position_x = win_x * 0.5,
          .attribute = A_NORMAL,
@@ -107,8 +107,7 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     };
     DialogueSelector(runtime, win, selector_event, (sizeof(selector_event) / sizeof(struct WarmSelectorActionEvent)));
 
-    werase(win);
-    wrefresh(win);
+    DialogueWindowReset(runtime, win, &event);
 
     TriggerKeyboardCheckEventFreeUp(runtime, &key_event);
     WarmLog_General(runtime, module_tag, "Exit the scene normally\n");

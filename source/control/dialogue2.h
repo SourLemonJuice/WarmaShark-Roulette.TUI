@@ -54,6 +54,7 @@ int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct Dialogue
                        struct WarmTriggerKeyboardCheckEvent *key_event);
 int DialoguePrintCenter(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event,
                         struct WarmTriggerKeyboardCheckEvent *key_event);
+int DialogueWindowReset(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event);
 int DialogueDelay(struct WarmRuntime *runtime, int length_ms);
 int DialogueClear(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event);
 // int Dialogue2UpdatePosition(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);

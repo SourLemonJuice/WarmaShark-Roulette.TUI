@@ -73,10 +73,7 @@ int SceneStart_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
     };
     int skip_introduction = DialogueSelector(runtime, win, skip_introduction_select, 2);
 
-    dialogue.type = kDialogueTypeWindowReset;
-    dialogue.text = NULL;
-    dialogue.wait_key = false;
-    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+    DialogueWindowReset(runtime, win, &dialogue);
     if ( skip_introduction == 0) {
         ChapterIntroduction_(runtime, win);
     }
@@ -202,10 +199,7 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
 
     int shooting_to = DialogueSelector(runtime, win, shooting_targets, 2);
 
-    dialogue.type = kDialogueTypeWindowReset;
-    dialogue.text = NULL;
-    dialogue.wait_key = false;
-    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+    DialogueWindowReset(runtime, win, &dialogue);
 
     switch (shooting_to) {
     case 0:

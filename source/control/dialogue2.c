@@ -63,6 +63,7 @@ int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct Dialogue
                 // display the full sentence immediately
                 wmove(win, event->position_y, event->position_x);
                 wprintw(win, "%s", event->text);
+                wrefresh(win);
                 break;
             }
         }
@@ -86,13 +87,7 @@ int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct Dialogue
         getyx(win, event->position_y, event->position_x);
         break;
     case kDialogueTypeWindowReset:
-        // erase the window
-        werase(win);
-        wrefresh(win);
-        // reset the position to origin of window
-        event->position_y = 0;
-        event->position_x = 0;
-        event->fast_sentence = false; // off skip mode
+        DialogueWindowReset(runtime, win, event);
         break;
     default:
         WarmLog_WarningLn(runtime, module_tag, "Dialogue2PrintText unknown event type");
@@ -140,7 +135,25 @@ int DialoguePrintCenter(struct WarmRuntime *runtime, WINDOW *win, struct Dialogu
 }
 
 /*
+    same like event type kDialogueTypeSentenceEnd, but will erase the full window.
+    can be used well with kDialogueTypeStatic type.
+ */
+int DialogueWindowReset(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event)
+{
+    // erase the window
+    werase(win);
+    wrefresh(win);
+    // reset the position to origin of window
+    event->position_y = 0;
+    event->position_x = 0;
+    event->fast_sentence = false; // off skip mode
+
+    return 0;
+}
+
+/*
     Delay in ms.
+    Old implement for speak rate.
  */
 int DialogueDelay(struct WarmRuntime *runtime, int length_ms)
 {
