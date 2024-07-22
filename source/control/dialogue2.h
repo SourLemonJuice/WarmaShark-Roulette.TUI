@@ -14,13 +14,14 @@
 enum WarmDialogue2EventType {
     // clear the printed string(not erase window), and reset position.
     kDialogueTypeSentenceEnd,
-    // same like ...SentenceEnd, but will erase the full window.
-    // can be used well with ...Static type.
-    kDialogueTypeSentenceEraseWindow,
     // don't do anything after print.
     // then no one known the full string length and position, so just erase the window...
     // remember to werase(), even next dialogue may will overwrite the sentence.
     kDialogueTypeStatic,
+    // same like ...SentenceEnd, but will erase the full window.
+    // can be used well with ...Static type.
+    // put it on the last event before it need to be cleared.
+    kDialogueTypeWindowReset,
 };
 
 struct WarmDialogue2Description {
@@ -47,9 +48,11 @@ struct WarmDialogue2Description {
 
 int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event,
                        struct WarmTriggerKeyboardCheckEvent *key_event);
-int Dialogue2Delay(struct WarmRuntime *runtime, int length_ms);
-int Dialogue2Clear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
-int Dialogue2UpdatePosition(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
+int DialoguePrintCenter(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event,
+                        struct WarmTriggerKeyboardCheckEvent *key_event);
+int DialogueDelay(struct WarmRuntime *runtime, int length_ms);
+int DialogueClear(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
+// int Dialogue2UpdatePosition(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
 int Dialogue2ResetPrintTextEvent(struct WarmDialogue2Description *event);
 
 #endif

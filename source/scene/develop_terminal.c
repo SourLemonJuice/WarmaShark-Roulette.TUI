@@ -65,8 +65,11 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     Dialogue2PrintText(runtime, win, &event, NULL);
 
     event.text = "，在这里可以按 q 键退出（真的？），Enter 或 Space 跳转到下一个对话。";
-    event.type = kDialogueTypeSentenceEraseWindow;
+    event.type = kDialogueTypeWindowReset;
     Dialogue2PrintText(runtime, win, &event, &key_event);
+
+    event.text = "这是关于一个中心句子打印的测试";
+    DialoguePrintCenter(runtime, win, &event, &key_event);
 
     event.text = "This is a Develop Terminal or just a test for a normal example dialogue tree.";
     Dialogue2PrintText(runtime, win, &event, &key_event);

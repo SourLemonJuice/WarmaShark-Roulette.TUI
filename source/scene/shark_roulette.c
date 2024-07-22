@@ -54,11 +54,11 @@ int SceneStart_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
 
     // init finished
 
-    dialogue.text = "所以，你想跳过介绍吗？";
     dialogue.type = kDialogueTypeStatic;
+    dialogue.text = "所以，你想跳过介绍吗？";
     Dialogue2PrintText(runtime, win, &dialogue, NULL);
 
-    struct WarmSelectorActionEvent skip_introduction_event[] = {
+    struct WarmSelectorActionEvent skip_introduction_select[] = {
         {.position_y = cache.win_y * 0.2,
          .position_x = cache.win_x * 0.1,
          .attribute = A_NORMAL,
@@ -70,9 +70,11 @@ int SceneStart_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
          .attribute_highlight = A_STANDOUT,
          .string = "跳过"},
     };
-    int skip_introduction = DialogueSelector(runtime, win, skip_introduction_event, 2);
-    werase(win);
-    wrefresh(win);
+    int skip_introduction = DialogueSelector(runtime, win, skip_introduction_select, 2);
+
+    dialogue.type = kDialogueTypeWindowReset;
+    dialogue.text = NULL;
+    Dialogue2PrintText(runtime, win, &dialogue, NULL);
     if ( skip_introduction == 0) {
         ChapterIntroduction_(runtime, win);
     }
@@ -102,12 +104,12 @@ static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
 {
     WarmLog_GeneralLn(runtime, module_tag, "enter the chapter: Introduction");
 
-    dialogue.text = "你好啊，";
     dialogue.type = kDialogueTypeStatic;
+    dialogue.text = "你好啊，";
     Dialogue2PrintText(runtime, win, &dialogue, NULL);
 
+    dialogue.type = kDialogueTypeWindowReset;
     dialogue.text = getlogin();
-    dialogue.type = kDialogueTypeSentenceEraseWindow;
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     dialogue.text = "抱歉，刚才发生了一些小插曲";
@@ -134,13 +136,12 @@ static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
     dialogue.text = "桌子上有一把很~酷~的左轮手枪，可以容纳六发子弹的弹仓，然而只有一个位置会被填充子弹";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-    dialogue.text = "我来简单的介绍一下规则:\n";
     dialogue.type = kDialogueTypeStatic;
+    dialogue.text = "我来简单的介绍一下规则:\n";
     Dialogue2PrintText(runtime, win, &dialogue, NULL);
 
     getyx(win, dialogue.position_y, dialogue.position_x);
     dialogue.position_x += 4;
-    Dialogue2UpdatePosition(runtime, win, &dialogue);
 
     dialogue.text = "第一回合由你来选择，你可以对我开枪，也可以对自己开枪";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
@@ -151,13 +152,9 @@ static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
     dialogue.text = "当然，你可以对着自己开满6枪，这样一定会输掉的";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
+    dialogue.type = kDialogueTypeWindowReset;
     dialogue.text = "你也可以对着我开枪，但是由于我的伸展角度有限，在下一回合只会向你开枪";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
-
-    dialogue.position_y = 0;
-    dialogue.position_x = 0;
-    werase(win);
-    Dialogue2UpdatePosition(runtime, win, &dialogue);
 
     dialogue.text = "别紧张啦~这不是一个可怕的游戏";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
@@ -200,15 +197,18 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
 
     int shooting_to = DialogueSelector(runtime, win, shooting_targets, 2);
 
-    werase(win);
+    dialogue.type = kDialogueTypeWindowReset;
+    dialogue.text = NULL;
+    Dialogue2PrintText(runtime, win, &dialogue, NULL);
+
     switch (shooting_to) {
     case 0:
-        dialogue.text = "你对着自己扣动了扳机";
         dialogue.type = kDialogueTypeStatic;
+        dialogue.text = "你对着自己扣动了扳机";
         Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
+        dialogue.type = kDialogueTypeWindowReset;
         dialogue.text = "，时间在这一刻仿佛静止了";
-        dialogue.type = kDialogueTypeSentenceEraseWindow;
         Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
         if (cache.current_cycle == cache.live_ammunition) {
@@ -247,12 +247,12 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
         }
         break;
     case 1:
-        dialogue.text = "你对着小鲨鱼扣动了扳机";
         dialogue.type = kDialogueTypeStatic;
+        dialogue.text = "你对着小鲨鱼扣动了扳机";
         Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
+        dialogue.type = kDialogueTypeWindowReset;
         dialogue.text = "，这一行为甚至没有让你产生任何负罪感";
-        dialogue.type = kDialogueTypeSentenceEraseWindow;
         Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
         if (cache.current_cycle == cache.live_ammunition) {
@@ -295,12 +295,12 @@ static int ChapterShootingFromShark_(struct WarmRuntime *runtime, WINDOW *win)
 {
     WarmLog_GeneralLn(runtime, module_tag, "enter the chapter: Shooting from player");
 
-    dialogue.text = "小鲨鱼努力的拿起枪，笨拙的做出了一个扣动扳机的动作";
     dialogue.type = kDialogueTypeStatic;
+    dialogue.text = "小鲨鱼努力的拿起枪，笨拙的做出了一个扣动扳机的动作";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
+    dialogue.type = kDialogueTypeWindowReset;
     dialogue.text = "，你的心跳停止了";
-    dialogue.type = kDialogueTypeSentenceEraseWindow;
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     if (cache.current_cycle == cache.live_ammunition) {
