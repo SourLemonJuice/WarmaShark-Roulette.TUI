@@ -44,7 +44,7 @@ int WarmLoggerMain(struct WarmRuntime *runtime, const enum WarmLogLevel level, c
 
     fprintf(runtime->log_handle, "[%d-%d-%d %d:%d:%d] ", tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday, tm->tm_hour, tm->tm_min,
             tm->tm_sec);
-    fprintf(runtime->log_handle, "[%s] ", LevelToString_(level));
+    fprintf(runtime->log_handle, "[%s]\t", LevelToString_(level));
     fprintf(runtime->log_handle, "[%s]: ", module_tag);
     va_start(va, format);
     vfprintf(runtime->log_handle, format, va);

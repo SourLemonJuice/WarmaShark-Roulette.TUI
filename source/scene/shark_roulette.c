@@ -80,7 +80,7 @@ int SceneStart_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
 
     cache.live_ammunition = rand() % 6;
     cache.turn = kTurnPlayer_;
-    WarmLog_GeneralLn(runtime, module_tag, "live ammunition is in: %d", cache.live_ammunition);
+    WarmLog_GeneralLn(runtime, module_tag, "live ammunition is in: %d(start from 0)", cache.live_ammunition);
     for (cache.current_cycle = 0; cache.current_cycle < 6; cache.current_cycle++) {
         if (cache.turn == kTurnPlayer_) {
             if (ChapterShootingFromPlayer_(runtime, win) != 0) {
@@ -93,8 +93,8 @@ int SceneStart_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
         }
     }
 
-    dialogue.text = "> 都是些有趣的人类呐";
-    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+    dialogue.text = "> 都是些有趣的生物呐（歪头笑） <";
+    DialoguePrintCenter(runtime, win, &dialogue, cache.key_event);
 
     return 0;
 }
@@ -234,8 +234,8 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
             dialogue.text = "这便是你的结局";
             Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-            dialogue.text = "结局-1:暴虐欢愉的收场";
-            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+            dialogue.text = "结局-1：暴虐欢愉的收场";
+            DialoguePrintCenter(runtime, win, &dialogue, cache.key_event);
 
             return 1;
         } else {
@@ -274,8 +274,8 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
             dialogue.text = "你知道弟切草的花语吗？";
             Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-            dialogue.text = "结局-2:弟切草";
-            Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+            dialogue.text = "结局-2：弟切草";
+            DialoguePrintCenter(runtime, win, &dialogue, cache.key_event);
 
             return 1;
         } else {
@@ -322,8 +322,8 @@ static int ChapterShootingFromShark_(struct WarmRuntime *runtime, WINDOW *win)
         dialogue.text = "当你气若游丝之时，你找到了这颗气味的来源，用染成鲜红的双手捧起了它";
         Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-        dialogue.text = "结局-3:原罪、诱惑、智慧的化身";
-        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+        dialogue.text = "结局-3：原罪、诱惑、智慧的化身";
+        DialoguePrintCenter(runtime, win, &dialogue, cache.key_event);
 
         return 1;
     } else {

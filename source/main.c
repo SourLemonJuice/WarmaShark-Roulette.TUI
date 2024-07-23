@@ -111,11 +111,11 @@ int main(int argc, char *argv[])
         // Shark Roulette
         wprintw(stdscr, "Little Shark Roulette\n");
         wrefresh(stdscr);
-        WINDOW *win = newwin((runtime.terminal_y - 1) * 0.4, runtime.terminal_x * 0.7, 1, 0);
+        WINDOW *win = newwin((runtime.terminal_y - 1) * 0.7, runtime.terminal_x * 0.7, 1, 4);
         box(win, 0, 0);
         wrefresh(win);
         delwin(win);
-        win = newwin((runtime.terminal_y - 1) * 0.4 - 2, runtime.terminal_x * 0.7 - 2, 2, 1);
+        win = newwin((runtime.terminal_y - 1) * 0.7 - 2, runtime.terminal_x * 0.7 - 2, 2, 5);
         SceneStart_SharkRoulette(&runtime, win);
         break;
     case 4:
