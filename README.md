@@ -22,12 +22,13 @@
 嘛，下次开始这样的项目会是在什么时候呢。\
 希望你我都能找到适合自己的未来。
 
+对了对了，对代码感兴趣的话可以去看看 #Documentations 章节，和注释一起食用效果更加
+
 ## Documentations
 
 The README don't have any useful information, so...
 
-Some incomplete documents here: [docs/](docs/)\
-But it's also just for myself...
+Some incomplete documents here: [docs/](docs/)
 
 ## Build system
 

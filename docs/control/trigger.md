@@ -10,3 +10,29 @@
 事件标识由结构体中的 `.index` 定义，一套配置中不能存在有着同样索引的事件（会直接抛出错误）
 
 至于优先级... 谁先加进去谁的优先级就越高，但没事为什么要弄会冲突的按键？
+
+检查器的原型是以前在开发终端里放着的这个：
+
+```c
+/*
+    Result:
+        0: continue
+        1: ERROR
+ */
+static int GetKeyToContinue_(struct WarmRuntime *runtime, WINDOW *win)
+{
+    int input;
+    while (true) {
+        input = wgetch(win);
+        if (input == ' ' or input == '\n') {
+            return 0;
+        } else if (input == 'q') {
+            EngineRuntimeExit(runtime, 0);
+        }
+    }
+
+    return 1;
+}
+```
+
+更多详情都在函数的注释里

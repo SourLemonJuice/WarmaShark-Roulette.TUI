@@ -2,10 +2,14 @@
 
 译为`对话`，它也确实是负责处理对话控件的。
 
+这是一个旧的实现，现在也被完全删掉了
+
 ## 实践
 
-开发终端中有相对完整的使用测试。\
-[develop_terminal](../source/scene/develop_terminal.c)
+~~开发终端中有相对完整的使用测试。~~\
+[scene/develop_terminal.c](../source/scene/develop_terminal.c)
+
+已经没有地方留着啦，去看看新的 [control/dialogue2.c](../source/control/dialogue2.c) 吧
 
 ## DialogueEvent
 
@@ -26,15 +30,11 @@ int DialogueExecuteEvent(...);
 
 ## Selector
 
-```c
-struct WarmSelectorActionEvent;
-int DialogueSelector(...);
-```
+已被转移到了单独的翻译单元中 [control/selector.c](../source/control/selector.c)\
+提交哈希 6936aeb1ef23bbfce2e38c224779b1950217e6b3
 
-`选择器`被用来实现一些通用的选项操作，比如文字小说中经典的控制对话树的 **我** 的回答... 嗯... 或者之类的东西。
+这也是这个单元的最后一次有大变动的提交了
 
-由于需要配置数量不定的按键对象，所以选择器 `int DialogueSelector()` 被定性要求输入一个由 `WarmSelectorActionEvent` 组成的 Array，相比于用更多的处理函数，这其实也利好配置时的代码可读性（虽说代码风格差也很难看）
+## 碎碎念
 
-目前用户可以用 `]` 选择下一个选项，`[` 选择上一个选项，这在未来可能会被改为可配置的。
-
-该函数会在选择结束后清除屏幕上选项们的字符串，并返回用户所选对象的 index。
+我是在给一个 .c 送终吗，赶快删掉啦

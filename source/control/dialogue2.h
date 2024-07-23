@@ -43,7 +43,7 @@ struct DialogueDescription {
     int interval_delay;
     // fast mode status, if true ignore the speak rate(interval_delay)
     bool fast_sentence;
-    // wait a key trigger event after print. it's not a print detection, that's controlled by skip_sentence
+    // wait a key trigger event after print. it's not a detection at printing, that's controlled by fast_sentence
     bool wait_key;
     // reset some config in structure to default after print
     // default: true

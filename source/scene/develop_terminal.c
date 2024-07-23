@@ -17,26 +17,6 @@
 static const char module_tag[] = "Scene.Develop-Terminal";
 
 /*
-    Result:
-        0: continue
-        1: ERROR
- */
-static int GetKeyToContinue_(struct WarmRuntime *runtime, WINDOW *win)
-{
-    int input;
-    while (true) {
-        input = wgetch(win);
-        if (input == ' ' or input == '\n') {
-            return 0;
-        } else if (input == 'q') {
-            EngineRuntimeExit(runtime, 0);
-        }
-    }
-
-    return 1;
-}
-
-/*
     If result is non zero, means have some problem.
  */
 int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)

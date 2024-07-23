@@ -2,7 +2,6 @@
 
 #include <ncurses.h>
 
-#include "dialogue.h"
 #include "log/logger.h"
 #include "predefine.h"
 #include "runtime.h"

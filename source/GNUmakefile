@@ -7,7 +7,7 @@ executable_base_name := warmaShark
 
 source_codes += main.c
 source_codes += log/logger.c runtime.c
-source_codes += dialogue.c control/dialogue2.c control/selector.c control/trigger.c
+source_codes += control/dialogue2.c control/selector.c control/trigger.c
 source_codes += scene/develop_terminal.c scene/program_info.c scene/shark_roulette.c scene/selector_show.c
 
 clang_flag += -std=c99
