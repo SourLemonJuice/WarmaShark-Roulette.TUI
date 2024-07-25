@@ -57,7 +57,7 @@ int DialoguePrintCenter(struct WarmRuntime *runtime, WINDOW *win, struct Dialogu
 int DialogueWindowReset(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event);
 int DialogueDelay(struct WarmRuntime *runtime, int length_ms);
 int DialogueClear(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event);
-// int Dialogue2UpdatePosition(struct WarmRuntime *runtime, WINDOW *win, struct WarmDialogue2Description *event);
 int Dialogue2ResetPrintTextEvent(struct DialogueDescription *event);
+int PrintwLineCenter(WINDOW *win, const char *format, ...);
 
 #endif

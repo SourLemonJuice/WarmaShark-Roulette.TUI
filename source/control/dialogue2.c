@@ -9,6 +9,7 @@
 #include "control/dialogue2.h"
 
 #include <iso646.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <string.h>
 #include <time.h>
@@ -185,22 +186,6 @@ int DialogueClear(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescr
 }
 
 /*
-    [try to remove]
-    move and take a log
-
-    when using kDialogueTypeStatic, start position maybe will need to change.
-    if what do this, chang the position_* in structure and run this function.
- */
-int Dialogue2UpdatePosition(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event)
-{
-    wmove(win, event->position_y, event->position_x);
-    WarmLog_GeneralLn(runtime, module_tag, "position has been updated to: y: %d, x: %d", event->position_y,
-                      event->position_x);
-
-    return 0;
-}
-
-/*
     Init WarmDialogue2Description structure.
  */
 int DialogueDescriptionInit(struct DialogueDescription *event)
@@ -227,6 +212,39 @@ int Dialogue2ResetPrintTextEvent(struct DialogueDescription *event)
     event->attribute = A_NORMAL;
     event->reset_config = true;
     event->wait_key = true;
+
+    return 0;
+}
+
+/*
+    Put the string in the center of the cursor line.
+    The maximum length can not over then window max columns.
+
+    return:
+        0: ok
+        1: error
+ */
+int PrintwLineCenter(WINDOW *win, const char *format, ...)
+{
+    int max_y;
+    int max_x;
+    getmaxyx(win, max_y, max_x);
+
+    char str[max_x]; // the final string to be displayed
+    va_list va;
+    va_start(va, format);
+    int result = vsnprintf(str, sizeof(str), format, va);
+    va_end(va);
+
+    if (result < 0) {
+        return 1;
+    }
+
+    int pos_y;
+    int pos_x;
+    getyx(win, pos_y, pos_x);
+    wmove(win, pos_y, (max_x - strlen(str)) / 2);
+    wprintw(win, "%s", str);
 
     return 0;
 }

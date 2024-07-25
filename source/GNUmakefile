@@ -6,7 +6,7 @@ build_type := debug
 executable_base_name := warmaShark
 
 source_codes += main.c
-source_codes += log/logger.c runtime.c
+source_codes += log/logger.c runtime.c window.c
 source_codes += control/dialogue2.c control/selector.c control/trigger.c
 source_codes += scene/develop_terminal.c scene/program_info.c scene/shark_roulette.c scene/selector_show.c
 
@@ -35,7 +35,7 @@ else ifeq (${build_type}, CI)
 build_version := CI Workflow
 clang_flag += -O0
 else
-# release info
+# release version
 build_version := Version 1.0, Build 1
 clang_flag += -Os
 endif

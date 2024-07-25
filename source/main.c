@@ -6,10 +6,12 @@
 
 #include <ncurses.h>
 
+#include "control/dialogue2.h"
 #include "control/selector.h"
 #include "log/logger.h"
 #include "runtime.h"
 #include "scene/scene_collection.h"
+#include "window.h"
 
 static const char module_tag[] = "Main";
 
@@ -78,6 +80,7 @@ int main(int argc, char *argv[])
     int selected_scene = DialogueSelector(&runtime, stdscr, scene_selector_event, 5);
     werase(stdscr);
 
+    WINDOW *window; // for upcoming scene
     switch (selected_scene) {
     case 0:
         // quit program
@@ -85,22 +88,15 @@ int main(int argc, char *argv[])
         break;
     case 1:
         // scene - develop terminal
-        attron(COLOR_PAIR(1));
-        wprintw(stdscr, "Yeah,");
-        attroff(COLOR_PAIR(1));
-        wprintw(stdscr, " Welcome to WarmaShark, below is the develop terminal.\n");
-        wprintw(stdscr, "======== ======== ======== ======== ========\n");
+        PrintwLineCenter(stdscr, "Yeah, welcome to WarmaShark, below is the develop terminal.\n");
+        PrintwLineCenter(stdscr, "======== ======== ======== ======== ======== ======== ========\n");
         wrefresh(stdscr);
 
         // create a window for the border of develop terminal scene
-        WINDOW *window = newwin((runtime.terminal_y - 2) * 0.4, runtime.terminal_x * 0.7, 2, 0);
-        box(window, 0, 0);
-        wrefresh(window);
+        window = WindowPercentageCreate(&runtime, stdscr, kWindowTypeHorizontalCenter, 0, kWindowTypeVerticalTop, 2,
+                                        0.4, 0.7);
+        window = WindowEngravedBorder(&runtime, window);
 
-        // creat a new windows without border
-        delwin(window);
-        window = newwin(((runtime.terminal_y - 2) * 0.4) - 2, (runtime.terminal_x * 0.7) - 2, 3, 1);
-        // start test scene
         SceneStart_DevelopTerminal(&runtime, window);
         break;
     case 2:
@@ -111,12 +107,11 @@ int main(int argc, char *argv[])
         // Shark Roulette
         wprintw(stdscr, "Little Shark Roulette\n");
         wrefresh(stdscr);
-        WINDOW *win = newwin((runtime.terminal_y - 1) * 0.7, runtime.terminal_x * 0.7, 1, 4);
-        box(win, 0, 0);
-        wrefresh(win);
-        delwin(win);
-        win = newwin((runtime.terminal_y - 1) * 0.7 - 2, runtime.terminal_x * 0.7 - 2, 2, 5);
-        SceneStart_SharkRoulette(&runtime, win);
+
+        window = newwin((runtime.terminal_y - 1) * 0.7, runtime.terminal_x * 0.7, 1, 4);
+        window = WindowEngravedBorder(&runtime, window);
+
+        SceneStart_SharkRoulette(&runtime, window);
         break;
     case 4:
         // Selector Show/Test
