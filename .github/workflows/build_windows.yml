@@ -21,10 +21,10 @@ jobs:
       with:
         install: git make clang ncurses-devel
     - name: make
-      run: make warmaShark.exe ${{ inputs.build_type || 'build_type=CI' }}
+      run: make warmaShark-Windows.exe ${{ inputs.build_type || 'build_type=CI' }}
     - name: Upload executable file
       uses: actions/upload-artifact@v4
       with:
-        name: WarmaShark-Windows
-        path: source/warmaShark.exe
+        name: warmaShark-Windows.exe
+        path: source/warmaShark-Windows.exe
         retention-days: 7

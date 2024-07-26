@@ -22,10 +22,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: make
-      run: make warmaShark.out ${{ inputs.build_type || 'build_type=CI' }}
+      run: make warmaShark-Linux.out ${{ inputs.build_type || 'build_type=CI' }}
     - name: Upload executable file
       uses: actions/upload-artifact@v4
       with:
-        name: WarmaShark-Linux
-        path: source/warmaShark.out
+        name: warmaShark-Linux.out
+        path: source/warmaShark-Linux.out
         retention-days: 7

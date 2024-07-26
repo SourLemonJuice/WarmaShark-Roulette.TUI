@@ -47,18 +47,18 @@ clang_flag += -DBUILD_GIT_REPO_INFO_STRING="\"${git_repo_info}\""
 build_date:= $(shell LANG=en_US.UTF-8 date --utc +%c)
 clang_flag += -DBUILD_DATE_STRING="\"${build_date}\""
 
-default: warmaShark.out
+default: warmaShark-Linux.out
 
-warmaShark.out: $(source_codes) GNUmakefile
+warmaShark-Linux.out: $(source_codes) GNUmakefile
 	/usr/bin/clang $(source_codes) \
-		--output $(executable_base_name).out \
+		--output $(executable_base_name)-Linux.out \
 		$(clang_flag)
 
 # this target needs to run in MSYS2 environment
 # and... it's a unstable target
-warmaShark.exe: $(source_codes)
+warmaShark-Windows.exe: $(source_codes)
 	clang $(source_codes) \
-		--output $(executable_base_name).exe \
+		--output $(executable_base_name)-Windows.exe \
 		$(clang_flag)
 
 clear:
