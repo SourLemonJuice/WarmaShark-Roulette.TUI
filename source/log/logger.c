@@ -42,8 +42,8 @@ int WarmLoggerMain(struct WarmRuntime *runtime, const enum WarmLogLevel level, c
     struct tm *tm = localtime(&now_time);
     va_list va;
 
-    fprintf(runtime->log_handle, "[%d-%d-%d %d:%d:%d] ", tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday, tm->tm_hour, tm->tm_min,
-            tm->tm_sec);
+    fprintf(runtime->log_handle, "[%04d-%02d-%02d %02d:%02d:%02d] ", tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday,
+            tm->tm_hour, tm->tm_min, tm->tm_sec);
     fprintf(runtime->log_handle, "[%s]\t", LevelToString_(level));
     fprintf(runtime->log_handle, "[%s]: ", module_tag);
     va_start(va, format);
@@ -63,17 +63,17 @@ int WarmthMeltdownUniverse(struct WarmRuntime *runtime, const char *format, ...)
     time(&now_time);
     va_list va;
 
-    #ifdef __linux__
+#ifdef __linux__
     // get backtrack info
     void *stack_pointers[32];
     char **stack_strings;
     int stack_size = backtrace(stack_pointers, 32);
     stack_strings = backtrace_symbols(stack_pointers, stack_size);
-    #else
+#else
     void *stack_pointers[0];
     char *stack_strings[] = {"Stack backtrack is disabled on Windows"};
     int stack_size = 1;
-    #endif
+#endif
 
     // tag
     fprintf(runtime->log_handle, "[%ld] [!!! Universe Meltdown !!!]\n", now_time);

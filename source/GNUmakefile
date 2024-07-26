@@ -44,7 +44,7 @@ endif
 clang_flag += -DBUILD_VERSION_STRING="\"${build_version}\""
 git_repo_info := $(shell git describe --abbrev=40 --dirty --tags --always --long)
 clang_flag += -DBUILD_GIT_REPO_INFO_STRING="\"${git_repo_info}\""
-build_date:= $(shell LANG=en_US.UTF-8 date --utc +%c)
+build_date:= $(shell date --utc --iso-8601=seconds)
 clang_flag += -DBUILD_DATE_STRING="\"${build_date}\""
 
 default: warmaShark-Linux.out
@@ -56,7 +56,7 @@ warmaShark-Linux.out: $(source_codes) GNUmakefile
 
 # this target needs to run in MSYS2 environment
 # and... it's a unstable target
-warmaShark-Windows.exe: $(source_codes)
+warmaShark-Windows.exe: $(source_codes) GNUmakefile
 	clang $(source_codes) \
 		--output $(executable_base_name)-Windows.exe \
 		$(clang_flag)
