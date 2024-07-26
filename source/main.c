@@ -73,6 +73,8 @@ static int SelectionSceneDevelop_(struct WarmRuntime *runtime)
 
 int main(int argc, char *argv[])
 {
+    // TODO control whether logging is enabled
+
     // init program
     struct WarmRuntime runtime;
     EngineRuntimeInit(&runtime);
@@ -145,7 +147,7 @@ int main(int argc, char *argv[])
         wrefresh(stdscr);
 
         window = WindowPercentageCreate(&runtime, stdscr, kWindowTypeHorizontalCenter, 0, kWindowTypeVerticalTop, 1,
-                                        0.7, 0.7);
+                                        0.55, 0.8);
         window = WindowEngravedBorder(&runtime, window);
 
         SceneStart_SharkRoulette(&runtime, window);
