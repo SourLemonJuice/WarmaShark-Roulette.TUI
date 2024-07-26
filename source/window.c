@@ -7,13 +7,14 @@
 #include "runtime.h"
 
 /*
-    [untested]
-    Note: This function won't use subwindow.
+    Create a window use the percentage size and a set of align manage.
 
-    The type of Center will ignore the offset.
+    note:
+        - This function won't use subwindow.
+        - The type of Center will ignore the offset.
 
     result:
-        NULL: error
+        NULL: newwin() return value
  */
 WINDOW *WindowPercentageCreate(struct WarmRuntime *runtime, WINDOW *parent_win, enum WindowHorizontalAlignType hor_type,
                                int hor_offset, enum WindowVerticalAlignType ver_type, int ver_offset,
@@ -40,6 +41,9 @@ WINDOW *WindowPercentageCreate(struct WarmRuntime *runtime, WINDOW *parent_win, 
         break;
     case kWindowTypeVerticalBottom:
         out_pos_y = beg_y + par_size_y - out_size_y - ver_offset;
+        break;
+    case kWindowTypeVerticalCenter:
+        out_pos_y = beg_y + (par_size_y - out_size_y) / 2;
         break;
     }
 

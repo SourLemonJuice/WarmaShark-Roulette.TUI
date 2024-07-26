@@ -4,15 +4,18 @@
 
 #include "runtime.h"
 
+// note: center don't have offset
+
 enum WindowHorizontalAlignType {
     kWindowTypeHorizontalLeft,
     kWindowTypeHorizontalRight,
-    kWindowTypeHorizontalCenter, // center don't have offset
+    kWindowTypeHorizontalCenter,
 };
 
 enum WindowVerticalAlignType {
     kWindowTypeVerticalTop,
     kWindowTypeVerticalBottom,
+    kWindowTypeVerticalCenter,
 };
 
 WINDOW *WindowPercentageCreate(struct WarmRuntime *runtime, WINDOW *parent_win, enum WindowHorizontalAlignType hor_type,

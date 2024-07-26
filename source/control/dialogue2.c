@@ -104,6 +104,9 @@ int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct Dialogue
 /*
     Print sentence in center of x-axis. The y-axis uses event position.
     It looked may not great yet, but I'll improve them... I think?
+
+    TODO Now it only can print single event, if so why not use PrintwLineCenter()
+    Maybe we need to save the event history?
  */
 int DialoguePrintCenter(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event,
                         struct WarmTriggerKeyboardCheckEvent *key_event)
@@ -219,6 +222,9 @@ int Dialogue2ResetPrintTextEvent(struct DialogueDescription *event)
 /*
     Put the string in the center of the cursor line.
     The maximum length can not over then window max columns.
+
+    Just use for replace the wprintw() but not a part of dialogue components.
+    The DialoguePrintCenter() is used for dialogue components.
 
     return:
         0: ok

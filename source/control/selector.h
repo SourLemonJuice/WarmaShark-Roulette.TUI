@@ -7,6 +7,9 @@
 
 #include "runtime.h"
 
+/*
+    TODO Add id system
+ */
 struct WarmSelectorActionEvent {
     char *string;
     attr_t attribute;
