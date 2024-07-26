@@ -40,9 +40,5 @@ int SceneStart_SelectorShow(struct WarmRuntime *runtime, WINDOW *win)
     wrefresh(win);
     wgetch(win);
 
-    werase(win);
-    wprintw(win, "[The selected index is: %d]\n", result);
-    wrefresh(win);
-
     return 0;
 }

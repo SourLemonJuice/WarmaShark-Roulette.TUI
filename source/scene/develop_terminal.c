@@ -90,6 +90,8 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     DialogueWindowReset(runtime, win, &event);
 
     TriggerKeyboardCheckEventFreeUp(runtime, &key_event);
+    werase(win);
+    wrefresh(win);
     WarmLog_General(runtime, module_tag, "Exit the scene normally\n");
     return 0;
 }

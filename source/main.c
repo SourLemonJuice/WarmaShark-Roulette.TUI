@@ -38,6 +38,7 @@ static int SelectionSceneMain_(struct WarmRuntime *runtime)
     int selected_scene = DialogueSelector(runtime, stdscr, scene_selector_event,
                                           sizeof(scene_selector_event) / sizeof(struct WarmSelectorActionEvent));
     werase(stdscr);
+    wrefresh(stdscr);
 
     return selected_scene;
 }
@@ -65,6 +66,7 @@ static int SelectionSceneDevelop_(struct WarmRuntime *runtime)
     int selected = DialogueSelector(runtime, stdscr, selector_event,
                                     sizeof(selector_event) / sizeof(struct WarmSelectorActionEvent));
     werase(stdscr);
+    wrefresh(stdscr);
 
     return selected;
 }
@@ -147,6 +149,9 @@ int main(int argc, char *argv[])
         window = WindowEngravedBorder(&runtime, window);
 
         SceneStart_SharkRoulette(&runtime, window);
+        werase(stdscr);
+        wrefresh(stdscr);
+        SceneStart_ProgramInfo(&runtime, stdscr);
         break;
     }
 
