@@ -1,3 +1,5 @@
+#include "main.h"
+
 #include <iso646.h>
 #include <locale.h>
 #include <stdio.h>
@@ -73,33 +75,60 @@ static int SelectionSceneDevelop_(struct WarmRuntime *runtime)
 
 int main(int argc, char *argv[])
 {
-    // TODO control whether logging is enabled
-
-    // init program
+    // init runtime
     struct WarmRuntime runtime;
     EngineRuntimeInit(&runtime);
 
-    WarmLog_GeneralLn(&runtime, module_tag, "Starting processing command flags");
+    // default action is SceneSelection
+    enum WarmProgramMainAction program_action = kWarmProgramActionSceneSelection;
     // handle command arguments
     if (argc >= 2) {
         for (int i = 1; i < argc; i++) {
-            if (strcmp(argv[i], "--help") == 0) {
-                printf("Usage: executable [--help] [--version]\n");
-                printf("It's a TUI game, build with ncurses.\n");
-                EngineRuntimeUnload(&runtime);
-                exit(0);
+            if (strcmp(argv[i], "--help") == 0 or strcmp(argv[i], "-h") == 0) {
+                // show help info
+                program_action = kWarmProgramActionHelpInfo;
             } else if (strcmp(argv[i], "--version") == 0) {
-                EngineNcursesInit(&runtime);
-                SceneStart_ProgramInfo(&runtime, stdscr);
-                EngineRuntimeExit(&runtime, 0);
+                // open version scene
+                program_action = kWarmProgramActionVersionScene;
+            } else if (strcmp(argv[i], "--logging") == 0) {
+                // enable log
+                runtime.log_enable = true;
+            } else if (strcmp(argv[i], "--log-path") == 0) {
+                // set log file path
+                i++;
+                if (i >= argc) {
+                    printf("Error: No value of flag '--log-path'\n");
+                    exit(kWarmErrorFlagProcess);
+                }
+                runtime.log_path = argv[i];
             } else {
                 printf("Error: Invalid arguments '%s', use '--help' to see more info.\n", argv[i]);
-                EngineRuntimeUnload(&runtime);
-                exit(1);
+                exit(kWarmErrorFlagProcess);
             }
         }
     }
-    EngineNcursesInit(&runtime);
+
+    switch (program_action) {
+    case kWarmProgramActionHelpInfo:
+        printf("Usage: Executable-File [--help | -h] [--version] [--logging] [--log-path <path>]\n\n");
+        printf("It's a full-screen TUI game, build with Ncurses. Try to run it without flags.\n");
+        exit(EXIT_SUCCESS);
+        break;
+    case kWarmProgramActionVersionScene:
+        EngineNcursesInit(&runtime);
+        EngineLogSystemInit(&runtime);
+        SceneStart_ProgramInfo(&runtime, stdscr);
+        EngineFullExit(&runtime, EXIT_SUCCESS);
+        break;
+    case kWarmProgramActionSceneSelection:
+        EngineLogSystemInit(&runtime);
+        EngineNcursesInit(&runtime);
+        break;
+    default:
+        printf("Error: Unimplemented type of enum WarmProgramMainAction");
+        exit(kWarmErrorFlagProcess);
+        break;
+    }
 
     // record some information for tracking
     WarmLog_GeneralLn(&runtime, module_tag, "Program locale should have been set to '%s'", runtime.locale_string);
@@ -113,7 +142,7 @@ int main(int argc, char *argv[])
     switch (selected_scene) {
     case 0:
         // quit program
-        EngineRuntimeExit(&runtime, 0);
+        EngineFullExit(&runtime, 0);
         break;
     case 1:
         selected_scene = SelectionSceneDevelop_(&runtime);
@@ -158,7 +187,7 @@ int main(int argc, char *argv[])
     }
 
     // free up everything
-    EngineRuntimeExit(&runtime, 0);
+    EngineFullExit(&runtime, EXIT_SUCCESS);
 
     return 0;
 }

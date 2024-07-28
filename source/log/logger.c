@@ -37,6 +37,9 @@ char *LevelToString_(const enum WarmLogLevel level)
 int WarmLoggerMain(struct WarmRuntime *runtime, const enum WarmLogLevel level, const char *module_tag,
                    const char *format, ...)
 {
+    if (runtime->log_enable == false)
+        return 0;
+
     time_t now_time;
     time(&now_time);
     struct tm *tm = localtime(&now_time);
@@ -89,7 +92,7 @@ int WarmthMeltdownUniverse(struct WarmRuntime *runtime, const char *format, ...)
     fflush(runtime->log_handle);
 
     // free up
-    EngineRuntimeExit(runtime, 1);
+    EngineFullExit(runtime, 1);
 
     return 0;
 }
