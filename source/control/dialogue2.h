@@ -59,5 +59,6 @@ int DialogueDelay(struct WarmRuntime *runtime, int length_ms);
 int DialogueClear(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event);
 int Dialogue2ResetPrintTextEvent(struct DialogueDescription *event);
 int PrintwLineCenter(WINDOW *win, const char *format, ...);
+char *CrossPlatformGetUserName(void);
 
 #endif

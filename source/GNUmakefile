@@ -12,7 +12,7 @@ source_codes += scene/develop_terminal.c scene/program_info.c scene/shark_roulet
 
 clang_flag += -std=c99
 clang_flag += -D_POSIX_C_SOURCE=200809L
-clang_flag += -Wall -Wextra -Werror
+clang_flag += -Wall -Wextra
 # and disable some stuff ( ´･･)ﾉ(._.`)
 clang_flag += -Wno-unused-parameter
 clang_flag += -Wno-unused-variable
@@ -20,8 +20,6 @@ clang_flag += -Wno-unused-but-set-variable
 clang_flag += -Wno-unused-const-variable
 clang_flag += -Wno-unused-function
 clang_flag += -Wno-sign-compare
-# for old version clang
-clang_flag += -Wno-unknown-warning-option
 
 clang_flag += -I./
 clang_flag += -lncursesw
@@ -54,10 +52,9 @@ warmaShark-Linux.out: $(source_codes) GNUmakefile
 		--output $(executable_base_name)-Linux.out \
 		$(clang_flag)
 
-# this target needs to run in MSYS2 environment
-# and... it's a unstable target
+# This target needs to run in MSYS2 environment.
 warmaShark-Windows.exe: $(source_codes) GNUmakefile
-	clang $(source_codes) \
+	/mingw64/bin/clang $(source_codes) \
 		--output $(executable_base_name)-Windows.exe \
 		$(clang_flag)
 

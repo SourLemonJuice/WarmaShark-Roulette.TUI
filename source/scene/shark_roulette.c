@@ -109,7 +109,7 @@ static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     dialogue.type = kDialogueTypeWindowReset;
-    dialogue.text = getlogin();
+    dialogue.text = CrossPlatformGetUserName();
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     dialogue.text = "抱歉，刚才发生了一些小插曲";

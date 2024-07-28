@@ -254,3 +254,23 @@ int PrintwLineCenter(WINDOW *win, const char *format, ...)
 
     return 0;
 }
+
+/*
+    Get username in different operating system
+ */
+char *CrossPlatformGetUserName(void)
+{
+    char *name;
+#if __linux__
+    name = getlogin();
+#elif __win32__
+    name = getenv("USERNAME");
+#else
+    name = "Username"
+#endif
+
+    if (name == NULL)
+        return "[Error: Can't get the username]";
+
+    return name;
+}

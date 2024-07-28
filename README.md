@@ -47,16 +47,18 @@ My test OS is Archlinux(main) and Ubuntu(verification, GitHub CI).
 
 ### For Windows Build
 
-In theory, it can build.\
-BUT!!!!
+I know the Windows version is essential for this game. Because most fans of Warma only use Windows, or seriously say no any normal one uses Linux daily.\
+But I don't know much about Mingw64 or other ways to build it for Windows.
 
-The clang compiler version of MSYS2 is 11.0.0\
-The control warning flags are slightly incompatible...
+You see, I've already tried this, the target `warmaShark-Windows.exe` of `make` and workflow `build_windows.yml` is for that.\
+But this didn't work...
 
-AAAAAAAAAAAAAAAAAAA
+So, should I fix it?\
+I don't think so, I spent a lot of time on this project, it's for learning C language but not fighting with Windows.
 
-`-Wno-unknown-warning-option` can fix it, but...\
-I hate...
+Anyway, it will be a large Todo item, but not now... Sorry.
+
+Windows should be the second main support platform. From now on.
 
 ## Known bugs
 
