@@ -38,7 +38,7 @@ int TriggerKeyboardCheck(struct WarmRuntime *runtime, WINDOW *win, struct WarmTr
     while (true) {
         input = wgetch(win);
         result = TriggerKeyboardCheckExistingKey(runtime, win, event, input);
-        if (not (result < 0))
+        if (not(result < 0))
             return result;
     }
 

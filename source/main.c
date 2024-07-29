@@ -112,7 +112,8 @@ int main(int argc, char *argv[])
     case kWarmProgramActionHelpInfo:
         printf("Usage: Executable-File [--help | -h] [--version] [--logging] [--log-path <path>]\n\n");
         printf("It's a full-screen TUI game, build with Ncurses. Try to run it without flags.\n");
-        printf("The default log path is \"./Engine.log\", use \"--logging\" to enable it, or \"--log-path\" to change it.\n");
+        printf("The default log path is \"./Engine.log\", use \"--logging\" to enable it, or \"--log-path\" to change "
+               "it.\n");
         exit(EXIT_SUCCESS);
         break;
     case kWarmProgramActionVersionScene:

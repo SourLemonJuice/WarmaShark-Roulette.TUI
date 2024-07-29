@@ -4,7 +4,24 @@ IndentWidth: 4
 UseTab: Never
 LineEnding: DeriveLF
 MaxEmptyLinesToKeep: 2 # for me, 2 empty lines were so common.
-BreakBeforeBraces: Linux # it's my first guide of style, so I'll keep it.
+# Linux my first guide of style, so I'll keep it.
+# But we need some C++ stuff here.
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterClass: false
+  AfterControlStatement: MultiLine
+  AfterEnum: false
+  AfterFunction: true
+  AfterNamespace: false
+  AfterStruct: false
+  AfterUnion: false
+  AfterExternBlock: false
+  BeforeCatch: false
+  BeforeElse: false
+  BeforeWhile: false
+#  BreakBeforeBraces End
+AllowShortBlocksOnASingleLine: Never
 AllowShortIfStatementsOnASingleLine: Never
 IndentCaseLabels: false
 IndentPPDirectives: BeforeHash
@@ -20,3 +37,4 @@ AlignTrailingComments:
 AlignOperands: AlignAfterOperator
 AlignEscapedNewlines: DontAlign
 ...
+
