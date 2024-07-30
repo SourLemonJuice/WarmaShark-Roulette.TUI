@@ -34,8 +34,7 @@ WINDOW *WindowPercentageCreate(struct WarmRuntime *runtime, WINDOW *parent_win, 
     int out_size_x = par_size_x * size_percent_x;
 
     int out_pos_y;
-    switch (ver_type)
-    {
+    switch (ver_type) {
     case kWindowTypeVerticalTop:
         out_pos_y = beg_y + ver_offset;
         break;

@@ -74,7 +74,7 @@ int SceneStart_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
     int skip_introduction = DialogueSelector(runtime, win, skip_introduction_select, 2);
 
     DialogueWindowReset(runtime, win, &dialogue);
-    if ( skip_introduction == 0) {
+    if (skip_introduction == 0) {
         ChapterIntroduction_(runtime, win);
     }
 
