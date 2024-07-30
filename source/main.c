@@ -1,5 +1,3 @@
-#include "main.h"
-
 #include <iso646.h>
 #include <locale.h>
 #include <stdio.h>
@@ -16,6 +14,12 @@
 #include "window.h"
 
 static const char module_tag[] = "Main";
+
+enum WarmProgramMainAction {
+    kWarmProgramActionHelpInfo,
+    kWarmProgramActionVersionScene,
+    kWarmProgramActionSceneSelection,
+};
 
 static int SelectionSceneMain_(struct WarmRuntime *runtime)
 {
@@ -92,7 +96,7 @@ int main(int argc, char *argv[])
                 program_action = kWarmProgramActionVersionScene;
             } else if (strcmp(argv[i], "--logging") == 0) {
                 // enable log
-                runtime.log_enable = true;
+                runtime.logging = true;
             } else if (strcmp(argv[i], "--log-path") == 0) {
                 // set log file path
                 i++;

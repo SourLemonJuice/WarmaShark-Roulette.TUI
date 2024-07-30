@@ -8,7 +8,7 @@
 struct WarmRuntime {
     char *log_path;
     FILE *log_handle;
-    bool log_enable;
+    bool logging;
     char *locale_string;
     // TODO useless
     int terminal_y; // terminal maximum y

@@ -24,7 +24,7 @@ int EngineRuntimeInit(struct WarmRuntime *runtime)
     runtime->log_path = "./Engine.log";
 
     // disable logging by default
-    runtime->log_enable = false;
+    runtime->logging = false;
 
     // seeding for random number
     srand(time(NULL));
@@ -37,7 +37,7 @@ int EngineRuntimeInit(struct WarmRuntime *runtime)
  */
 int EngineLogSystemInit(struct WarmRuntime *runtime)
 {
-    if (runtime->log_enable == false)
+    if (runtime->logging == false)
         return 0;
 
     // open log file
@@ -87,7 +87,7 @@ int EngineNcursesInit(struct WarmRuntime *runtime)
 void EngineLogSystemUnload(struct WarmRuntime *runtime)
 {
     // if log has been disabled, don't fclose a non-existent "FILE*"
-    if (runtime->log_enable == false)
+    if (runtime->logging == false)
         return;
 
     fclose(runtime->log_handle);

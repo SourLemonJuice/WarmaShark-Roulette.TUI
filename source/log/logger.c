@@ -37,7 +37,7 @@ char *LevelToString_(const enum WarmLogLevel level)
 int WarmLoggerMain(struct WarmRuntime *runtime, const enum WarmLogLevel level, const char *module_tag,
                    const char *format, ...)
 {
-    if (runtime->log_enable == false)
+    if (runtime->logging == false)
         return 0;
 
     time_t now_time;
