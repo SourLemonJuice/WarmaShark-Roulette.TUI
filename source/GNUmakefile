@@ -49,11 +49,11 @@ clang_flag += -DBUILD_DATE_STRING="\"${build_date}\""
 .PHONY += default
 .PHONY += clear
 
-default: warmaShark-Linux.out
+default: warmaShark-Linux
 
-warmaShark-Linux.out: ${source_codes} GNUmakefile
+warmaShark-Linux: ${source_codes} GNUmakefile
 	${CC} ${source_codes} \
-		--output ${executable_base_name}-Linux.out \
+		--output ${executable_base_name}-Linux \
 		${clang_flag}
 
 # This target needs to run in MSYS2 environment.
