@@ -32,7 +32,7 @@ static const char module_tag[] = "Control.Dialogue2";
         - When function returned, the cursor won't be reset to origin.
  */
 int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event,
-                       struct WarmTriggerKeyboardCheckEvent *key_event)
+                       struct WarmTriggerKeyboardEvent *key_event)
 {
     // move at first
     wmove(win, event->position_y, event->position_x);
@@ -109,7 +109,7 @@ int Dialogue2PrintText(struct WarmRuntime *runtime, WINDOW *win, struct Dialogue
     Maybe we need to save the event history?
  */
 int DialoguePrintCenter(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event,
-                        struct WarmTriggerKeyboardCheckEvent *key_event)
+                        struct WarmTriggerKeyboardEvent *key_event)
 {
     int max_y;
     int max_x;

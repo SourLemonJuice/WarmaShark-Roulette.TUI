@@ -16,6 +16,11 @@
 
 static const char module_tag[] = "Scene.Develop-Terminal";
 
+static void ExitDueToKeyboard_(void *runtime)
+{
+    EngineFullExit(runtime, 0);
+}
+
 /*
     If result is non zero, means have some problem.
  */
@@ -27,9 +32,9 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     int win_x;
     getmaxyx(win, win_y, win_x);
 
-    struct WarmTriggerKeyboardCheckEvent key_event;
-    TriggerKeyboardCheckEventInit(runtime, &key_event, (int[]){' ', '\n'}, 2, 0);
-    TriggerKeyboardCheckEventAppend(runtime, &key_event, (int[]){'q'}, 1, 1);
+    struct WarmTriggerKeyboardEvent *key_event;
+    key_event = TriggerKeyboardCheckEventInit(runtime, 0, (int[]){' ', '\n'}, 2, NULL, NULL);
+    TriggerKeyboardCheckEventAppend(runtime, key_event, 1, (int[]){'q'}, 1, ExitDueToKeyboard_, runtime);
 
     struct DialogueDescription event = {
         .attribute = A_NORMAL,
@@ -43,35 +48,35 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     event.attribute = COLOR_PAIR(1);
     event.type = kDialogueTypeStatic;
     event.wait_key = false;
-    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2PrintText(runtime, win, &event, key_event);
 
-    event.text = "，在这里可以按 q 键退出（真的？），Enter 或 Space 跳转到下一个对话。";
+    event.text = "，在这里可以按 q 键退出（真的可以！），Enter 或 Space 跳转到下一个对话。";
     event.type = kDialogueTypeWindowReset;
-    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2PrintText(runtime, win, &event, key_event);
 
     event.text = "这是关于一个中心句子打印的测试";
-    DialoguePrintCenter(runtime, win, &event, &key_event);
+    DialoguePrintCenter(runtime, win, &event, key_event);
 
     event.text = "This is a Develop Terminal or just a test for a normal example dialogue tree.";
-    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2PrintText(runtime, win, &event, key_event);
 
     event.text = "But what's the difference, dialogue trees are just some data structure... We are all normal.";
-    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2PrintText(runtime, win, &event, key_event);
 
     event.text = "The protagonist of this program(or videogame), is a shark. But live in another universe.";
-    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2PrintText(runtime, win, &event, key_event);
 
     event.text = "沃玛/Warma created him. Maybe his name is littleShark?";
-    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2PrintText(runtime, win, &event, key_event);
 
     event.text = "Cute, Evil, Complex, or have another Hidden Story?";
-    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2PrintText(runtime, win, &event, key_event);
 
     event.text = "Sorry... But... Can you wait while I continue developing? I need some light ahead of me... also need "
                  "to make with myself.";
     event.type = kDialogueTypeStatic;
     event.wait_key = false;
-    Dialogue2PrintText(runtime, win, &event, &key_event);
+    Dialogue2PrintText(runtime, win, &event, key_event);
 
     struct WarmSelectorActionEvent selector_event[] = {
         {
@@ -93,7 +98,7 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
 
     DialogueWindowReset(runtime, win, &event);
 
-    TriggerKeyboardCheckEventFreeUp(runtime, &key_event);
+    TriggerKeyboardCheckEventFreeUp(runtime, key_event);
     werase(win);
     wrefresh(win);
     WarmLog_General(runtime, module_tag, "Exit the scene normally\n");

@@ -33,7 +33,7 @@ enum PlayerTurn_ {
 static struct SceneCache_ {
     int win_y;
     int win_x;
-    struct WarmTriggerKeyboardCheckEvent *key_event;
+    struct WarmTriggerKeyboardEvent *key_event;
     enum PlayerTurn_ turn;
     int live_ammunition;
     int current_cycle;
@@ -48,9 +48,9 @@ int SceneStart_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
     getmaxyx(win, cache.win_y, cache.win_x);
     WarmLog_GeneralLn(runtime, module_tag, "scene's window y: %d, x: %d", cache.win_y, cache.win_x);
 
-    struct WarmTriggerKeyboardCheckEvent key_event;
-    TriggerKeyboardCheckEventInit(runtime, &key_event, (int[]){' ', '\n'}, 2, 0);
-    cache.key_event = &key_event;
+    struct WarmTriggerKeyboardEvent *key_event;
+    key_event = TriggerKeyboardCheckEventInit(runtime, 0, (int[]){' ', '\n'}, 2, NULL, NULL);
+    cache.key_event = key_event;
 
     // init finished
 

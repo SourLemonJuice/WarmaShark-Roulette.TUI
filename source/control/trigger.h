@@ -5,23 +5,30 @@
 
 #include "runtime.h"
 
-struct WarmTriggerKeyboardCheckEvent {
+struct WarmTriggerKeyboardEvent {
     // for result and information for linked list processing
     int index;
     // which key need to detect
     int *keys;
     int keys_size;
+    // function will be executed after matching.
+    // if is NULL, skip
+    void (*action)(void *);
+    // parameter of action function.
+    // ideally it is a structure, convert type with yourself
+    void *action_parma;
     // next linked
-    struct WarmTriggerKeyboardCheckEvent *next;
+    struct WarmTriggerKeyboardEvent *next;
 };
 
-int TriggerKeyboardCheck(struct WarmRuntime *runtime, WINDOW *win, struct WarmTriggerKeyboardCheckEvent *event);
-int TriggerKeyboardCheckExistingKey(struct WarmRuntime *runtime, WINDOW *win,
-                                    struct WarmTriggerKeyboardCheckEvent *event, int key);
-int TriggerKeyboardCheckEventInit(struct WarmRuntime *runtime, struct WarmTriggerKeyboardCheckEvent *event, int keys[],
-                                  int keys_size, int index);
-int TriggerKeyboardCheckEventAppend(struct WarmRuntime *runtime, struct WarmTriggerKeyboardCheckEvent *event,
-                                    int keys[], int keys_size, int index);
-int TriggerKeyboardCheckEventFreeUp(struct WarmRuntime *runtime, struct WarmTriggerKeyboardCheckEvent *event);
+int TriggerKeyboardCheck(struct WarmRuntime *runtime, WINDOW *win, struct WarmTriggerKeyboardEvent *event);
+int TriggerKeyboardCheckExistingKey(struct WarmRuntime *runtime, WINDOW *win, struct WarmTriggerKeyboardEvent *event,
+                                    int key);
+struct WarmTriggerKeyboardEvent *TriggerKeyboardCheckEventInit(struct WarmRuntime *runtime, int index, int keys[],
+                                                               int keys_size, void (*action)(void *),
+                                                               void *action_parma);
+int TriggerKeyboardCheckEventAppend(struct WarmRuntime *runtime, struct WarmTriggerKeyboardEvent *event, int index,
+                                    int keys[], int keys_size, void (*action)(void *), void *action_parma);
+int TriggerKeyboardCheckEventFreeUp(struct WarmRuntime *runtime, struct WarmTriggerKeyboardEvent *event);
 
 #endif
