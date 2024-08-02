@@ -180,16 +180,20 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
     WarmLog_GeneralLn(runtime, module_tag, "enter the chapter: Shooting from player");
 
     struct WarmSelectorActionEvent shooting_targets[] = {
-        {.position_y = cache.win_y * 0.2,
-         .position_x = cache.win_x * 0.1,
-         .attribute = A_NORMAL,
-         .attribute_highlight = A_STANDOUT,
-         .string = "自己"},
-        {.position_y = cache.win_y * 0.2,
-         .position_x = cache.win_x * 0.3,
-         .attribute = A_NORMAL,
-         .attribute_highlight = A_STANDOUT,
-         .string = "亦或是小鲨鱼"},
+        {
+            .position_y = cache.win_y * 0.2,
+            .position_x = cache.win_x * 0.1,
+            .attribute = A_NORMAL,
+            .attribute_highlight = A_STANDOUT,
+            .string = "自己",
+        },
+        {
+            .position_y = cache.win_y * 0.2,
+            .position_x = cache.win_x * 0.3,
+            .attribute = A_NORMAL,
+            .attribute_highlight = A_STANDOUT,
+            .string = "亦或是小鲨鱼",
+        },
     };
 
     dialogue.text = "> 你会射向谁呢:";

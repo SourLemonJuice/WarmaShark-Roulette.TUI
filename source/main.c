@@ -25,21 +25,27 @@ static int SelectionSceneMain_(struct WarmRuntime *runtime)
 {
     wprintw(stdscr, "Choose the scene:");
     struct WarmSelectorActionEvent scene_selector_event[] = {
-        {.string = "Quit/Exit",
-         .attribute = A_NORMAL,
-         .attribute_highlight = A_STANDOUT,
-         .position_y = 1,
-         .position_x = 2},
-        {.string = "Develop Tool Box\t[Develop]",
-         .attribute = A_NORMAL,
-         .attribute_highlight = A_STANDOUT,
-         .position_y = 2,
-         .position_x = 2},
-        {.string = "Shark Roulette\t[Main Game]",
-         .attribute = A_NORMAL,
-         .attribute_highlight = A_STANDOUT,
-         .position_y = 3,
-         .position_x = 2},
+        {
+            .string = "Quit/Exit",
+            .attribute = A_NORMAL,
+            .attribute_highlight = A_STANDOUT,
+            .position_y = 1,
+            .position_x = 2,
+        },
+        {
+            .string = "Develop Tool Box\t[Develop]",
+            .attribute = A_NORMAL,
+            .attribute_highlight = A_STANDOUT,
+            .position_y = 2,
+            .position_x = 2,
+        },
+        {
+            .string = "Shark Roulette\t[Main Game]",
+            .attribute = A_NORMAL,
+            .attribute_highlight = A_STANDOUT,
+            .position_y = 3,
+            .position_x = 2,
+        },
     };
     int selected_scene = DialogueSelector(runtime, stdscr, scene_selector_event,
                                           sizeof(scene_selector_event) / sizeof(struct WarmSelectorActionEvent));
@@ -53,21 +59,27 @@ static int SelectionSceneDevelop_(struct WarmRuntime *runtime)
 {
     wprintw(stdscr, "Develop Tool Box:");
     struct WarmSelectorActionEvent selector_event[] = {
-        {.string = "Develop Terminal\t[Little Dialogue Demo]",
-         .attribute = A_NORMAL,
-         .attribute_highlight = A_STANDOUT,
-         .position_y = 1,
-         .position_x = 2},
-        {.string = "Program info\t\t[Build Version]",
-         .attribute = A_NORMAL,
-         .attribute_highlight = A_STANDOUT,
-         .position_y = 2,
-         .position_x = 2},
-        {.string = "Selector Show/Test\t[Just for Test]",
-         .attribute = A_DIM,
-         .attribute_highlight = A_STANDOUT,
-         .position_y = 3,
-         .position_x = 2},
+        {
+            .string = "Develop Terminal\t[Little Dialogue Demo]",
+            .attribute = A_NORMAL,
+            .attribute_highlight = A_STANDOUT,
+            .position_y = 1,
+            .position_x = 2,
+        },
+        {
+            .string = "Program info\t\t[Build Version]",
+            .attribute = A_NORMAL,
+            .attribute_highlight = A_STANDOUT,
+            .position_y = 2,
+            .position_x = 2,
+        },
+        {
+            .string = "Selector Show/Test\t[Just for Test]",
+            .attribute = A_DIM,
+            .attribute_highlight = A_STANDOUT,
+            .position_y = 3,
+            .position_x = 2,
+        },
     };
     int selected = DialogueSelector(runtime, stdscr, selector_event,
                                     sizeof(selector_event) / sizeof(struct WarmSelectorActionEvent));

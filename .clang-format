@@ -4,12 +4,11 @@ IndentWidth: 4
 UseTab: Never
 LineEnding: DeriveLF
 MaxEmptyLinesToKeep: 2 # for me, 2 empty lines were so common.
-# Linux my first guide of style, so I'll keep it.
-# But we need some C++ stuff here.
+# Sorry Linux... But we need some C++ stuff here.
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterCaseLabel: false
-  AfterClass: false
+  AfterClass: true
   AfterControlStatement: MultiLine
   AfterEnum: false
   AfterFunction: true
@@ -37,4 +36,3 @@ AlignTrailingComments:
 AlignOperands: AlignAfterOperator
 AlignEscapedNewlines: DontAlign
 ...
-

@@ -74,16 +74,20 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     Dialogue2PrintText(runtime, win, &event, &key_event);
 
     struct WarmSelectorActionEvent selector_event[] = {
-        {.position_y = win_y * 0.6,
-         .position_x = win_x * 0.1,
-         .attribute = A_NORMAL,
-         .attribute_highlight = A_STANDOUT,
-         .string = "You Idiot(just joke)"},
-        {.position_y = win_y * 0.6,
-         .position_x = win_x * 0.5,
-         .attribute = A_NORMAL,
-         .attribute_highlight = A_STANDOUT,
-         .string = "Take it slow, it's fine"},
+        {
+            .position_y = win_y * 0.6,
+            .position_x = win_x * 0.1,
+            .attribute = A_NORMAL,
+            .attribute_highlight = A_STANDOUT,
+            .string = "You Idiot(just joke)",
+        },
+        {
+            .position_y = win_y * 0.6,
+            .position_x = win_x * 0.5,
+            .attribute = A_NORMAL,
+            .attribute_highlight = A_STANDOUT,
+            .string = "Take it slow, it's fine",
+        },
     };
     DialogueSelector(runtime, win, selector_event, (sizeof(selector_event) / sizeof(struct WarmSelectorActionEvent)));
 
