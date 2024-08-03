@@ -115,7 +115,7 @@ static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
     dialogue.text = "抱歉，刚才发生了一些小插曲";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-    dialogue.text = "你好";
+    dialogue.text = "总之... 你好！";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     dialogue.text = "在我的记忆中，我们已经见了${见面次数}次了";
@@ -127,17 +127,29 @@ static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
     dialogue.text = "而且就这么堂而皇之的打在了输出函数里，因为正式版没有出所以就这么敷衍观众吗？";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-    dialogue.text = "总之——我们有了一个公平对决的机会";
+    dialogue.text = "无论发生了什么，我们现在都有一个公平的对决机会";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-    dialogue.text = "我们的面前有一张桌子";
-    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
-
-    dialogue.text = "桌子上有一把很~酷~的左轮手枪，可以容纳六发子弹的弹仓，然而只有一个位置会被填充子弹";
+    dialogue.text = "这里有一张桌子";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     dialogue.type = kDialogueTypeStatic;
-    dialogue.text = "我来简单的介绍一下规则:\n";
+    dialogue.text = "桌上有一把很";
+    dialogue.wait_key = false;
+    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+    dialogue.type = kDialogueTypeStatic;
+    dialogue.text = " ~酷~ ";
+    dialogue.attribute = COLOR_PAIR(kColorDangerRed) | A_BOLD;
+    dialogue.wait_key = false;
+    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+    dialogue.type = kDialogueTypeWindowReset;
+    dialogue.text = "的左轮手枪，可以容纳六发子弹的弹仓，然而只有一个位置会被填充子弹";
+    Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+    dialogue.type = kDialogueTypeStatic;
+    dialogue.text = "我来简单的介绍一下规则吧:\n";
     dialogue.wait_key = false;
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
@@ -150,7 +162,7 @@ static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
     dialogue.text = "当你对自己开枪，可以额外的获得一个行动回合";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-    dialogue.text = "当然，你可以对着自己开满6枪，这样一定会输掉的";
+    dialogue.text = "当然，你可以对着自己开满6枪，虽然这样一定会输掉的";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     dialogue.type = kDialogueTypeWindowReset;
@@ -190,13 +202,32 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
         {
             .position_y = cache.win_y * 0.2,
             .position_x = cache.win_x * 0.3,
-            .attribute = A_NORMAL,
+            .attribute = COLOR_PAIR(kColorDangerRed),
             .attribute_highlight = A_STANDOUT,
             .string = "亦或是小鲨鱼",
         },
     };
 
-    dialogue.text = "> 你会射向谁呢:";
+    switch (rand() % 5) {
+    case 0:
+        dialogue.text = "> 你会射向谁呢：";
+        break;
+    case 1:
+        dialogue.text = "> 要继续下去总是要经历选择的嘛，抱歉：";
+        break;
+    case 2:
+        dialogue.text = "> 你的目标是？";
+        break;
+    case 3:
+        dialogue.text = "> ${管理员.对话.文本}...";
+        break;
+    case 4:
+        dialogue.text = "> 作为一个从各个方面都绝对的第三者和创造者... 这样是不是有点太无情了呢";
+        break;
+    default:
+        dialogue.text = "[Game: rand() Error]";
+        break;
+    }
     dialogue.type = kDialogueTypeStatic;
     dialogue.wait_key = false;
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
@@ -239,11 +270,12 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
             Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
             dialogue.text = "结局-1：暴虐欢愉的收场";
+            dialogue.attribute = COLOR_PAIR(kColorDangerRed);
             DialoguePrintCenter(runtime, win, &dialogue, cache.key_event);
 
             return 1;
         } else {
-            dialogue.text = "你很幸运，此时枪里并没有子弹，而你因此获得了额外的回合";
+            dialogue.text = "你很幸运，此时枪里并没有子弹，而你也因此获得了额外的回合";
             Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
             cache.turn = kTurnPlayer_;
@@ -255,8 +287,12 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
         dialogue.text = "你对着小鲨鱼扣动了扳机";
         Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-        dialogue.type = kDialogueTypeWindowReset;
+        dialogue.type = kDialogueTypeStatic;
         dialogue.text = "，这一行为甚至没有让你产生任何负罪感";
+        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
+
+        dialogue.type = kDialogueTypeWindowReset;
+        dialogue.text = "。好吧，我猜的";
         Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
         if (cache.current_cycle == cache.live_ammunition) {
@@ -279,6 +315,7 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
             Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
             dialogue.text = "结局-2：弟切草";
+            dialogue.attribute = COLOR_PAIR(kColorDangerRed);
             DialoguePrintCenter(runtime, win, &dialogue, cache.key_event);
 
             return 1;
@@ -304,11 +341,11 @@ static int ChapterShootingFromShark_(struct WarmRuntime *runtime, WINDOW *win)
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     dialogue.type = kDialogueTypeWindowReset;
-    dialogue.text = "，你的心跳停止了";
+    dialogue.text = "，你的心跳近乎停止了";
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     if (cache.current_cycle == cache.live_ammunition) {
-        dialogue.text = "你俯下头看了看自己的胸口，你胸部的衣服被染成了暗红色";
+        dialogue.text = "俯下头看了看自己的胸口，胸部的衣服被染成了暗红色";
         Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
         dialogue.text = "也许是右心房，或者右心室（笑）";
@@ -317,7 +354,7 @@ static int ChapterShootingFromShark_(struct WarmRuntime *runtime, WINDOW *win)
         dialogue.text = "可怜的小鲨鱼，由于高度原因，连给你一个干脆利落的结局都做不到";
         Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-        dialogue.text = "此时，你闻到了一股诡异的香甜，从小鲨鱼洞穿你身体的位置";
+        dialogue.text = "此时，你闻到了一股诡异的香甜，从小鲨鱼洞穿你身体的位置...";
         Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
         dialogue.text = "你以手指与指甲作为工具，从你的身体里探索那股香甜气味的来源";
@@ -326,7 +363,16 @@ static int ChapterShootingFromShark_(struct WarmRuntime *runtime, WINDOW *win)
         dialogue.text = "当你气若游丝之时，你找到了这颗气味的来源，用染成鲜红的双手捧起了它";
         Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
+        dialogue.type = kDialogueTypeStatic;
         dialogue.text = "结局-3：原罪、诱惑、智慧的化身";
+        dialogue.attribute = COLOR_PAIR(kColorDangerRed);
+        DialoguePrintCenter(runtime, win, &dialogue, cache.key_event);
+
+        getyx(win, dialogue.position_y, dialogue.position_x);
+        dialogue.position_y += 1;
+
+        dialogue.type = kDialogueTypeWindowReset;
+        dialogue.text = "> 是的，一颗苹果 <";
         DialoguePrintCenter(runtime, win, &dialogue, cache.key_event);
 
         return 1;

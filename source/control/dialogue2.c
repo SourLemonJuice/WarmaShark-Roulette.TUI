@@ -119,6 +119,7 @@ int DialoguePrintCenter(struct WarmRuntime *runtime, WINDOW *win, struct Dialogu
     // dump source position
     int src_pos_y = event->position_y;
     int src_pos_x = event->position_x;
+    int src_type = event->type;
 
     event->position_x = (max_x - str_len) / 2;
 
@@ -132,6 +133,8 @@ int DialoguePrintCenter(struct WarmRuntime *runtime, WINDOW *win, struct Dialogu
     Dialogue2PrintText(runtime, win, event, key_event);
 
     // reset position
+    if (src_type == kDialogueTypeWindowReset) // WindowReset has already set the position
+        return 0;
     event->position_y = src_pos_y;
     event->position_x = src_pos_x;
 

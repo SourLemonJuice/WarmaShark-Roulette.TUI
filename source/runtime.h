@@ -21,6 +21,11 @@ enum WarmProgramExitErrorCode {
     kWarmErrorStreamOperation,
 };
 
+enum WarmNcursesColorId {
+    kColorTest = 1,
+    kColorDangerRed,
+};
+
 int EngineRuntimeInit(struct WarmRuntime *runtime);
 int EngineLogSystemInit(struct WarmRuntime *runtime);
 int EngineNcursesInit(struct WarmRuntime *runtime);

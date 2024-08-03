@@ -45,7 +45,7 @@ int SceneStart_DevelopTerminal(struct WarmRuntime *runtime, WINDOW *win)
     Dialogue2ResetPrintTextEvent(&event);
 
     event.text = "你好/Hello";
-    event.attribute = COLOR_PAIR(1);
+    event.attribute = COLOR_PAIR(kColorTest);
     event.type = kDialogueTypeStatic;
     event.wait_key = false;
     Dialogue2PrintText(runtime, win, &event, key_event);

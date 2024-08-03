@@ -19,9 +19,9 @@ int SceneStart_ProgramInfo(struct WarmRuntime *runtime, WINDOW *par_win)
 
     // show program info
     werase(win);
-    wattron(win, COLOR_PAIR(2));
+    wattron(win, COLOR_PAIR(kColorDangerRed));
     wprintw(win, "WarmaShark-Roulette\n");
-    wattroff(win, COLOR_PAIR(2));
+    wattroff(win, COLOR_PAIR(kColorDangerRed));
     wprintw(win, "Version:\t\t%s\n", BUILD_VERSION_STRING);
     wprintw(win, "Git commit:\t\t%s\n", BUILD_GIT_REPO_INFO_STRING);
     wprintw(win, "Build date/time:\t%s\n\n", BUILD_DATE_STRING);
