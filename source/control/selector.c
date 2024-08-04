@@ -59,6 +59,8 @@ static int DialogueSelectorClearOptionsOnScreen_(struct WarmRuntime *runtime, WI
 int DialogueSelector(struct WarmRuntime *runtime, WINDOW *win, const struct WarmSelectorActionEvent *event,
                      int event_size)
 {
+    WarmLog_GeneralLn(runtime, module_tag, "Start selector with %d option", event_size);
+
     // this func need get arrow key... so force enable keypad()
     keypad(win, true);
 

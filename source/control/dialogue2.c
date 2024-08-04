@@ -147,6 +147,8 @@ int DialoguePrintCenter(struct WarmRuntime *runtime, WINDOW *win, struct Dialogu
  */
 int DialogueWindowReset(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event)
 {
+    WarmLog_GeneralLn(runtime, module_tag, "Reset dialogue window display and position");
+
     // erase the window
     werase(win);
     wrefresh(win);
@@ -164,6 +166,8 @@ int DialogueWindowReset(struct WarmRuntime *runtime, WINDOW *win, struct Dialogu
  */
 int DialogueDelay(struct WarmRuntime *runtime, int length_ms)
 {
+    WarmLog_GeneralLn(runtime, module_tag, "Start delay %dms", length_ms);
+
     struct timespec timespec = {
         .tv_sec = length_ms / 1000,
         .tv_nsec = (length_ms % 1000) * 1000000,
@@ -179,6 +183,8 @@ int DialogueDelay(struct WarmRuntime *runtime, int length_ms)
  */
 int DialogueClear(struct WarmRuntime *runtime, WINDOW *win, struct DialogueDescription *event)
 {
+    WarmLog_GeneralLn(runtime, module_tag, "Clear event string");
+
     // move to original position
     wmove(win, event->position_y, event->position_x);
     // clear the window

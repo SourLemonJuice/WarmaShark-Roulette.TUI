@@ -33,6 +33,8 @@ static int MatchTheKeys_(int input, int target[], int size)
  */
 int TriggerKeyboardCheck(struct WarmRuntime *runtime, WINDOW *win, struct WarmTriggerKeyboardEvent *event)
 {
+    WarmLog_GeneralLn(runtime, module_tag, "Keyboard blocking check start");
+
     int input; // it is a char not num
     int result;
     while (true) {
@@ -51,6 +53,8 @@ int TriggerKeyboardCheck(struct WarmRuntime *runtime, WINDOW *win, struct WarmTr
 int TriggerKeyboardCheckExistingKey(struct WarmRuntime *runtime, WINDOW *win, struct WarmTriggerKeyboardEvent *event,
                                     int key)
 {
+    // don't logging here
+
     struct WarmTriggerKeyboardEvent *current = event; // the current event
     while (true) {
         if (MatchTheKeys_(key, current->keys, current->keys_size) == 0) {
@@ -76,6 +80,10 @@ struct WarmTriggerKeyboardEvent *TriggerKeyboardCheckEventInit(struct WarmRuntim
                                                                int keys_size, void (*action)(void *),
                                                                void *action_parma)
 {
+    WarmLog_GeneralLn(runtime, module_tag,
+                      "Keyboard trigger event structure Init | index: %d; key size: %d; action: %p", index, keys_size,
+                      action);
+
     struct WarmTriggerKeyboardEvent *event = malloc(sizeof(struct WarmTriggerKeyboardEvent));
 
     event->keys = keys;
@@ -97,6 +105,9 @@ struct WarmTriggerKeyboardEvent *TriggerKeyboardCheckEventInit(struct WarmRuntim
 int TriggerKeyboardCheckEventAppend(struct WarmRuntime *runtime, struct WarmTriggerKeyboardEvent *event, int index,
                                     int keys[], int keys_size, void (*action)(void *), void *action_parma)
 {
+    WarmLog_GeneralLn(runtime, module_tag, "Keyboard trigger event Append | index: %d; key size: %d; action: %p", index,
+                      keys_size, action);
+
     struct WarmTriggerKeyboardEvent *last_event = event;
     while (true) {
         // if already have a event have the same index, return a error
@@ -128,6 +139,8 @@ int TriggerKeyboardCheckEventAppend(struct WarmRuntime *runtime, struct WarmTrig
 
 int TriggerKeyboardCheckEventFreeUp(struct WarmRuntime *runtime, struct WarmTriggerKeyboardEvent *event)
 {
+    WarmLog_GeneralLn(runtime, module_tag, "Keyboard check event linked list free up");
+
     // the old input is a auto storage period, don't free it.
     // but new design hope it's in heap memory, free up it now
     struct WarmTriggerKeyboardEvent *now_ptr = event;
