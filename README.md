@@ -25,13 +25,12 @@
 嘛，下次开始这样的项目会是在什么时候呢。\
 希望你我都能找到适合自己的未来
 
-对了对了，对代码感兴趣的话可以去看看 [#Documentations](#documentations) 章节，和注释一起食用效果更加
+对了对了，对代码感兴趣的话可以去看看 [#Documentations/文档](#documentations文档) 章节，和注释一起食用效果更加
 
-## Documentations
+## Documentations/文档
 
-The README don't have any useful information, so...
-
-Some incomplete documents here: [docs/](docs/)
+Some incomplete documents here: [docs/](docs/)\
+（所有文档都是中文写的哦）
 
 ## Build system
 
@@ -72,12 +71,13 @@ Windows should be the second main support platform. From now on.
 
 ## Known bugs
 
+- It not even start in Windows.
 - Chinese characters may be garbled due to the ncurses/ncursesw dynamic link issue. It is just in some platforms like Ubuntu.
-- It may not even start in Windows.
 
-## Todo list
+## Todo
 
-- NULL
+- Use appimage?
+- The full system uses `char` now, maybe we can change it to `wchat_t`?
 
 ## License
 
