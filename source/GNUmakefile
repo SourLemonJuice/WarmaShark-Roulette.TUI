@@ -35,7 +35,7 @@ build_version := CI Workflow
 clang_flag += -O0
 else
 # release version
-build_version := Version 2.0, Build 2
+build_version := Version 2.1, Build 3
 clang_flag += -Os
 endif
 
