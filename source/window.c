@@ -7,6 +7,39 @@
 #include "runtime.h"
 
 /*
+    Get a New window handle and can put something on it directly, don't need care of border offset
+
+    Note: Remember to delwin() this returned window
+ */
+WINDOW *WindowDirectlyAvailable(WINDOW *win, struct WindowAttribute *attr)
+{
+    int beg_y;
+    int beg_x;
+    getbegyx(win, beg_y, beg_x);
+    int size_y;
+    int size_x;
+    getmaxyx(win, size_y, size_x);
+
+    switch (attr->style) {
+    case kWindowTypeBlank:
+        return newwin(size_y, size_x, beg_y, beg_x);
+        break;
+    case kWindowTypeBorder:
+        return newwin(size_y - 2, size_x - 2, beg_y + 1, beg_x + 1);
+        break;
+    }
+
+    return NULL;
+}
+
+WINDOW *WindowDetailCreate(struct WarmRuntime *runtime, WINDOW *parent_win, struct WindowAttribute *attr,
+                           float size_percent_y, float size_percent_x)
+{
+    return WindowPercentageCreate(runtime, parent_win, attr->hor_type, attr->hor_offset, attr->ver_type,
+                                  attr->ver_offset, size_percent_y, size_percent_x);
+}
+
+/*
     Create a window use the percentage size and a set of align manage.
 
     note:
