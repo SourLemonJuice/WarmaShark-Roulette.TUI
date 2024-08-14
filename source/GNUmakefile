@@ -29,7 +29,7 @@ ifeq (${build_type}, debug)
 build_version := Develop Build
 clang_flag += -O0
 clang_flag += -g
-clang_flag += -rdynamic
+# -rdynamic only enabled in Linux
 else ifeq (${build_type}, CI)
 build_version := CI Workflow
 clang_flag += -O0
@@ -51,15 +51,22 @@ clang_flag += -DBUILD_DATE_STRING="\"${build_date}\""
 
 default: warmaShark-Linux
 
+warmaShark-Linux: clang_flag += -rdynamic
 warmaShark-Linux: ${source_codes} GNUmakefile
 	${CC} ${source_codes} \
 		--output ${executable_base_name}-Linux \
 		${clang_flag}
 
-# This target needs to run in MSYS2 environment.
+# This target needs to run in MSYS2 environment
 warmaShark-Windows.exe: ${source_codes} GNUmakefile
 	/mingw64/bin/clang ${source_codes} \
 		--output ${executable_base_name}-Windows.exe \
+		${clang_flag}
+
+# MinGW-w64 in Linux enviroment
+warmaShark-Windows-beta.exe: ${source_codes} GNUmakefile
+	x86_64-w64-mingw32-gcc ${source_codes} \
+		--output ${executable_base_name}-Windows-beta.exe \
 		${clang_flag}
 
 clear:
