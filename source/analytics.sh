@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-scan-build make warmaShark-Linux.out -B
+scan-build make warmaShark -B
