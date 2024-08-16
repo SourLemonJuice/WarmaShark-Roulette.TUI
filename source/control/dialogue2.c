@@ -272,7 +272,7 @@ char *CrossPlatformGetUserName(void)
     char *name;
 #if __linux__
     name = getlogin();
-#elif __win32__
+#elif _WIN32
     name = getenv("USERNAME");
 #else
     name = "[dialogue2.c/CrossPlatformGetUserName(): Unknow platform]";

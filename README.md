@@ -38,7 +38,7 @@ Some documents here: [docs/](docs/)\
 
 The variable `build_type` of make can set some build macro and compiler's flags
 
-- `...=debug` is default one, no optimization and have some debug flag: `-g`, `-rdynamic`
+- `...=debug` is default one, no optimization and have some debug flags
 - `...=CI` use for GitHub Action.
 - `...=<Anything>`, yes, just anything, not a keyword, it means Release mode
 
@@ -76,10 +76,13 @@ Windows should be the second main support platform. From now on
 
 ### Build for Windows
 
-Note: It's a **very unstable** target
+Note: It's a **Unstable** target
 
 In Archlinux, install the `mingw-w64-gcc`(package) `mingw-w64-ncurses`(AUR).\
 Then just run `make warmaShark-Windows.exe`, I hope...
+
+The problem is MinGW looked like don't allow me to set this: `setlocale(LC_ALL, ".UTF-8");`, but it works in MSVC compiler.\
+`".65001"` and `SetConsoleOutputCP(65001);` function are also won't fix the garbled
 
 ## Known issues
 

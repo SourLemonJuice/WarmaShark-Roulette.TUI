@@ -7,19 +7,15 @@
 #include <time.h>
 
 #include <ncurses.h>
+#if _WIN32
+    #include <windows.h>
+#endif
 
 /*
-    Here needs to become the first function in the program. Don't forget this.
+    Initialize some structure member
  */
 int EngineRuntimeInit(struct WarmRuntime *runtime)
 {
-    // set locale
-    runtime->locale_string = getenv("LANG");
-    if (runtime->locale_string == NULL)
-        exit(1);
-    // NOTE: this step need before any IO operation, include the ncurses init!!!
-    setlocale(LC_ALL, runtime->locale_string);
-
     // default log path
     runtime->log_path = "./Engine.log";
 
@@ -30,6 +26,22 @@ int EngineRuntimeInit(struct WarmRuntime *runtime)
     srand(time(NULL));
 
     return 0;
+}
+
+/*
+    Set locale
+    NOTE: this step need before any IO operation, include the ncurses init!!!
+ */
+void EngineSetLocale(struct WarmRuntime *runtime)
+{
+    runtime->locale_string = setlocale(LC_ALL, "C.UTF-8");
+
+#if _WIN32
+    // maybe it could be some use? Well... it won't
+    SetConsoleOutputCP(65001);
+#endif
+
+    return;
 }
 
 /*

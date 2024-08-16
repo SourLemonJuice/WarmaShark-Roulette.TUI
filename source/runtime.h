@@ -27,6 +27,7 @@ enum WarmNcursesColorId {
 };
 
 int EngineRuntimeInit(struct WarmRuntime *runtime);
+void EngineSetLocale(struct WarmRuntime *runtime);
 int EngineLogSystemInit(struct WarmRuntime *runtime);
 int EngineNcursesInit(struct WarmRuntime *runtime);
 void EngineLogSystemUnload(struct WarmRuntime *runtime);
