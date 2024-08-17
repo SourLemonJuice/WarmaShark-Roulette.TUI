@@ -19,7 +19,8 @@
 
 目前主要的支持系统是 Linux，至于 Windows 构建相关的事情写在这里：[#Sorry for Windows version](#sorry-for-windows-version)\
 关于构建系统的更多信息写在 [#Build system](#build-system) 章节。\
-另外，Windows 的工作流是手动的，所以没有实时的 CI 构建
+都去用 WSL 吧！！！（发疯）（难受）（这也不是什么好玩的游戏，无所谓了...）（这点事情真的很浪费心情的，我受不了了... 抱歉）（Microsoft Windows 与终端八字不合...）\
+唉，人是要开始学新东西才会有长进的吧。等等未来的我回来修吧（苦笑）
 
 嘛，下次开始这样的项目会是在什么时候呢。\
 希望你我都能找到适合自己的未来
@@ -91,6 +92,7 @@ The problem is MinGW looked like don't allow me to set this: `setlocale(LC_ALL, 
 
 ## Todo
 
+- Recreate windows with the correct size, when resizing the terminal.
 - The full system uses `char` now, maybe we can change it to `wchat_t`?
 
 ## License

@@ -31,6 +31,9 @@ struct WindowAttribute {
     int ver_offset;
 };
 
+/*
+    TODO I want to record all the windows and recreate them when the terminal has been resized
+ */
 struct WindowRecordNode {
     WINDOW *win;
     struct WindowAttribute attr;

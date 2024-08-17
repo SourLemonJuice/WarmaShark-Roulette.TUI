@@ -32,6 +32,9 @@ WINDOW *WindowDirectlyAvailable(WINDOW *win, struct WindowAttribute *attr)
     return NULL;
 }
 
+/*
+    TODO It's just a idea, it doesn't have the window size and offset
+ */
 WINDOW *WindowDetailCreate(struct WarmRuntime *runtime, WINDOW *parent_win, struct WindowAttribute *attr,
                            float size_percent_y, float size_percent_x)
 {
