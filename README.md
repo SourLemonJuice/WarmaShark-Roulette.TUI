@@ -33,6 +33,10 @@
 Some documents here: [docs/](docs/)\
 （所有文档都是中文写的哦）
 
+## Preview/预览
+
+写在另一个文件里 [docs/preview.md](docs/preview.md)
+
 ## Build system
 
 ### Build flags
