@@ -24,6 +24,8 @@ enum WarmProgramExitErrorCode {
 enum WarmNcursesColorId {
     kColorTest = 1,
     kColorDangerRed,
+    kColorFlowerYellow,
+    kColorAdminMessage,
 };
 
 int EngineRuntimeInit(struct WarmRuntime *runtime);

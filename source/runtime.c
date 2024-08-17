@@ -84,6 +84,8 @@ int EngineNcursesInit(struct WarmRuntime *runtime)
         start_color();
         init_pair(kColorTest, COLOR_YELLOW, COLOR_BLUE);
         init_pair(kColorDangerRed, COLOR_RED, COLOR_BLACK);
+        init_pair(kColorFlowerYellow, COLOR_YELLOW, COLOR_BLACK);
+        init_pair(kColorAdminMessage, COLOR_MAGENTA, COLOR_BLACK);
     }
 
     // maximum terminal size

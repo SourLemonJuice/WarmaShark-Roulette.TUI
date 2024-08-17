@@ -93,7 +93,8 @@ int SceneStart_SharkRoulette(struct WarmRuntime *runtime, WINDOW *win)
         }
     }
 
-    dialogue.text = "> 都是些有趣的生物呐（歪头笑） <";
+    dialogue.text = "> 都是些有趣的生物呐（歪头笑）";
+    dialogue.attribute = COLOR_PAIR(kColorAdminMessage);
     DialoguePrintCenter(runtime, win, &dialogue, cache.key_event);
 
     return 0;
@@ -182,6 +183,7 @@ static int ChapterIntroduction_(struct WarmRuntime *runtime, WINDOW *win)
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     dialogue.text = "> 所以... 游戏要开始咯";
+    dialogue.attribute = COLOR_PAIR(kColorAdminMessage);
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
     return 0;
@@ -225,10 +227,12 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
         dialogue.text = "> 作为一个从各个方面都绝对的第三者和创造者... 这样是不是有点太无情了呢";
         break;
     default:
-        dialogue.text = "[Game: rand() Error]";
+        dialogue.text = "[Error: Form rand()]";
+        WarmLog_WarningLn(runtime, module_tag, "ChapterShootingFromPlayer_(): rand() Error, unexpected result");
         break;
     }
     dialogue.type = kDialogueTypeStatic;
+    dialogue.attribute = COLOR_PAIR(kColorAdminMessage);
     dialogue.wait_key = false;
     Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
@@ -284,11 +288,7 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
         break;
     case 1:
         dialogue.type = kDialogueTypeStatic;
-        dialogue.text = "你对着小鲨鱼扣动了扳机";
-        Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
-
-        dialogue.type = kDialogueTypeStatic;
-        dialogue.text = "，这一行为甚至没有让你产生任何负罪感";
+        dialogue.text = "你对着小鲨鱼扣动了扳机，这一行为甚至没有让你产生任何负罪感";
         Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
         dialogue.type = kDialogueTypeWindowReset;
@@ -296,7 +296,8 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
         Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
         if (cache.current_cycle == cache.live_ammunition) {
-            dialogue.text = "噗";
+            dialogue.text = "噗～";
+            dialogue.attribute = COLOR_PAIR(kColorFlowerYellow);
             Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
             dialogue.text = "枪口伸出了一朵小黄花，花芯是须状的，这并不是你在外面发现的那朵花";
@@ -311,7 +312,8 @@ static int ChapterShootingFromPlayer_(struct WarmRuntime *runtime, WINDOW *win)
             dialogue.text = "这是弟切草";
             Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
-            dialogue.text = "你知道弟切草的花语吗？";
+            dialogue.text = "> 你知道弟切草的花语吗？";
+            dialogue.attribute = COLOR_PAIR(kColorAdminMessage);
             Dialogue2PrintText(runtime, win, &dialogue, cache.key_event);
 
             dialogue.text = "结局-2：弟切草";
@@ -372,7 +374,8 @@ static int ChapterShootingFromShark_(struct WarmRuntime *runtime, WINDOW *win)
         dialogue.position_y += 1;
 
         dialogue.type = kDialogueTypeWindowReset;
-        dialogue.text = "> 是的，一颗苹果 <";
+        dialogue.text = "> 是的，一颗苹果哦";
+        dialogue.attribute = COLOR_PAIR(kColorAdminMessage);
         DialoguePrintCenter(runtime, win, &dialogue, cache.key_event);
 
         return 1;
