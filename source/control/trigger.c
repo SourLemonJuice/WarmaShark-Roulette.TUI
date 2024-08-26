@@ -105,7 +105,7 @@ struct WarmTriggerKeyboardEvent *TriggerKeyboardCheckEventInit(struct WarmRuntim
 int TriggerKeyboardCheckEventAppend(struct WarmRuntime *runtime, struct WarmTriggerKeyboardEvent *event, int index,
                                     int keys[], int keys_size, void (*action)(void *), void *action_parma)
 {
-    WarmLog_GeneralLn(runtime, module_tag, "Keyboard trigger event Append | index: %d; key size: %d; action: %p", index,
+    WarmLog_GeneralLn(runtime, module_tag, "Keyboard trigger event Append | index: %d; key size: %d; action: %#p", index,
                       keys_size, action);
 
     struct WarmTriggerKeyboardEvent *last_event = event;

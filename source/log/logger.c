@@ -31,6 +31,19 @@ char *LevelToString_(const enum WarmLogLevel level)
     return "Unknow";
 }
 
+static void PrintLocalTimeTag_(FILE *stream, char end_str[])
+{
+    time_t now_time;
+    time(&now_time);
+    struct tm *tm = localtime(&now_time);
+
+    fprintf(stream, "[%04d-%02d-%02d %02d:%02d:%02d] ", tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday, tm->tm_hour,
+            tm->tm_min, tm->tm_sec);
+    fprintf(stream, "%s", end_str);
+
+    return;
+}
+
 /*
     This function is mainly used by macro but not users directly. TBD
  */
@@ -40,13 +53,9 @@ int WarmLoggerMain(struct WarmRuntime *runtime, const enum WarmLogLevel level, c
     if (runtime->logging == false)
         return 0;
 
-    time_t now_time;
-    time(&now_time);
-    struct tm *tm = localtime(&now_time);
     va_list va;
 
-    fprintf(runtime->log_handle, "[%04d-%02d-%02d %02d:%02d:%02d] ", tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday,
-            tm->tm_hour, tm->tm_min, tm->tm_sec);
+    PrintLocalTimeTag_(runtime->log_handle, " ");
     fprintf(runtime->log_handle, "[%s]\t", LevelToString_(level));
     fprintf(runtime->log_handle, "[%s]: ", module_tag);
     va_start(va, format);
@@ -62,8 +71,6 @@ int WarmLoggerMain(struct WarmRuntime *runtime, const enum WarmLogLevel level, c
  */
 int WarmthMeltdownUniverse(struct WarmRuntime *runtime, const char *format, ...)
 {
-    time_t now_time;
-    time(&now_time);
     va_list va;
 
 #ifdef __linux__
@@ -79,7 +86,8 @@ int WarmthMeltdownUniverse(struct WarmRuntime *runtime, const char *format, ...)
 #endif
 
     // tag
-    fprintf(runtime->log_handle, "[%ld] [!!! Universe Meltdown !!!]\n", now_time);
+    PrintLocalTimeTag_(runtime->log_handle, " ");
+    fprintf(runtime->log_handle, "[!!! Universe Meltdown !!!]\n");
     // main prompt string
     va_start(va, format);
     vfprintf(runtime->log_handle, format, va);
