@@ -67,11 +67,14 @@ warmaShark-Linux-Static: ${source_codes} GNUmakefile
 		--static
 
 # use MinGW-w64 in Linux enviroment
+# -fexec-charset and -finput-charset are not work
 warmaShark-Windows.exe: ${source_codes} GNUmakefile
 	/usr/bin/x86_64-w64-mingw32-gcc ${source_codes} \
 		--output ${executable_base_name}-Windows.exe \
 		${clang_flag} \
 		--static \
+		-fexec-charset=GBK \
+		-finput-charset=UTF-8 \
 		-DNCURSES_STATIC
 
 clear:
