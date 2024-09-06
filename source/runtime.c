@@ -34,11 +34,11 @@ int EngineRuntimeInit(struct WarmRuntime *runtime)
  */
 void EngineSetLocale(struct WarmRuntime *runtime)
 {
-    runtime->locale_string = setlocale(LC_ALL, "C.UTF-8");
-
 #if _WIN32
-    // maybe it could be some use? Well... it won't
-    SetConsoleOutputCP(65001);
+    // so I can't set "C.936" on windows?
+    runtime->locale_string = setlocale(LC_ALL, ".936");
+#else
+    runtime->locale_string = setlocale(LC_ALL, "C.UTF-8");
 #endif
 
     return;

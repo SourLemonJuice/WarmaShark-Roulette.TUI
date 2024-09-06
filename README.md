@@ -89,6 +89,11 @@ Then just run `make warmaShark-Windows.exe`, I hope...
 The problem is MinGW looked like don't allow me to set this: `setlocale(LC_ALL, ".UTF-8");`, but it works in MSVC compiler.\
 `".65001"` and `SetConsoleOutputCP(65001);` function are also won't fix the garbled
 
+Using `setlocale(LC_ALL, ".936")` and the compiler flag `-fexec-charset=GBK -finput-charset=UTF-8` do can fix some of them.\
+But it will break the cursor of ncurses. One full-width char is displayed, but the cursor moved 3 half-width spaces, and cursor position is totally inconsistent
+
+So, what to do after that...
+
 ## Known issues
 
 - Chinese characters may be garbled due to the ncurses/ncursesw dynamic link issue. It is just in some platforms like Ubuntu.

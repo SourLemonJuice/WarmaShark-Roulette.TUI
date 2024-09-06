@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
     }
 
     // record some information for tracking
-    WarmLog_GeneralLn(&runtime, module_tag, "setlocale() result is \"%s\"", runtime.locale_string);
+    WarmLog_GeneralLn(&runtime, module_tag, "setlocale() result of EngineSetLocale() is \"%s\"", runtime.locale_string);
     WarmLog_GeneralLn(&runtime, module_tag, "Current locale is \"%s\"", setlocale(LC_ALL, NULL));
     WarmLog_GeneralLn(&runtime, module_tag, "MAX screen X: %d, Y: %d", runtime.terminal_x, runtime.terminal_y);
     WarmLog_GeneralLn(&runtime, module_tag, "program runtime has been init, starting scene selector");
